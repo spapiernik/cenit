@@ -1,0 +1,106 @@
+name: Sync CENIT table
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - pyproject.toml
+      - uv.lock
+      - scripts/**
+      - src/cenit/**
+
+concurrency:
+  group: cenit-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  BRANCH: bot/cenit-sync
+  URL: https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: Download current PDF
+        run: curl -fL --retry 3 "$URL" -o /tmp/cenit.pdf
+      - name: Extract table
+        run: uv run cenit /tmp/cenit.pdf --source-url "$URL" --output /tmp/cenit
+      - name: Normalize source path
+        run: |
+          uv run python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for name in ("cenit.json", "cenit_report.json", "cenit_debug.json"):
+              path = Path("/tmp") / name
+              data = json.loads(path.read_text(encoding="utf-8"))
+              data["source"]["file"] = None
+              path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+      - name: Compare datasets
+        id: diff
+        run: |
+          uv run python scripts/compare.py \
+            --changed-file /tmp/changed \
+            data/current/cenit.json /tmp/cenit.json > /tmp/diff.md
+          echo "changed=$(cat /tmp/changed)" >> "$GITHUB_OUTPUT"
+      - name: Upload diff
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cenit-diff
+          path: |
+            /tmp/diff.md
+            /tmp/cenit_report.json
+      - name: Commit and open PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          git config user.name "cenit-bot"
+          git config user.email "cenit-bot@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          cp /tmp/cenit.json data/current/cenit.json
+          cp /tmp/cenit.csv data/current/cenit.csv
+          cp /tmp/cenit_report.json data/current/cenit_report.json
+          cp /tmp/cenit_debug.json data/current/cenit_debug.json
+          uv run python - <<'PY' > data/source.json
+          import cenit
+          import datetime
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          payload = {
+              "url": os.environ["URL"],
+              "sha256": hashlib.sha256(Path("/tmp/cenit.pdf").read_bytes()).hexdigest(),
+              "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              "schema_version": cenit.SCHEMA_VERSION,
+          }
+          print(json.dumps(payload, indent=2))
+          PY
+          git add data
+          git commit -m "chore(data): weekly CENIT sync"
+          git push --force origin "$BRANCH"
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            gh pr edit "$BRANCH" --body-file /tmp/diff.md
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore(data): weekly CENIT sync" --body-file /tmp/diff.md
+          fi
