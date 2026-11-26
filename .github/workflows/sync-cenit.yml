@@ -39,7 +39,7 @@ jobs:
       - name: Download current PDF
         run: curl -fL --retry 3 "$URL" -o /tmp/cenit.pdf
       - name: Extract table
-        run: uv run cenit /tmp/cenit.pdf --source-url "$URL" --output /tmp/cenit
+        run: uv run python scripts/extract.py /tmp/cenit.pdf --source-url "$URL" --output /tmp/cenit
       - name: Normalize source path
         run: |
           uv run python - <<'PY'
@@ -87,15 +87,18 @@ jobs:
           import os
           from pathlib import Path
 
+          extracted = json.loads(Path("/tmp/cenit.json").read_text(encoding="utf-8"))
           payload = {
               "url": os.environ["URL"],
               "sha256": hashlib.sha256(Path("/tmp/cenit.pdf").read_bytes()).hexdigest(),
+              "document_date": extracted["source"]["document_date"],
               "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "schema_version": cenit.SCHEMA_VERSION,
           }
           print(json.dumps(payload, indent=2))
           PY
-          git add data
+          uv run python scripts/generate_data.py
+          git add data src/cenit/_data.py
           git commit -m "chore(data): weekly CENIT sync"
           git push --force origin "$BRANCH"
           if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then

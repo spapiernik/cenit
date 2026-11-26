@@ -20,7 +20,8 @@ jobs:
       - run: uv sync --frozen
       - run: uv run python -m compileall -q src scripts tests
       - run: uv run python -m unittest discover -s tests
-      - run: uv run cenit tests/fixtures/cenit_codes.pdf --output /tmp/ci/cenit
+      - run: uv run python scripts/generate_data.py --check
+      - run: uv run python scripts/extract.py tests/fixtures/cenit_codes.pdf --output /tmp/ci/cenit
       - run: |
           uv run python scripts/compare.py \
             --changed-file /tmp/ci/changed \

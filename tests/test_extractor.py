@@ -3,12 +3,11 @@ import sys
 import unittest
 from pathlib import Path
 
-import cenit
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import compare
+import extract
 
 
 class ExtractorTest(unittest.TestCase):
@@ -19,10 +18,11 @@ class ExtractorTest(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        result = cenit.extract(fixture, 1, None)
+        result = extract.extract(fixture, 1, None)
 
-        self.assertEqual(cenit.SCHEMA_VERSION, 2)
-        self.assertEqual(len(result["records"]), cenit.EXPECTED_PARTICIPANTS)
+        self.assertEqual(extract.SCHEMA_VERSION, 2)
+        self.assertEqual(len(result["records"]), extract.EXPECTED_PARTICIPANTS)
+        self.assertEqual(result["source"]["document_date"], "2026-10-07")
         self.assertEqual(result["report"]["status"], "ok")
         current = {
             "participants": result["records"],
@@ -31,9 +31,9 @@ class ExtractorTest(unittest.TestCase):
         self.assertFalse(compare.compare(golden, current)["changed"])
 
     def test_totals_label_detection(self) -> None:
-        self.assertTrue(cenit.is_totals_label("TOTAL PARTICIPANTES EN CENIT"))
-        self.assertTrue(cenit.is_totals_label("  TOTAL   PARTICIPANTES EN CENIT  "))
-        self.assertFalse(cenit.is_totals_label("TOTAL PARTICIPANTES"))
+        self.assertTrue(extract.is_totals_label("TOTAL PARTICIPANTES EN CENIT"))
+        self.assertTrue(extract.is_totals_label("  TOTAL   PARTICIPANTES EN CENIT  "))
+        self.assertFalse(extract.is_totals_label("TOTAL PARTICIPANTES"))
 
 
 if __name__ == "__main__":

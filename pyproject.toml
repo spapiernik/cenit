@@ -1,20 +1,18 @@
 [project]
 name = "cenit"
 version = "0.1.0"
-description = "Document-specific extractor for the CENIT participants table"
+description = "Versioned Python library for CENIT compensation codes"
 readme = "README.md"
 authors = [
     { name = "Santiago Papiernik", email = "spapiernik12@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = [
-    "openpyxl>=3.1.5",
-    "pandas>=3.1.1",
+dependencies = []
+
+[dependency-groups]
+dev = [
     "pdfplumber>=0.11.11",
 ]
-
-[project.scripts]
-cenit = "cenit:main"
 
 [build-system]
 requires = ["uv_build>=0.12.11,<0.13.0"]
