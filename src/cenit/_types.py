@@ -19,6 +19,15 @@ ENTITY_TYPES = (
 )
 
 
+class _RichViewMixin:
+    __slots__ = ()
+
+    def __rich_console__(self, console, options):
+        from .view import render
+
+        yield render(self)
+
+
 class AccountType(StrEnum):
     SAVINGS = "savings"
     CHECKING = "checking"
@@ -34,7 +43,7 @@ class AccountNumberLengthScope(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class AccountNumberLengthVariant:
+class AccountNumberLengthVariant(_RichViewMixin):
     """A source group of account number lengths with its footnote qualifiers."""
 
     lengths: tuple[int, ...]
@@ -46,7 +55,7 @@ class AccountNumberLengthVariant:
 
 
 @dataclass(frozen=True, slots=True)
-class AccountCapabilities:
+class AccountCapabilities(_RichViewMixin):
     """Qualified account number lengths accepted by one participant."""
 
     savings_account_number_lengths: tuple[AccountNumberLengthVariant, ...] = ()
@@ -68,7 +77,7 @@ class AccountCapabilities:
 
 
 @dataclass(frozen=True, slots=True)
-class ParticipantRecord:
+class ParticipantRecord(_RichViewMixin):
     """One participant row from the versioned CENIT table."""
 
     row_number: int
@@ -97,7 +106,7 @@ Code = ParticipantRecord
 
 
 @dataclass(frozen=True, slots=True)
-class EntityTypeTotals:
+class EntityTypeTotals(_RichViewMixin):
     """Counts by entity type from the totals row."""
 
     bank: int
@@ -110,7 +119,7 @@ class EntityTypeTotals:
 
 
 @dataclass(frozen=True, slots=True)
-class Totals:
+class Totals(_RichViewMixin):
     """Totals row from the versioned CENIT table."""
 
     participants: int

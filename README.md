@@ -100,18 +100,92 @@ Public functions:
 - `get_by_name(name)`
 - `all_records()`
 - `routing_code(code)`
-- `footnotes()`
+- `footnotes()` and `footnote_definitions(language="en")`
 - `get_account_capabilities(code)`
 - `list_account_number_lengths(code, account_type, scope=None)`
 - `is_valid_account_number_length(code, account_type, length, scope="standard")`
 - `list_participants_by_entity_type(entity_type)`
 - `list_debit_capable_participants()`
 - `totals()`
+- `display(value)`, `render(value)`, `explore(value)`, `save(value, path)`, `to_text(value)`, `to_html(value)` and `to_svg(value)`
 - `version()`, `schema_version()`, `source_date()`, `source_url()`, `source_sha256()` and `source_fetched_at()`
 
 The routing code is `1` followed by the three-digit participant code. `routing_code` accepts either a full CENIT code such as `"1007"` or a participant code such as `"007"`.
 
 `totals().entity_types` is a typed object, so counts are available as attributes such as `bank` and `information_operator`.
+
+## Viewing data
+
+Rendering uses [Rich](https://rich.readthedocs.io/) for printable output and [Textual](https://textual.textualize.io/) for the interactive explorer. Both are installed with the package. The public data classes implement `__rich_console__`, so a single value can be printed directly. Use `cenit.display` or `cenit.render` for collections because they group values into tables automatically.
+
+```python
+import cenit
+
+record = cenit.get_by_code("1013")
+cenit.display(record)
+cenit.display([record, record])
+cenit.display([record, cenit.totals()])
+cenit.display([record, [record, cenit.totals()]])
+
+cenit.explore([record, cenit.totals()])
+```
+
+`cenit.explore` opens a scrollable Textual view with bordered, striped, colorized `DataTable` widgets. Press `q` to quit.
+
+Consecutive values of the same class become rows in one table. Different classes and nested collections become separate tables with dim separator rules. Lists of scalars become cell rows, and lists of lists become matrices. Nested dataclasses are expanded into their own columns, so `Totals` shows `Participants` followed by one column per entity type instead of a compact `EntityTypeTotals(...)` string.
+
+Column labels use the full source terminology in the selected language, for example `Código de Compensación CENIT`, `Inicio de Operación`, `Tipo de Entidad` and `Aplica Transacciones Débito`. Account data appears in four columns: `Cuenta de Ahorros`, `Cuenta Corriente`, `Depósito Electrónico o de Bajo Monto` and `Nombre del Depósito Electrónico o de Bajo Monto`. English uses the same title capitalization. Entity type values are translated as well, for example `Operador de Información` and `Information Operator`.
+
+`Operation Start` shows the date when present and the source marker such as `(*)` when there is no date. The `Footnotes` column is hidden by default. Marker definitions are printed below the tables and are also available through `cenit.footnote_definitions("spa")`.
+
+`View` controls the output:
+
+```python
+view = cenit.View(
+    language="es",
+    columns=(
+        "participant_name",
+        "cenit_code",
+        "operation_start_date",
+        "supports_debit_transactions",
+        "savings_account_number_lengths",
+        "checking_account_number_lengths",
+        "electronic_or_low_value_deposit_number_lengths",
+        "electronic_or_low_value_deposit_name",
+    ),
+    exclude=(),
+    show_columns=True,
+    show_footnotes=True,
+    keep_excluded_columns=False,
+    title="Participantes CENIT",
+    separator=True,
+    separator_style="dim",
+    row_columns={1: ("cenit_code",)},
+    width=160,
+)
+cenit.display([record, cenit.get_by_code("1070")], view=view)
+```
+
+- `language` accepts ISO 639-1 codes `en` and `es`, and ISO 639-2 codes `eng` and `spa`, case-insensitive.
+- `columns` selects fields. `exclude` removes fields. `keep_excluded_columns=True` keeps removed fields as empty cells.
+- `show_columns=False` hides the header row. `show_footnotes=False` hides the marker definitions below the tables.
+- `row_columns` maps a zero-based row index to the fields shown for that row.
+- `title`, `separator` and `separator_style` control table titles and separator rules.
+
+Exports use Rich's console recorder:
+
+```python
+records = cenit.all_records()[:5]
+text = cenit.to_text(records, language="es")
+html = cenit.to_html(records, width=160)
+svg = cenit.to_svg(records)
+
+cenit.save(records, "out/cenit.txt")
+cenit.save(records, "out/cenit.html", width=160)
+cenit.save(records, "out/cenit.svg")
+```
+
+`save` infers the format from `.txt`, `.html` or `.svg`. `render` returns the Rich renderable when a custom console or further composition is needed.
 
 ## Data model
 

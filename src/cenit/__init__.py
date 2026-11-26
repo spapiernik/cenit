@@ -23,6 +23,17 @@ from ._types import (
     Totals,
     normalize_name,
 )
+from .view import (
+    View,
+    display,
+    explore,
+    footnote_definitions,
+    render,
+    save,
+    to_html,
+    to_svg,
+    to_text,
+)
 
 __all__ = [
     "ENTITY_TYPES",
@@ -34,7 +45,11 @@ __all__ = [
     "EntityTypeTotals",
     "ParticipantRecord",
     "Totals",
+    "View",
     "all_records",
+    "display",
+    "explore",
+    "footnote_definitions",
     "footnotes",
     "get_account_capabilities",
     "get_by_code",
@@ -44,12 +59,17 @@ __all__ = [
     "list_account_number_lengths",
     "list_debit_capable_participants",
     "list_participants_by_entity_type",
+    "render",
     "routing_code",
+    "save",
     "schema_version",
     "source_date",
     "source_fetched_at",
     "source_sha256",
     "source_url",
+    "to_html",
+    "to_svg",
+    "to_text",
     "totals",
     "version",
 ]
