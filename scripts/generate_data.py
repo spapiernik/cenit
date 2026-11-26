@@ -27,6 +27,23 @@ ENTITY_TYPES = (
     ("operador_de_información", "information_operator"),
     ("seped", "seped"),
 )
+FOOTNOTES = {
+    "(*)": "Linked before May 2025",
+    "(**)": "Used for special collection agreements",
+    "(***)": "Includes leading zeros",
+    "(****)": "Electronic deposit service available but not enabled in CENIT",
+}
+MARKER_SCOPES = {
+    "*": "LINKED_BEFORE_MAY_2025",
+    "**": "SPECIAL_COLLECTION_AGREEMENT",
+    "***": "INCLUDES_LEADING_ZEROS",
+    "****": "ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT",
+}
+LENGTH_TOKEN = re.compile(
+    r"\((?P<parenthesized>[^)]*)\)(?P<parenthesized_markers>\*{1,4})?"
+    r"|(?P<plain>\d+(?:\s*(?:,|y)\s*\d+)*)(?P<plain_markers>\*{1,4})?",
+    re.IGNORECASE,
+)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -39,13 +56,13 @@ def date_expression(value: date | None) -> str:
     return f"date({value.year}, {value.month}, {value.day})"
 
 
-def parse_operation_start(value: str) -> tuple[date | None, str]:
+def parse_operation_start(value: str) -> tuple[date | None, str | None]:
     label = str(value).strip()
     match = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", label)
     if match is None:
-        return None, label
+        return None, label or None
     day, month, year = (int(part) for part in match.groups())
-    return date(year, month, day), label
+    return date(year, month, day), None
 
 
 def parse_boolean(value: str) -> bool:
@@ -56,8 +73,33 @@ def parse_boolean(value: str) -> bool:
     raise ValueError(f"unknown boolean value: {value!r}")
 
 
-def parse_lengths(value: str) -> tuple[int, ...]:
-    return tuple(int(part) for part in re.findall(r"\d{1,2}", value or ""))
+def parse_length_variants(value: str) -> tuple[tuple[tuple[int, ...], str], ...]:
+    variants: list[tuple[tuple[int, ...], str]] = []
+    for match in LENGTH_TOKEN.finditer(value or ""):
+        parenthesized = match.group("parenthesized")
+        if parenthesized is not None:
+            trailing = match.group("parenthesized_markers") or ""
+            if trailing:
+                markers = trailing
+                lengths_text = parenthesized
+            elif parenthesized and all(char == "*" for char in parenthesized):
+                markers = parenthesized
+                lengths_text = ""
+            else:
+                markers = ""
+                lengths_text = parenthesized
+        else:
+            markers = match.group("plain_markers") or ""
+            lengths_text = match.group("plain") or ""
+
+        markers = "*" * len(markers) if markers else ""
+        lengths = tuple(int(part) for part in re.findall(r"\d+", lengths_text))
+        if not lengths and not markers:
+            continue
+        if markers and markers not in MARKER_SCOPES:
+            raise ValueError(f"unknown footnote markers: {markers!r}")
+        variants.append((lengths, markers))
+    return tuple(variants)
 
 
 def parse_entity_types(record: dict[str, Any]) -> tuple[str, ...]:
@@ -69,30 +111,75 @@ def parse_entity_types(record: dict[str, Any]) -> tuple[str, ...]:
     )
 
 
-def render_code(record: dict[str, Any]) -> str:
+def scope_expression(markers: str) -> str:
+    if not markers:
+        return "AccountNumberLengthScope.STANDARD"
+    return f"AccountNumberLengthScope.{MARKER_SCOPES[markers]}"
+
+
+def render_variants(
+    variants: tuple[tuple[tuple[int, ...], str], ...], indent: int
+) -> str:
+    if not variants:
+        return "()"
+    pad = " " * indent
+    lines = ["("]
+    for lengths, markers in variants:
+        marker_value = (markers,) if markers else ()
+        lines.append(f"{pad}    AccountNumberLengthVariant(")
+        lines.append(f"{pad}        lengths={lengths!r},")
+        lines.append(f"{pad}        footnote_markers={marker_value!r},")
+        lines.append(f"{pad}        scope={scope_expression(markers)},")
+        lines.append(f"{pad}    ),")
+    lines.append(f"{pad})")
+    return "\n".join(lines)
+
+
+def collect_footnotes(
+    note: str | None,
+    groups: tuple[tuple[tuple[tuple[int, ...], str], ...], ...],
+) -> tuple[str, ...]:
+    candidates: list[str] = []
+    if note:
+        candidates.append(note)
+    for variants in groups:
+        for _, markers in variants:
+            if markers:
+                candidates.append(f"({markers})")
+    result: list[str] = []
+    for candidate in candidates:
+        if candidate in FOOTNOTES and candidate not in result:
+            result.append(candidate)
+    return tuple(result)
+
+
+def render_participant(record: dict[str, Any]) -> str:
     account = record["tipo_de_cuenta_y_longitud"]
     deposit = account["depósito_electrónico_o_de_bajo_monto"]
-    start_date, start_label = parse_operation_start(record["inicio_de_operación"])
-    savings = parse_lengths(account["cuenta_de_ahorros"])
-    checking = parse_lengths(account["cuenta_corriente"])
-    deposit_lengths = parse_lengths(deposit["longitud"])
+    start_date, start_note = parse_operation_start(record["inicio_de_operación"])
+    savings = parse_length_variants(account["cuenta_de_ahorros"])
+    checking = parse_length_variants(account["cuenta_corriente"])
+    deposit_variants = parse_length_variants(deposit["longitud"])
     deposit_name = (deposit["nombre"] or "").strip() or None
+    footnotes = collect_footnotes(start_note, (savings, checking, deposit_variants))
 
     lines = [
-        "    Code(",
-        f"        position={record['posición']!r},",
-        f"        participant={record['participante']!r},",
+        "    ParticipantRecord(",
+        f"        row_number={record['posición']!r},",
+        f"        participant_name={record['participante']!r},",
         f"        cenit_code={record['código_cenit']!r},",
         f"        operation_start_date={date_expression(start_date)},",
-        f"        operation_start_label={start_label!r},",
+        f"        operation_start_note={start_note!r},",
         f"        entity_types={parse_entity_types(record)!r},",
         f"        supports_debit_transactions={parse_boolean(record['aplica_transacciones_débito'])!r},",
-        "        account_types=AccountTypes(",
-        f"            savings_account_lengths={savings!r},",
-        f"            checking_account_lengths={checking!r},",
+        "        account_capabilities=AccountCapabilities(",
+        f"            savings_account_number_lengths={render_variants(savings, 16)},",
+        f"            checking_account_number_lengths={render_variants(checking, 16)},",
+        "            electronic_or_low_value_deposit_number_lengths="
+        f"{render_variants(deposit_variants, 16)},",
         "        ),",
-        f"        electronic_or_low_value_deposit={deposit_name!r},",
-        f"        electronic_or_low_value_deposit_lengths={deposit_lengths!r},",
+        f"        electronic_or_low_value_deposit_name={deposit_name!r},",
+        f"        footnotes={footnotes!r},",
         "    ),",
     ]
     return "\n".join(lines)
@@ -111,10 +198,15 @@ def render_module(dataset: dict[str, Any], source: dict[str, Any], version: str)
         raise ValueError("data/source.json has no document_date")
 
     totals = dataset["totals"]
-    codes = "\n".join(render_code(record) for record in dataset["participants"])
+    participants = "\n".join(
+        render_participant(record) for record in dataset["participants"]
+    )
     entity_totals = "\n".join(
-        f"        {english!r}: {int(totals['tipo_de_entidad'][spanish])},"
+        f"        {english}={int(totals['tipo_de_entidad'][spanish])},"
         for spanish, english in ENTITY_TYPES
+    )
+    footnotes = "\n".join(
+        f"    {marker!r}: {meaning!r}," for marker, meaning in FOOTNOTES.items()
     )
 
     return f'''"""Generated data for cenit. Regenerate with scripts/generate_data.py."""
@@ -125,7 +217,15 @@ from datetime import date
 from types import MappingProxyType
 from typing import Mapping
 
-from cenit._types import AccountTypes, Code, Totals, normalize_name
+from cenit._types import (
+    AccountCapabilities,
+    AccountNumberLengthScope,
+    AccountNumberLengthVariant,
+    EntityTypeTotals,
+    ParticipantRecord,
+    Totals,
+    normalize_name,
+)
 
 SCHEMA_VERSION = {SCHEMA_VERSION}
 VERSION = {version!r}
@@ -134,22 +234,26 @@ SOURCE_SHA256 = {source["sha256"]!r}
 SOURCE_URL = {source["url"]!r}
 SOURCE_FETCHED_AT = {source["fetched_at"]!r}
 
-CODES: tuple[Code, ...] = (
-{codes}
+FOOTNOTES: Mapping[str, str] = MappingProxyType(
+{{
+{footnotes}
+}}
 )
 
-CODES_BY_CENIT_CODE: Mapping[str, Code] = MappingProxyType(
-    {{code.cenit_code: code for code in CODES}}
+RECORDS: tuple[ParticipantRecord, ...] = (
+{participants}
 )
-CODES_BY_NAME: Mapping[str, Code] = MappingProxyType(
-    {{normalize_name(code.participant): code for code in CODES}}
+
+CODES_BY_CENIT_CODE: Mapping[str, ParticipantRecord] = MappingProxyType(
+    {{record.cenit_code: record for record in RECORDS}}
+)
+CODES_BY_NAME: Mapping[str, ParticipantRecord] = MappingProxyType(
+    {{normalize_name(record.participant_name): record for record in RECORDS}}
 )
 TOTALS = Totals(
     participants={int(totals["participantes"])},
-    entity_types=MappingProxyType(
-        {{
+    entity_types=EntityTypeTotals(
 {entity_totals}
-        }}
     ),
 )
 '''

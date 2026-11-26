@@ -6,7 +6,15 @@ from datetime import date
 from types import MappingProxyType
 from typing import Mapping
 
-from cenit._types import AccountTypes, Code, Totals, normalize_name
+from cenit._types import (
+    AccountCapabilities,
+    AccountNumberLengthScope,
+    AccountNumberLengthVariant,
+    EntityTypeTotals,
+    ParticipantRecord,
+    Totals,
+    normalize_name,
+)
 
 SCHEMA_VERSION = 2
 VERSION = '0.1.0'
@@ -15,776 +23,1299 @@ SOURCE_SHA256 = 'ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d7970
 SOURCE_URL = 'https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf'
 SOURCE_FETCHED_AT = '2026-11-26T16:12:07.193094+00:00'
 
-CODES: tuple[Code, ...] = (
-    Code(
-        position=1,
-        participant='APORTES EN LÍNEA S.A.',
+FOOTNOTES: Mapping[str, str] = MappingProxyType(
+{
+    '(*)': 'Linked before May 2025',
+    '(**)': 'Used for special collection agreements',
+    '(***)': 'Includes leading zeros',
+    '(****)': 'Electronic deposit service available but not enabled in CENIT',
+}
+)
+
+RECORDS: tuple[ParticipantRecord, ...] = (
+    ParticipantRecord(
+        row_number=1,
+        participant_name='APORTES EN LÍNEA S.A.',
         cenit_code='1084',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('information_operator',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=2,
-        participant='ASOPAGOS',
+    ParticipantRecord(
+        row_number=2,
+        participant_name='ASOPAGOS',
         cenit_code='1086',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('information_operator',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=3,
-        participant='AVAL SOLUCIONES DIGITALES - DALE',
+    ParticipantRecord(
+        row_number=3,
+        participant_name='AVAL SOLUCIONES DIGITALES - DALE',
         cenit_code='1899',
         operation_start_date=date(2025, 7, 3),
-        operation_start_label='3/07/2025',
+        operation_start_note=None,
         entity_types=('seped',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='DALE',
-        electronic_or_low_value_deposit_lengths=(12,),
+        electronic_or_low_value_deposit_name='DALE',
+        footnotes=(),
     ),
-    Code(
-        position=4,
-        participant='BAN100 S.A.',
+    ParticipantRecord(
+        row_number=4,
+        participant_name='BAN100 S.A.',
         cenit_code='1058',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(13,),
-            checking_account_lengths=(13,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(13,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(13,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=5,
-        participant='BANCAMÍA',
+    ParticipantRecord(
+        row_number=5,
+        participant_name='BANCAMÍA',
         cenit_code='1059',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(16,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(16,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(),
+                        footnote_markers=('****',),
+                        scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)', '(****)'),
     ),
-    Code(
-        position=6,
-        participant='BANCO AGRARIO DE COLOMBIA',
+    ParticipantRecord(
+        row_number=6,
+        participant_name='BANCO AGRARIO DE COLOMBIA',
         cenit_code='1040',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(),
+                        footnote_markers=('****',),
+                        scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)', '(****)'),
     ),
-    Code(
-        position=7,
-        participant='BANCO AV VILLAS',
+    ParticipantRecord(
+        row_number=7,
+        participant_name='BANCO AV VILLAS',
         cenit_code='1052',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='DEPÓSITOS DIGITALES',
-        electronic_or_low_value_deposit_lengths=(9,),
+        electronic_or_low_value_deposit_name='DEPÓSITOS DIGITALES',
+        footnotes=('(*)',),
     ),
-    Code(
-        position=8,
-        participant='BANCO BANCOOMEVA',
+    ParticipantRecord(
+        row_number=8,
+        participant_name='BANCO BANCOOMEVA',
         cenit_code='1061',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(),
+                        footnote_markers=('****',),
+                        scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)', '(****)'),
     ),
-    Code(
-        position=9,
-        participant='BANCO BBVA',
+    ParticipantRecord(
+        row_number=9,
+        participant_name='BANCO BBVA',
         cenit_code='1013',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(5, 7, 13, 9, 10, 12, 14, 16),
-            checking_account_lengths=(5, 7, 9, 10, 12, 14, 16),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(5, 7, 13),
+                        footnote_markers=('**',),
+                        scope=AccountNumberLengthScope.SPECIAL_COLLECTION_AGREEMENT,
+                    ),
+                    AccountNumberLengthVariant(
+                        lengths=(9, 10, 12, 14, 16),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(5, 7),
+                        footnote_markers=('**',),
+                        scope=AccountNumberLengthScope.SPECIAL_COLLECTION_AGREEMENT,
+                    ),
+                    AccountNumberLengthVariant(
+                        lengths=(9, 10, 12, 14, 16),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='DINERO MOVIL',
-        electronic_or_low_value_deposit_lengths=(10,),
+        electronic_or_low_value_deposit_name='DINERO MOVIL',
+        footnotes=('(*)', '(**)'),
     ),
-    Code(
-        position=10,
-        participant='BANCO CAJA SOCIAL',
+    ParticipantRecord(
+        row_number=10,
+        participant_name='BANCO CAJA SOCIAL',
         cenit_code='1032',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(11, 13),
-            checking_account_lengths=(11,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11, 13),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(),
+                        footnote_markers=('****',),
+                        scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)', '(****)'),
     ),
-    Code(
-        position=11,
-        participant='BANCO CITIBANK',
+    ParticipantRecord(
+        row_number=11,
+        participant_name='BANCO CITIBANK',
         cenit_code='1009',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(10,),
-            checking_account_lengths=(10,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=12,
-        participant='BANCO COOPCENTRAL',
+    ParticipantRecord(
+        row_number=12,
+        participant_name='BANCO COOPCENTRAL',
         cenit_code='1066',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9, 13),
-            checking_account_lengths=(9, 13),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9, 13),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9, 13),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9, 13),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='LETMI',
-        electronic_or_low_value_deposit_lengths=(9, 13),
+        electronic_or_low_value_deposit_name='LETMI',
+        footnotes=('(*)',),
     ),
-    Code(
-        position=13,
-        participant='BANCO DAVIVIENDA',
+    ParticipantRecord(
+        row_number=13,
+        participant_name='BANCO DAVIVIENDA',
         cenit_code='1051',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(16,),
-            checking_account_lengths=(16,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(16,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(16,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='DAVIPLATA',
-        electronic_or_low_value_deposit_lengths=(10,),
+        electronic_or_low_value_deposit_name='DAVIPLATA',
+        footnotes=('(*)',),
     ),
-    Code(
-        position=14,
-        participant='BANCO DE BOGOTÁ',
+    ParticipantRecord(
+        row_number=14,
+        participant_name='BANCO DE BOGOTÁ',
         cenit_code='1001',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=15,
-        participant='BANCO DE OCCIDENTE',
+    ParticipantRecord(
+        row_number=15,
+        participant_name='BANCO DE OCCIDENTE',
         cenit_code='1023',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=16,
-        participant='BANCO FALABELLA',
+    ParticipantRecord(
+        row_number=16,
+        participant_name='BANCO FALABELLA',
         cenit_code='1062',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=17,
-        participant='BANCO FINANDINA',
+    ParticipantRecord(
+        row_number=17,
+        participant_name='BANCO FINANDINA',
         cenit_code='1063',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(10,),
-            checking_account_lengths=(10,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=18,
-        participant='BANCO GNB SUDAMERIS',
+    ParticipantRecord(
+        row_number=18,
+        participant_name='BANCO GNB SUDAMERIS',
         cenit_code='1012',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(18,),
-            checking_account_lengths=(18,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(18,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(18,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=19,
-        participant='BANCO ITAÚ',
+    ParticipantRecord(
+        row_number=19,
+        participant_name='BANCO ITAÚ',
         cenit_code='1006',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=20,
-        participant='BANCO JP MORGAN',
+    ParticipantRecord(
+        row_number=20,
+        participant_name='BANCO JP MORGAN',
         cenit_code='1071',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(10,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=21,
-        participant='BANCO MUNDO MUJER',
+    ParticipantRecord(
+        row_number=21,
+        participant_name='BANCO MUNDO MUJER',
         cenit_code='1047',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(14,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(14,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=22,
-        participant='BANCO PICHINCHA',
+    ParticipantRecord(
+        row_number=22,
+        participant_name='BANCO PICHINCHA',
         cenit_code='1060',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=23,
-        participant='BANCO POPULAR',
+    ParticipantRecord(
+        row_number=23,
+        participant_name='BANCO POPULAR',
         cenit_code='1002',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=24,
-        participant='BANCO REPÚBLICA',
+    ParticipantRecord(
+        row_number=24,
+        participant_name='BANCO REPÚBLICA',
         cenit_code='1000',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=25,
-        participant='BANCO SANTANDER DE NEGOCIOS',
+    ParticipantRecord(
+        row_number=25,
+        participant_name='BANCO SANTANDER DE NEGOCIOS',
         cenit_code='1065',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(9,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=26,
-        participant='BANCO SERFINANZA',
+    ParticipantRecord(
+        row_number=26,
+        participant_name='BANCO SERFINANZA',
         cenit_code='1069',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='CLICuenta',
-        electronic_or_low_value_deposit_lengths=(12,),
+        electronic_or_low_value_deposit_name='CLICuenta',
+        footnotes=('(*)',),
     ),
-    Code(
-        position=27,
-        participant='BANCOLOMBIA',
+    ParticipantRecord(
+        row_number=27,
+        participant_name='BANCOLOMBIA',
         cenit_code='1007',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(11,),
-            checking_account_lengths=(11,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='Bancolombia',
-        electronic_or_low_value_deposit_lengths=(11,),
+        electronic_or_low_value_deposit_name='Bancolombia',
+        footnotes=('(*)',),
     ),
-    Code(
-        position=28,
-        participant='BNP PARIBAS',
+    ParticipantRecord(
+        row_number=28,
+        participant_name='BNP PARIBAS',
         cenit_code='1042',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financial_corporation',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(16,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(16,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=29,
-        participant='COLTEFINANCIERA',
+    ParticipantRecord(
+        row_number=29,
+        participant_name='COLTEFINANCIERA',
         cenit_code='1370',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financing_company',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(10,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=30,
-        participant='COMPENSAR',
+    ParticipantRecord(
+        row_number=30,
+        participant_name='COMPENSAR',
         cenit_code='1083',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('information_operator',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=31,
-        participant='CONFIAR COOPERATIVA FINANCIERA',
+    ParticipantRecord(
+        row_number=31,
+        participant_name='CONFIAR COOPERATIVA FINANCIERA',
         cenit_code='1292',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financial_cooperative',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=32,
-        participant='COOPERATIVA FINANCIERA DE ANTIOQUIA',
+    ParticipantRecord(
+        row_number=32,
+        participant_name='COOPERATIVA FINANCIERA DE ANTIOQUIA',
         cenit_code='1283',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financial_cooperative',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(11,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=('***',),
+                        scope=AccountNumberLengthScope.INCLUDES_LEADING_ZEROS,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='CFA EXPRESS',
-        electronic_or_low_value_deposit_lengths=(10,),
+        electronic_or_low_value_deposit_name='CFA EXPRESS',
+        footnotes=('(*)', '(***)'),
     ),
-    Code(
-        position=33,
-        participant='COTRAFA',
+    ParticipantRecord(
+        row_number=33,
+        participant_name='COTRAFA',
         cenit_code='1289',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financial_cooperative',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(13,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(13,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=34,
-        participant='CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO',
+    ParticipantRecord(
+        row_number=34,
+        participant_name='CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO',
         cenit_code='1816',
         operation_start_date=date(2025, 9, 1),
-        operation_start_label='1/09/2025',
+        operation_start_note=None,
         entity_types=('financing_company',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(11,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='MOSI',
-        electronic_or_low_value_deposit_lengths=(10,),
+        electronic_or_low_value_deposit_name='MOSI',
+        footnotes=(),
     ),
-    Code(
-        position=35,
-        participant='DAVIBANK',
+    ParticipantRecord(
+        row_number=35,
+        participant_name='DAVIBANK',
         cenit_code='1019',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank', 'information_operator'),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(10,),
-            checking_account_lengths=(10,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=36,
-        participant='DECEVAL',
+    ParticipantRecord(
+        row_number=36,
+        participant_name='DECEVAL',
         cenit_code='1550',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('government_entity',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=37,
-        participant='DGCPTN',
+    ParticipantRecord(
+        row_number=37,
+        participant_name='DGCPTN',
         cenit_code='1683',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('government_entity',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=38,
-        participant='DGCPTN – REGALÍAS',
+    ParticipantRecord(
+        row_number=38,
+        participant_name='DGCPTN – REGALÍAS',
         cenit_code='1685',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('government_entity',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=39,
-        participant='ENLACE OPERATIVO',
+    ParticipantRecord(
+        row_number=39,
+        participant_name='ENLACE OPERATIVO',
         cenit_code='1089',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('information_operator',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=40,
-        participant='FINANCIERA JURISCOOP CF',
+    ParticipantRecord(
+        row_number=40,
+        participant_name='FINANCIERA JURISCOOP CF',
         cenit_code='1121',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financing_company',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(11,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(11,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=41,
-        participant='FOGAFIN',
+    ParticipantRecord(
+        row_number=41,
+        participant_name='FOGAFIN',
         cenit_code='1684',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('government_entity',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=42,
-        participant='IRIS CF',
+    ParticipantRecord(
+        row_number=42,
+        participant_name='IRIS CF',
         cenit_code='1108',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financing_company',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=43,
-        participant='JFK COOPERATIVA FINANCIERA',
+    ParticipantRecord(
+        row_number=43,
+        participant_name='JFK COOPERATIVA FINANCIERA',
         cenit_code='1286',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('financial_cooperative',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(14,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(14,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=44,
-        participant='LULO BANK S.A.',
+    ParticipantRecord(
+        row_number=44,
+        participant_name='LULO BANK S.A.',
         cenit_code='1070',
         operation_start_date=date(2025, 5, 22),
-        operation_start_label='22/05/2025',
+        operation_start_note=None,
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=('***',),
+                        scope=AccountNumberLengthScope.INCLUDES_LEADING_ZEROS,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(***)',),
     ),
-    Code(
-        position=45,
-        participant='MI BANCO',
+    ParticipantRecord(
+        row_number=45,
+        participant_name='MI BANCO',
         cenit_code='1067',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('bank',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(12,),
-            checking_account_lengths=(12,),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(12,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=46,
-        participant='MOVii S.A.',
+    ParticipantRecord(
+        row_number=46,
+        participant_name='MOVii S.A.',
         cenit_code='1801',
         operation_start_date=date(2026, 5, 4),
-        operation_start_label='4/05/2026',
+        operation_start_note=None,
         entity_types=('financing_company',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='MOVii',
-        electronic_or_low_value_deposit_lengths=(10,),
+        electronic_or_low_value_deposit_name='MOVii',
+        footnotes=(),
     ),
-    Code(
-        position=47,
-        participant='NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO',
+    ParticipantRecord(
+        row_number=47,
+        participant_name='NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO',
         cenit_code='1507',
         operation_start_date=date(2026, 9, 1),
-        operation_start_label='1/09/2026',
+        operation_start_note=None,
         entity_types=('financing_company',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(10, 11),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10, 11),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(10, 11),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='NEQUI',
-        electronic_or_low_value_deposit_lengths=(10, 11),
+        electronic_or_low_value_deposit_name='NEQUI',
+        footnotes=(),
     ),
-    Code(
-        position=48,
-        participant='RAPPIPAY',
+    ParticipantRecord(
+        row_number=48,
+        participant_name='RAPPIPAY',
         cenit_code='1811',
         operation_start_date=date(2026, 2, 7),
-        operation_start_label='7/02/2026',
+        operation_start_note=None,
         entity_types=('financing_company',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(9,),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(9,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='RAPPIPAY',
-        electronic_or_low_value_deposit_lengths=(9,),
+        electronic_or_low_value_deposit_name='RAPPIPAY',
+        footnotes=(),
     ),
-    Code(
-        position=49,
-        participant='SIMPLE S.A.',
+    ParticipantRecord(
+        row_number=49,
+        participant_name='SIMPLE S.A.',
         cenit_code='1088',
         operation_start_date=None,
-        operation_start_label='(*)',
+        operation_start_note='(*)',
         entity_types=('information_operator',),
         supports_debit_transactions=True,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
         ),
-        electronic_or_low_value_deposit=None,
-        electronic_or_low_value_deposit_lengths=(),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=('(*)',),
     ),
-    Code(
-        position=50,
-        participant='TUYA S.A.',
+    ParticipantRecord(
+        row_number=50,
+        participant_name='TUYA S.A.',
         cenit_code='1026',
         operation_start_date=date(2026, 8, 12),
-        operation_start_label='12/08/2026',
+        operation_start_note=None,
         entity_types=('financing_company',),
         supports_debit_transactions=False,
-        account_types=AccountTypes(
-            savings_account_lengths=(),
-            checking_account_lengths=(),
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(16,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
         ),
-        electronic_or_low_value_deposit='CUENTA DIGITAL TUYA PAY',
-        electronic_or_low_value_deposit_lengths=(16,),
+        electronic_or_low_value_deposit_name='CUENTA DIGITAL TUYA PAY',
+        footnotes=(),
     ),
 )
 
-CODES_BY_CENIT_CODE: Mapping[str, Code] = MappingProxyType(
-    {code.cenit_code: code for code in CODES}
+CODES_BY_CENIT_CODE: Mapping[str, ParticipantRecord] = MappingProxyType(
+    {record.cenit_code: record for record in RECORDS}
 )
-CODES_BY_NAME: Mapping[str, Code] = MappingProxyType(
-    {normalize_name(code.participant): code for code in CODES}
+CODES_BY_NAME: Mapping[str, ParticipantRecord] = MappingProxyType(
+    {normalize_name(record.participant_name): record for record in RECORDS}
 )
 TOTALS = Totals(
     participants=50,
-    entity_types=MappingProxyType(
-        {
-        'bank': 27,
-        'financial_cooperative': 4,
-        'financial_corporation': 1,
-        'financing_company': 8,
-        'government_entity': 4,
-        'information_operator': 23,
-        'seped': 1,
-        }
+    entity_types=EntityTypeTotals(
+        bank=27,
+        financial_cooperative=4,
+        financial_corporation=1,
+        financing_company=8,
+        government_entity=4,
+        information_operator=23,
+        seped=1,
     ),
 )
