@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run python -m compileall -q src scripts tests
+      - run: uv run python -m unittest discover -s tests
+      - run: uv run cenit tests/fixtures/cenit_codes.pdf --output /tmp/ci/cenit
+      - run: |
+          uv run python scripts/compare.py \
+            --changed-file /tmp/ci/changed \
+            data/current/cenit.json /tmp/ci/cenit.json > /tmp/ci/diff.md
+          test "$(cat /tmp/ci/changed)" = "false"
