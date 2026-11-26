@@ -1,0 +1,1223 @@
+{
+  "schema_version": 2,
+  "source": {
+    "file": null,
+    "sha256": "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
+    "page": 1,
+    "url": null
+  },
+  "participants": [
+    {
+      "posición": 1,
+      "participante": "APORTES EN LÍNEA S.A.",
+      "código_cenit": "1084",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 2,
+      "participante": "ASOPAGOS",
+      "código_cenit": "1086",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 3,
+      "participante": "AVAL SOLUCIONES DIGITALES - DALE",
+      "código_cenit": "1899",
+      "inicio_de_operación": "3/07/2025",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": true
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "12",
+          "nombre": "DALE"
+        }
+      }
+    },
+    {
+      "posición": 4,
+      "participante": "BAN100 S.A.",
+      "código_cenit": "1058",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "13",
+        "cuenta_corriente": "13",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 5,
+      "participante": "BANCAMÍA",
+      "código_cenit": "1059",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "16",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "(****)",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 6,
+      "participante": "BANCO AGRARIO DE COLOMBIA",
+      "código_cenit": "1040",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "(****)",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 7,
+      "participante": "BANCO AV VILLAS",
+      "código_cenit": "1052",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "9",
+          "nombre": "DEPÓSITOS DIGITALES"
+        }
+      }
+    },
+    {
+      "posición": 8,
+      "participante": "BANCO BANCOOMEVA",
+      "código_cenit": "1061",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "(****)",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 9,
+      "participante": "BANCO BBVA",
+      "código_cenit": "1013",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "(5, 7,13)**, 9, 10, 12, 14, 16",
+        "cuenta_corriente": "(5, 7)**, 9, 10, 12, 14, 16",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10",
+          "nombre": "DINERO MOVIL"
+        }
+      }
+    },
+    {
+      "posición": 10,
+      "participante": "BANCO CAJA SOCIAL",
+      "código_cenit": "1032",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "11 y 13",
+        "cuenta_corriente": "11",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "(****)",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 11,
+      "participante": "BANCO CITIBANK",
+      "código_cenit": "1009",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "10",
+        "cuenta_corriente": "10",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 12,
+      "participante": "BANCO COOPCENTRAL",
+      "código_cenit": "1066",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9 y 13",
+        "cuenta_corriente": "9 y 13",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "9 y 13",
+          "nombre": "LETMI"
+        }
+      }
+    },
+    {
+      "posición": 13,
+      "participante": "BANCO DAVIVIENDA",
+      "código_cenit": "1051",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "16",
+        "cuenta_corriente": "16",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10",
+          "nombre": "DAVIPLATA"
+        }
+      }
+    },
+    {
+      "posición": 14,
+      "participante": "BANCO DE BOGOTÁ",
+      "código_cenit": "1001",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 15,
+      "participante": "BANCO DE OCCIDENTE",
+      "código_cenit": "1023",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 16,
+      "participante": "BANCO FALABELLA",
+      "código_cenit": "1062",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 17,
+      "participante": "BANCO FINANDINA",
+      "código_cenit": "1063",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "10",
+        "cuenta_corriente": "10",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 18,
+      "participante": "BANCO GNB SUDAMERIS",
+      "código_cenit": "1012",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "18",
+        "cuenta_corriente": "18",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 19,
+      "participante": "BANCO ITAÚ",
+      "código_cenit": "1006",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 20,
+      "participante": "BANCO JP MORGAN",
+      "código_cenit": "1071",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "10",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 21,
+      "participante": "BANCO MUNDO MUJER",
+      "código_cenit": "1047",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "14",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 22,
+      "participante": "BANCO PICHINCHA",
+      "código_cenit": "1060",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 23,
+      "participante": "BANCO POPULAR",
+      "código_cenit": "1002",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 24,
+      "participante": "BANCO REPÚBLICA",
+      "código_cenit": "1000",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 25,
+      "participante": "BANCO SANTANDER DE NEGOCIOS",
+      "código_cenit": "1065",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "9",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 26,
+      "participante": "BANCO SERFINANZA",
+      "código_cenit": "1069",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "12",
+          "nombre": "CLICuenta"
+        }
+      }
+    },
+    {
+      "posición": 27,
+      "participante": "BANCOLOMBIA",
+      "código_cenit": "1007",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "11",
+        "cuenta_corriente": "11",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "11",
+          "nombre": "Bancolombia"
+        }
+      }
+    },
+    {
+      "posición": 28,
+      "participante": "BNP PARIBAS",
+      "código_cenit": "1042",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": true,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "16",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 29,
+      "participante": "COLTEFINANCIERA",
+      "código_cenit": "1370",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "10",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 30,
+      "participante": "COMPENSAR",
+      "código_cenit": "1083",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 31,
+      "participante": "CONFIAR COOPERATIVA FINANCIERA",
+      "código_cenit": "1292",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": true,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 32,
+      "participante": "COOPERATIVA FINANCIERA DE ANTIOQUIA",
+      "código_cenit": "1283",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": true,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "11***",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10",
+          "nombre": "CFA EXPRESS"
+        }
+      }
+    },
+    {
+      "posición": 33,
+      "participante": "COTRAFA",
+      "código_cenit": "1289",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": true,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "13",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 34,
+      "participante": "CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO",
+      "código_cenit": "1816",
+      "inicio_de_operación": "1/09/2025",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "11",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10",
+          "nombre": "MOSI"
+        }
+      }
+    },
+    {
+      "posición": 35,
+      "participante": "DAVIBANK",
+      "código_cenit": "1019",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "10",
+        "cuenta_corriente": "10",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 36,
+      "participante": "DECEVAL",
+      "código_cenit": "1550",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": true,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 37,
+      "participante": "DGCPTN",
+      "código_cenit": "1683",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": true,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 38,
+      "participante": "DGCPTN – REGALÍAS",
+      "código_cenit": "1685",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": true,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 39,
+      "participante": "ENLACE OPERATIVO",
+      "código_cenit": "1089",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 40,
+      "participante": "FINANCIERA JURISCOOP CF",
+      "código_cenit": "1121",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "11",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 41,
+      "participante": "FOGAFIN",
+      "código_cenit": "1684",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": true,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 42,
+      "participante": "IRIS CF",
+      "código_cenit": "1108",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 43,
+      "participante": "JFK COOPERATIVA FINANCIERA",
+      "código_cenit": "1286",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": true,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "14",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 44,
+      "participante": "LULO BANK S.A.",
+      "código_cenit": "1070",
+      "inicio_de_operación": "22/05/2025",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12***",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 45,
+      "participante": "MI BANCO",
+      "código_cenit": "1067",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": true,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "12",
+        "cuenta_corriente": "12",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 46,
+      "participante": "MOVii S.A.",
+      "código_cenit": "1801",
+      "inicio_de_operación": "4/05/2026",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10",
+          "nombre": "MOVii"
+        }
+      }
+    },
+    {
+      "posición": 47,
+      "participante": "NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO",
+      "código_cenit": "1507",
+      "inicio_de_operación": "1/09/2026",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "10 y 11",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "10 y 11",
+          "nombre": "NEQUI"
+        }
+      }
+    },
+    {
+      "posición": 48,
+      "participante": "RAPPIPAY",
+      "código_cenit": "1811",
+      "inicio_de_operación": "7/02/2026",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "9",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "9",
+          "nombre": "RAPPIPAY"
+        }
+      }
+    },
+    {
+      "posición": 49,
+      "participante": "SIMPLE S.A.",
+      "código_cenit": "1088",
+      "inicio_de_operación": "(*)",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": false,
+        "entidad_del_estado": false,
+        "operador_de_información": true,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "SI",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 50,
+      "participante": "TUYA S.A.",
+      "código_cenit": "1026",
+      "inicio_de_operación": "12/08/2026",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "seped": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "N/A",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "16",
+          "nombre": "CUENTA DIGITAL TUYA PAY"
+        }
+      }
+    }
+  ],
+  "totals": {
+    "participantes": "50",
+    "tipo_de_entidad": {
+      "bancos": "27",
+      "cooperativa_financiera": "4",
+      "corporación_financiera": "1",
+      "compañía_de_financiamiento": "8",
+      "entidad_del_estado": "4",
+      "operador_de_información": "23",
+      "seped": "1"
+    }
+  }
+}

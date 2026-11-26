@@ -1,0 +1,603 @@
+{
+  "schema_version": 2,
+  "source": {
+    "file": null,
+    "sha256": "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
+    "page": 1,
+    "url": null
+  },
+  "status": "ok",
+  "grid": {
+    "x_boundaries": [
+      35.53,
+      207.07,
+      241.38,
+      285.39,
+      309.67,
+      330.71,
+      351.74,
+      376.34,
+      397.38,
+      425.22,
+      437.19,
+      465.03,
+      516.49,
+      567.94,
+      601.28,
+      665.06
+    ],
+    "y_boundaries": [
+      190.6,
+      203.9,
+      217.2,
+      230.45,
+      243.7,
+      256.95,
+      270.2,
+      291.3,
+      304.6,
+      325.6,
+      338.9,
+      352.15,
+      365.4,
+      378.7,
+      392.0,
+      405.2,
+      418.5,
+      431.75,
+      445.0,
+      458.3,
+      471.6,
+      484.85,
+      498.1,
+      511.4,
+      524.7,
+      537.95,
+      551.2,
+      564.5,
+      577.8,
+      591.05,
+      604.3,
+      617.6,
+      630.8,
+      644.1,
+      657.4,
+      670.65,
+      683.9,
+      697.2,
+      710.5,
+      723.75,
+      737.0,
+      750.3,
+      763.6,
+      776.85,
+      790.1,
+      803.4,
+      816.7,
+      829.9,
+      843.2,
+      856.45,
+      877.5,
+      888.65
+    ],
+    "data_y_range": [
+      190.3,
+      888.85
+    ]
+  },
+  "summary": {
+    "expected_physical_columns": 15,
+    "found_physical_columns": 15,
+    "physical_columns_kept": 15,
+    "physical_columns_ignored": 0,
+    "expected_labels": 16,
+    "labels_found": 16,
+    "labels_ignored": 0,
+    "entity_subcolumns": 7,
+    "account_subcolumns": 4,
+    "expected_data_rows": 51,
+    "found_data_rows": 51,
+    "participant_rows_used": 50,
+    "totals_rows_used": 1,
+    "unextracted_cells": 0
+  },
+  "headers": [
+    {
+      "key": "participante",
+      "label": "Participante",
+      "role": "label",
+      "physical_columns": [
+        1,
+        1
+      ],
+      "rotated": false,
+      "expected": "Participante",
+      "found": "Participante",
+      "matched": true
+    },
+    {
+      "key": "código_cenit",
+      "label": "Código de Compensación CENIT",
+      "role": "label",
+      "physical_columns": [
+        2,
+        2
+      ],
+      "rotated": true,
+      "expected": "Código de Compensación CENIT",
+      "found": "Códigode Compensación CENIT",
+      "matched": true
+    },
+    {
+      "key": "inicio_de_operación",
+      "label": "Inicio de Operación",
+      "role": "label",
+      "physical_columns": [
+        3,
+        3
+      ],
+      "rotated": true,
+      "expected": "Inicio de Operación",
+      "found": "Iniciode Operación",
+      "matched": true
+    },
+    {
+      "key": "bancos",
+      "label": "Bancos",
+      "role": "label",
+      "physical_columns": [
+        4,
+        4
+      ],
+      "rotated": true,
+      "expected": "Bancos",
+      "found": "Bancos",
+      "matched": true
+    },
+    {
+      "key": "cooperativa_financiera",
+      "label": "Cooperativa Financiera",
+      "role": "label",
+      "physical_columns": [
+        5,
+        5
+      ],
+      "rotated": true,
+      "expected": "Cooperativa Financiera",
+      "found": "Cooperativa Financiera",
+      "matched": true
+    },
+    {
+      "key": "corporación_financiera",
+      "label": "Corporación Financiera",
+      "role": "label",
+      "physical_columns": [
+        6,
+        6
+      ],
+      "rotated": true,
+      "expected": "Corporación Financiera",
+      "found": "Corporación Financiera",
+      "matched": true
+    },
+    {
+      "key": "compañía_de_financiamiento",
+      "label": "Compañía de Financiamiento",
+      "role": "label",
+      "physical_columns": [
+        7,
+        7
+      ],
+      "rotated": true,
+      "expected": "Compañía de Financiamiento",
+      "found": "Compañíade Financiamiento",
+      "matched": true
+    },
+    {
+      "key": "entidad_del_estado",
+      "label": "Entidad del Estado",
+      "role": "label",
+      "physical_columns": [
+        8,
+        8
+      ],
+      "rotated": true,
+      "expected": "Entidad del Estado",
+      "found": "Entidaddel Estado",
+      "matched": true
+    },
+    {
+      "key": "operador_de_información",
+      "label": "Operador de Información",
+      "role": "label",
+      "physical_columns": [
+        9,
+        9
+      ],
+      "rotated": true,
+      "expected": "Operador de Información",
+      "found": "Operadorde Información",
+      "matched": true
+    },
+    {
+      "key": "seped",
+      "label": "SEPED",
+      "role": "label",
+      "physical_columns": [
+        10,
+        10
+      ],
+      "rotated": true,
+      "expected": "SEPED",
+      "found": "SEPED",
+      "matched": true
+    },
+    {
+      "key": "aplica_transacciones_débito",
+      "label": "Aplica Transacciones Débito",
+      "role": "label",
+      "physical_columns": [
+        11,
+        11
+      ],
+      "rotated": true,
+      "expected": "Aplica Transacciones Débito",
+      "found": "Aplica Transacciones Débito",
+      "matched": true
+    },
+    {
+      "key": "cuenta_de_ahorros",
+      "label": "Cuenta de Ahorros",
+      "role": "label",
+      "physical_columns": [
+        12,
+        12
+      ],
+      "rotated": true,
+      "expected": "Cuenta de Ahorros",
+      "found": "Cuentade Ahorros",
+      "matched": true
+    },
+    {
+      "key": "cuenta_corriente",
+      "label": "Cuenta Corriente",
+      "role": "label",
+      "physical_columns": [
+        13,
+        13
+      ],
+      "rotated": true,
+      "expected": "Cuenta Corriente",
+      "found": "Cuenta Corriente",
+      "matched": true
+    },
+    {
+      "key": "tipo_de_entidad",
+      "label": "Tipo de Entidad",
+      "role": "parent",
+      "physical_columns": [
+        4,
+        10
+      ],
+      "rotated": false,
+      "expected": "Tipo de Entidad",
+      "found": "TipodeEntidad",
+      "matched": true
+    },
+    {
+      "key": "tipo_de_cuenta_y_longitud",
+      "label": "Tipo de Cuenta y Longitud",
+      "role": "parent",
+      "physical_columns": [
+        12,
+        15
+      ],
+      "rotated": false,
+      "expected": "Tipo de Cuenta y Longitud",
+      "found": "TipodeCuentayLongitud",
+      "matched": true
+    },
+    {
+      "key": "depósito_electrónico_o_de_bajo_monto",
+      "label": "Depósito Electrónico o de Bajo Monto",
+      "role": "parent",
+      "physical_columns": [
+        14,
+        15
+      ],
+      "rotated": true,
+      "expected": "Depósito Electrónico o de Bajo Monto",
+      "found": "Depósito Electrónicoo deBajoMonto",
+      "matched": true
+    }
+  ],
+  "columns": [
+    {
+      "key": "participante",
+      "label": "Participante",
+      "role": "column",
+      "parent": null,
+      "physical_index": 0,
+      "x_range": [
+        35.53,
+        207.07
+      ],
+      "expected_label": "Participante",
+      "label_found": "Participante",
+      "label_matched": true,
+      "parent_label_matched": null,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "código_cenit",
+      "label": "Código de Compensación CENIT",
+      "role": "column",
+      "parent": null,
+      "physical_index": 1,
+      "x_range": [
+        207.07,
+        241.38
+      ],
+      "expected_label": "Código de Compensación CENIT",
+      "label_found": "Códigode Compensación CENIT",
+      "label_matched": true,
+      "parent_label_matched": null,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "inicio_de_operación",
+      "label": "Inicio de Operación",
+      "role": "column",
+      "parent": null,
+      "physical_index": 2,
+      "x_range": [
+        241.38,
+        285.39
+      ],
+      "expected_label": "Inicio de Operación",
+      "label_found": "Iniciode Operación",
+      "label_matched": true,
+      "parent_label_matched": null,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "bancos",
+      "label": "Bancos",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 3,
+      "x_range": [
+        285.39,
+        309.67
+      ],
+      "expected_label": "Bancos",
+      "label_found": "Bancos",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 27,
+      "rows_empty": 23
+    },
+    {
+      "key": "cooperativa_financiera",
+      "label": "Cooperativa Financiera",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 4,
+      "x_range": [
+        309.67,
+        330.71
+      ],
+      "expected_label": "Cooperativa Financiera",
+      "label_found": "Cooperativa Financiera",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 4,
+      "rows_empty": 46
+    },
+    {
+      "key": "corporación_financiera",
+      "label": "Corporación Financiera",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 5,
+      "x_range": [
+        330.71,
+        351.74
+      ],
+      "expected_label": "Corporación Financiera",
+      "label_found": "Corporación Financiera",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 1,
+      "rows_empty": 49
+    },
+    {
+      "key": "compañía_de_financiamiento",
+      "label": "Compañía de Financiamiento",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 6,
+      "x_range": [
+        351.74,
+        376.34
+      ],
+      "expected_label": "Compañía de Financiamiento",
+      "label_found": "Compañíade Financiamiento",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 8,
+      "rows_empty": 42
+    },
+    {
+      "key": "entidad_del_estado",
+      "label": "Entidad del Estado",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 7,
+      "x_range": [
+        376.34,
+        397.38
+      ],
+      "expected_label": "Entidad del Estado",
+      "label_found": "Entidaddel Estado",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 4,
+      "rows_empty": 46
+    },
+    {
+      "key": "operador_de_información",
+      "label": "Operador de Información",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 8,
+      "x_range": [
+        397.38,
+        425.22
+      ],
+      "expected_label": "Operador de Información",
+      "label_found": "Operadorde Información",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 23,
+      "rows_empty": 27
+    },
+    {
+      "key": "seped",
+      "label": "SEPED",
+      "role": "subcolumn",
+      "parent": "tipo_de_entidad",
+      "physical_index": 9,
+      "x_range": [
+        425.22,
+        437.19
+      ],
+      "expected_label": "SEPED",
+      "label_found": "SEPED",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 1,
+      "rows_empty": 49
+    },
+    {
+      "key": "aplica_transacciones_débito",
+      "label": "Aplica Transacciones Débito",
+      "role": "column",
+      "parent": null,
+      "physical_index": 10,
+      "x_range": [
+        437.19,
+        465.03
+      ],
+      "expected_label": "Aplica Transacciones Débito",
+      "label_found": "Aplica Transacciones Débito",
+      "label_matched": true,
+      "parent_label_matched": null,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "cuenta_de_ahorros",
+      "label": "Cuenta de Ahorros",
+      "role": "subcolumn",
+      "parent": "tipo_de_cuenta_y_longitud",
+      "physical_index": 11,
+      "x_range": [
+        465.03,
+        516.49
+      ],
+      "expected_label": "Cuenta de Ahorros",
+      "label_found": "Cuentade Ahorros",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "cuenta_corriente",
+      "label": "Cuenta Corriente",
+      "role": "subcolumn",
+      "parent": "tipo_de_cuenta_y_longitud",
+      "physical_index": 12,
+      "x_range": [
+        516.49,
+        567.94
+      ],
+      "expected_label": "Cuenta Corriente",
+      "label_found": "Cuenta Corriente",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "depósito_electrónico_o_de_bajo_monto_longitud",
+      "label": "Depósito Electrónico o de Bajo Monto",
+      "role": "subcolumn",
+      "parent": "depósito_electrónico_o_de_bajo_monto",
+      "physical_index": 13,
+      "x_range": [
+        567.94,
+        601.28
+      ],
+      "expected_label": "Depósito Electrónico o de Bajo Monto",
+      "label_found": "Depósito Electrónicoo deBajoMonto",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 50,
+      "rows_empty": 0
+    },
+    {
+      "key": "depósito_electrónico_o_de_bajo_monto_nombre",
+      "label": "Depósito Electrónico o de Bajo Monto",
+      "role": "subcolumn",
+      "parent": "depósito_electrónico_o_de_bajo_monto",
+      "physical_index": 14,
+      "x_range": [
+        601.28,
+        665.06
+      ],
+      "expected_label": "Depósito Electrónico o de Bajo Monto",
+      "label_found": "Depósito Electrónicoo deBajoMonto",
+      "label_matched": true,
+      "parent_label_matched": true,
+      "kept": true,
+      "ignored": false,
+      "rows_with_value": 13,
+      "rows_empty": 37
+    }
+  ],
+  "unextracted": [],
+  "issues": []
+}

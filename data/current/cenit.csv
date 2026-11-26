@@ -1,0 +1,52 @@
+﻿participante,código_cenit,inicio_de_operación,bancos,cooperativa_financiera,corporación_financiera,compañía_de_financiamiento,entidad_del_estado,operador_de_información,seped,aplica_transacciones_débito,cuenta_de_ahorros,cuenta_corriente,depósito_electrónico_o_de_bajo_monto_longitud,depósito_electrónico_o_de_bajo_monto_nombre
+APORTES EN LÍNEA S.A.,1084,(*),,,,,,X,,SI,N/A,N/A,N/A,
+ASOPAGOS,1086,(*),,,,,,X,,SI,N/A,N/A,N/A,
+AVAL SOLUCIONES DIGITALES - DALE,1899,3/07/2025,,,,,,,X,SI,N/A,N/A,12,DALE
+BAN100 S.A.,1058,(*),X,,,,,X,,SI,13,13,N/A,
+BANCAMÍA,1059,(*),X,,,,,,,NO,16,N/A,(****),
+BANCO AGRARIO DE COLOMBIA,1040,(*),X,,,,,X,,SI,12,12,(****),
+BANCO AV VILLAS,1052,(*),X,,,,,X,,SI,9,9,9,DEPÓSITOS DIGITALES
+BANCO BANCOOMEVA,1061,(*),X,,,,,X,,SI,12,12,(****),
+BANCO BBVA,1013,(*),X,,,,,X,,SI,"(5, 7,13)**, 9, 10, 12, 14, 16","(5, 7)**, 9, 10, 12, 14, 16",10,DINERO MOVIL
+BANCO CAJA SOCIAL,1032,(*),X,,,,,X,,SI,11 y 13,11,(****),
+BANCO CITIBANK,1009,(*),X,,,,,X,,SI,10,10,N/A,
+BANCO COOPCENTRAL,1066,(*),X,,,,,X,,SI,9 y 13,9 y 13,9 y 13,LETMI
+BANCO DAVIVIENDA,1051,(*),X,,,,,X,,SI,16,16,10,DAVIPLATA
+BANCO DE BOGOTÁ,1001,(*),X,,,,,X,,SI,9,9,N/A,
+BANCO DE OCCIDENTE,1023,(*),X,,,,,X,,SI,9,9,N/A,
+BANCO FALABELLA,1062,(*),X,,,,,X,,SI,12,12,N/A,
+BANCO FINANDINA,1063,(*),X,,,,,,,SI,10,10,N/A,
+BANCO GNB SUDAMERIS,1012,(*),X,,,,,X,,SI,18,18,N/A,
+BANCO ITAÚ,1006,(*),X,,,,,X,,SI,9,9,N/A,
+BANCO JP MORGAN,1071,(*),X,,,,,,,SI,N/A,10,N/A,
+BANCO MUNDO MUJER,1047,(*),X,,,,,,,SI,14,N/A,N/A,
+BANCO PICHINCHA,1060,(*),X,,,,,X,,NO,9,9,N/A,
+BANCO POPULAR,1002,(*),X,,,,,X,,SI,12,12,N/A,
+BANCO REPÚBLICA,1000,(*),X,,,,,,,NO,N/A,N/A,N/A,
+BANCO SANTANDER DE NEGOCIOS,1065,(*),X,,,,,,,SI,9,9,N/A,
+BANCO SERFINANZA,1069,(*),X,,,,,,,SI,12,12,12,CLICuenta
+BANCOLOMBIA,1007,(*),X,,,,,X,,SI,11,11,11,Bancolombia
+BNP PARIBAS,1042,(*),,,X,,,,,SI,16,N/A,N/A,
+COLTEFINANCIERA,1370,(*),,,,X,,,,SI,10,N/A,N/A,
+COMPENSAR,1083,(*),,,,,,X,,SI,N/A,N/A,N/A,
+CONFIAR COOPERATIVA FINANCIERA,1292,(*),,X,,,,,,SI,9,N/A,N/A,
+COOPERATIVA FINANCIERA DE ANTIOQUIA,1283,(*),,X,,,,,,NO,11***,N/A,10,CFA EXPRESS
+COTRAFA,1289,(*),,X,,,,,,SI,13,N/A,N/A,
+CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO,1816,1/09/2025,,,,X,,,,NO,11,N/A,10,MOSI
+DAVIBANK,1019,(*),X,,,,,X,,SI,10,10,N/A,
+DECEVAL,1550,(*),,,,,X,,,NO,N/A,N/A,N/A,
+DGCPTN,1683,(*),,,,,X,,,NO,N/A,N/A,N/A,
+DGCPTN – REGALÍAS,1685,(*),,,,,X,,,NO,N/A,N/A,N/A,
+ENLACE OPERATIVO,1089,(*),,,,,,X,,SI,N/A,N/A,N/A,
+FINANCIERA JURISCOOP CF,1121,(*),,,,X,,,,SI,11,N/A,N/A,
+FOGAFIN,1684,(*),,,,,X,,,NO,N/A,N/A,N/A,
+IRIS CF,1108,(*),,,,X,,,,SI,12,N/A,N/A,
+JFK COOPERATIVA FINANCIERA,1286,(*),,X,,,,,,SI,14,N/A,N/A,
+LULO BANK S.A.,1070,22/05/2025,X,,,,,,,SI,12***,N/A,N/A,
+MI BANCO,1067,(*),X,,,,,,,SI,12,12,N/A,
+MOVii S.A.,1801,4/05/2026,,,,X,,,,NO,N/A,N/A,10,MOVii
+NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO,1507,1/09/2026,,,,X,,,,NO,10 y 11,N/A,10 y 11,NEQUI
+RAPPIPAY,1811,7/02/2026,,,,X,,,,SI,9,N/A,9,RAPPIPAY
+SIMPLE S.A.,1088,(*),,,,,,X,,SI,N/A,N/A,N/A,
+TUYA S.A.,1026,12/08/2026,,,,X,,,,NO,N/A,N/A,16,CUENTA DIGITAL TUYA PAY
+TOTAL PARTICIPANTES EN CENIT,50,,27,4,1,8,4,23,1,,,,,
