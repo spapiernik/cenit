@@ -19,10 +19,10 @@ from cenit._types import (
 
 SCHEMA_VERSION = 2
 VERSION = '0.1.0'
-SOURCE_DATE = date(2026, 10, 7)
-SOURCE_SHA256 = 'ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706'
+SOURCE_DATE = date(2026, 11, 27)
+SOURCE_SHA256 = 'b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6'
 SOURCE_URL = 'https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf'
-SOURCE_FETCHED_AT = '2026-11-26T16:12:07.193094+00:00'
+SOURCE_FETCHED_AT = '2026-11-27T21:54:15.030585+00:00'
 
 FOOTNOTES: Mapping[str, str] = MappingProxyType(
 {
@@ -1236,6 +1236,28 @@ RECORDS: tuple[Participant, ...] = (
     ),
     Participant(
         row_number=48,
+        name='NU COLOMBIA',
+        code='1809',
+        operation_start_date=date(2026, 12, 1),
+        operation_start_note=None,
+        entity_types=(EntityType.FINANCING_COMPANY,),
+        supports_debit_transactions=False,
+        account_capabilities=AccountCapabilities(
+            savings_account_number_lengths=(
+                    AccountNumberLengthVariant(
+                        lengths=(8,),
+                        footnote_markers=(),
+                        scope=AccountNumberLengthScope.STANDARD,
+                    ),
+                ),
+            checking_account_number_lengths=(),
+            electronic_or_low_value_deposit_number_lengths=(),
+        ),
+        electronic_or_low_value_deposit_name=None,
+        footnotes=(),
+    ),
+    Participant(
+        row_number=49,
         name='RAPPIPAY',
         code='1811',
         operation_start_date=date(2026, 2, 7),
@@ -1263,7 +1285,7 @@ RECORDS: tuple[Participant, ...] = (
         footnotes=(),
     ),
     Participant(
-        row_number=49,
+        row_number=50,
         name='SIMPLE S.A.',
         code='1088',
         operation_start_date=None,
@@ -1279,7 +1301,7 @@ RECORDS: tuple[Participant, ...] = (
         footnotes=('(*)',),
     ),
     Participant(
-        row_number=50,
+        row_number=51,
         name='TUYA S.A.',
         code='1026',
         operation_start_date=date(2026, 8, 12),
@@ -1309,12 +1331,12 @@ CODES_BY_NAME: Mapping[str, Participant] = MappingProxyType(
     {normalize_name(record.name): record for record in RECORDS}
 )
 TOTALS = Totals(
-    participants=50,
+    participants=51,
     entity_types=EntityTypeTotals(
         bank=27,
         financial_cooperative=4,
         financial_corporation=1,
-        financing_company=8,
+        financing_company=9,
         government_entity=4,
         information_operator=23,
         sedpe=1,
