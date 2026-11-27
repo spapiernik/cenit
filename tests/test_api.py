@@ -1,5 +1,6 @@
 import sys
 import unittest
+from dataclasses import replace
 from datetime import date, datetime
 from pathlib import Path
 
@@ -145,6 +146,19 @@ class ApiTest(unittest.TestCase):
 
     def test_participant_exposes_code(self) -> None:
         self.assertEqual(cenit.get_by_code("1059").code, "1059")
+
+    def test_participant_csv_returns_exact_source_line(self) -> None:
+        lines = (
+            (ROOT / "data" / "current" / "cenit.csv")
+            .read_text(encoding="utf-8-sig")
+            .splitlines()
+        )
+        expected = next(line for line in lines[1:] if ",1013," in line)
+        self.assertEqual(cenit.get_by_code("1013").csv(), expected)
+
+        missing = replace(cenit.get_by_code("1013"), code="9999")
+        with self.assertRaises(LookupError):
+            missing.csv()
 
     def test_footnotes_totals_and_metadata(self) -> None:
         self.assertEqual(cenit.footnotes()["(**)"], "Used for special collection agreements")

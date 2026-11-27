@@ -163,6 +163,15 @@ class Participant(_RichViewMixin):
         """Check whether one account number length is accepted."""
         return int(length) in self.account_number_lengths(account_type, scope)
 
+    def csv(self) -> str:
+        """Return the exact CSV line for this participant."""
+        from . import _data
+
+        try:
+            return _data.CSV_LINES[self.code]
+        except KeyError:
+            raise LookupError(f"no CSV line for CENIT code {self.code!r}") from None
+
 
 @dataclass(frozen=True, slots=True)
 class EntityTypeTotals(_RichViewMixin):
