@@ -25,7 +25,12 @@ class ExtractorTest(unittest.TestCase):
             result["report"]["summary"]["declared_participants"],
             len(result["records"]),
         )
-        self.assertEqual(result["source"]["document_date"], "2026-10-07")
+        recorded_source = json.loads(
+            (ROOT / "data" / "source.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            result["source"]["document_date"], recorded_source["document_date"]
+        )
         self.assertEqual(result["report"]["status"], "ok")
         current = {
             "participants": result["records"],

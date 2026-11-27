@@ -82,6 +82,7 @@ CSV_LINES: Mapping[str, str] = MappingProxyType(
     '1067': 'MI BANCO,1067,(*),X,,,,,,,SI,12,12,N/A,',
     '1801': 'MOVii S.A.,1801,4/05/2026,,,,X,,,,NO,N/A,N/A,10,MOVii',
     '1507': 'NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO,1507,1/09/2026,,,,X,,,,NO,10 y 11,N/A,10 y 11,NEQUI',
+    '1809': 'NU COLOMBIA,1809,1/12/2026,,,,X,,,,NO,8,N/A,N/A,',
     '1811': 'RAPPIPAY,1811,7/02/2026,,,,X,,,,SI,9,N/A,9,RAPPIPAY',
     '1088': 'SIMPLE S.A.,1088,(*),,,,,,X,,SI,N/A,N/A,N/A,',
     '1026': 'TUYA S.A.,1026,12/08/2026,,,,X,,,,NO,N/A,N/A,16,CUENTA DIGITAL TUYA PAY',
