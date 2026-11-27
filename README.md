@@ -12,6 +12,7 @@ import cenit
 participant = cenit.get_by_code("1013")
 print(participant.name, participant.code)
 print(participant.supports_account_number_length("savings", 10))
+print(participant.csv())
 print(cenit.EntityType.BANK in participant.entity_types)
 print(cenit.get_by_name("bamlom", default=None))
 print(len(cenit.all_records()))

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 import sys
@@ -13,6 +14,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "current" / "cenit.json"
+CSV_PATH = ROOT / "data" / "current" / "cenit.csv"
 SOURCE_PATH = ROOT / "data" / "source.json"
 PYPROJECT_PATH = ROOT / "pyproject.toml"
 MODULE_PATH = ROOT / "src" / "cenit" / "_data.py"
@@ -196,6 +198,21 @@ def render_participant(record: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def csv_lines_expression(dataset: dict[str, Any]) -> str:
+    lines = CSV_PATH.read_text(encoding="utf-8-sig").splitlines()
+    pairs = [
+        (row, line)
+        for row, line in zip(csv.DictReader(lines), lines[1:])
+        if not row["participante"].strip().lower().startswith("total participantes")
+    ]
+    if len(pairs) != len(dataset["participants"]):
+        raise ValueError("CSV participant row count does not match the dataset")
+    entries = [
+        f"    {row['código_cenit']!r}: {line!r}," for row, line in pairs
+    ]
+    return "\n".join(entries)
+
+
 def render_module(dataset: dict[str, Any], source: dict[str, Any], version: str) -> str:
     if dataset["schema_version"] != SCHEMA_VERSION:
         raise ValueError("dataset schema version does not match the generator")
@@ -223,6 +240,7 @@ def render_module(dataset: dict[str, Any], source: dict[str, Any], version: str)
     footnotes = "\n".join(
         f"    {marker!r}: {meaning!r}," for marker, meaning in FOOTNOTES.items()
     )
+    csv_lines = csv_lines_expression(dataset)
 
     return f'''"""Generated data for cenit. Regenerate with scripts/generate_data.py."""
 
@@ -253,6 +271,12 @@ SOURCE_FETCHED_AT = {source["fetched_at"]!r}
 FOOTNOTES: Mapping[str, str] = MappingProxyType(
 {{
 {footnotes}
+}}
+)
+
+CSV_LINES: Mapping[str, str] = MappingProxyType(
+{{
+{csv_lines}
 }}
 )
 
