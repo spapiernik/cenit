@@ -11,6 +11,31 @@ import extract
 
 
 class ExtractorTest(unittest.TestCase):
+    def test_change_log_parser_groups_wrapped_entries(self) -> None:
+        text = """\
+        CONTROL DE CAMBIOS
+        27 de noviembre de 2026 - Se incluye a NU COLOMBIA COMPAÑÍA DE
+        FINANCIAMIENTO S.A. como entidad autorizada en el Sistema CENIT.
+        - Se corrige la sigla SEPED por SEDPE.
+        7 de octubre de 2026 - Se incluye el nombre de BANCOLOMBIA.
+        Hoja 2 de 2
+        """
+        entries = extract.parse_change_log(text)
+
+        self.assertEqual(
+            entries[0],
+            {
+                "date": "2026-11-27",
+                "text": (
+                    "Se incluye a NU COLOMBIA COMPAÑÍA DE FINANCIAMIENTO S.A. "
+                    "como entidad autorizada en el Sistema CENIT."
+                ),
+            },
+        )
+        self.assertEqual(entries[1]["date"], "2026-11-27")
+        self.assertIn("SEPED por SEDPE", entries[1]["text"])
+        self.assertEqual(entries[2]["date"], "2026-10-07")
+
     def test_fixture_matches_committed_dataset(self) -> None:
         fixture = ROOT / "tests" / "fixtures" / "cenit_codes.pdf"
         golden = json.loads(
