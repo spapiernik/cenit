@@ -93,7 +93,7 @@ jobs:
               "sha256": hashlib.sha256(Path("/tmp/cenit.pdf").read_bytes()).hexdigest(),
               "document_date": extracted["source"]["document_date"],
               "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-              "schema_version": cenit.SCHEMA_VERSION,
+              "schema_version": cenit.source().schema_version,
           }
           print(json.dumps(payload, indent=2))
           PY
