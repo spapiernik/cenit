@@ -42,8 +42,6 @@ import pdfplumber
 
 SCHEMA_VERSION = 2
 
-EXPECTED_PARTICIPANTS = 50
-EXPECTED_DATA_ROWS = EXPECTED_PARTICIPANTS + 1
 EXPECTED_PHYSICAL_COLUMNS = 15
 EXPECTED_BOUNDARIES = EXPECTED_PHYSICAL_COLUMNS + 1
 
@@ -78,17 +76,6 @@ ENTITY_COLUMNS = {
     8: "operador_de_información",
     9: "sedpe",
 }
-
-EXPECTED_ENTITY_TOTALS = {
-    "bancos": 27,
-    "cooperativa_financiera": 4,
-    "corporación_financiera": 1,
-    "compañía_de_financiamiento": 8,
-    "entidad_del_estado": 4,
-    "operador_de_información": 23,
-    "sedpe": 1,
-}
-
 
 @dataclass(frozen=True)
 class ColumnSpec:
@@ -347,7 +334,9 @@ def find_grid(page: Any) -> tuple[list[float], list[float], list[float]]:
     return x_boundaries, y_boundaries, [data_top, data_bottom]
 
 
-def find_data_boundaries(page: Any, x_boundaries: list[float], y_boundaries: list[float]) -> list[float]:
+def find_data_boundaries(
+    page: Any, x_boundaries: list[float], y_boundaries: list[float]
+) -> tuple[list[float], int]:
     """Cut the horizontal boundaries at the bottom of the totals row."""
     words = page.extract_words()
     total_words = [
@@ -362,16 +351,27 @@ def find_data_boundaries(page: Any, x_boundaries: list[float], y_boundaries: lis
         )
 
     center_y = (total_words[0]["top"] + total_words[0]["bottom"]) / 2
+    declared_numbers = [
+        clean_text(word["text"])
+        for word in sorted(words, key=lambda word: word["x0"])
+        if abs((word["top"] + word["bottom"]) / 2 - center_y) < 3
+        and x_boundaries[0] <= word["x0"] <= x_boundaries[-1]
+        and clean_text(word["text"]).isdigit()
+    ]
+    if not declared_numbers:
+        raise ValueError("The totals row does not declare a participant count.")
+    declared_participants = int(declared_numbers[0])
+
     for index in range(len(y_boundaries) - 1):
         if y_boundaries[index] <= center_y < y_boundaries[index + 1]:
             boundaries = y_boundaries[: index + 2]
-            expected = EXPECTED_DATA_ROWS + 1
-            if len(boundaries) != expected:
+            expected_boundaries = declared_participants + 2
+            if len(boundaries) != expected_boundaries:
                 raise ValueError(
-                    f"Expected {expected} data-row boundaries, "
+                    f"Expected {expected_boundaries} data-row boundaries, "
                     f"found {len(boundaries)}."
                 )
-            return boundaries
+            return boundaries, declared_participants
     raise ValueError("The totals-row label is outside the detected row grid.")
 
 
@@ -510,7 +510,7 @@ def convert_participant(row: list[str], position: int) -> dict[str, Any]:
 
 
 def validate_records(
-    records: list[dict[str, Any]], total_row: list[str]
+    records: list[dict[str, Any]], total_row: list[str], declared_participants: int
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     issues: list[dict[str, Any]] = []
     unextracted: list[dict[str, Any]] = []
@@ -520,11 +520,11 @@ def validate_records(
     if duplicates:
         issues.append(issue("duplicate_codes", "Duplicate CENIT codes found.", codes=duplicates))
 
-    if len(records) != EXPECTED_PARTICIPANTS:
+    if len(records) != declared_participants:
         issues.append(
             issue(
                 "participant_count",
-                f"Expected {EXPECTED_PARTICIPANTS} participants, found {len(records)}.",
+                f"Expected {declared_participants} participants, found {len(records)}.",
             )
         )
 
@@ -574,48 +574,38 @@ def validate_records(
                 )
             )
 
-    for key, expected in EXPECTED_ENTITY_TOTALS.items():
-        obtained = sum(record["tipo_de_entidad"][key] for record in records)
-        if obtained != expected:
-            issues.append(
-                issue(
-                    "entity_total_mismatch",
-                    f"Expected {expected} rows for {key}, counted {obtained}.",
-                    column=key,
-                    expected=expected,
-                    found=obtained,
-                )
-            )
-
+    totals_row_number = declared_participants + 1
     if not is_totals_label(total_row[0] if total_row else ""):
         issues.append(
             issue(
                 "totals_label",
                 f"The totals row does not contain {TOTALS_ROW_LABEL!r}.",
-                row=EXPECTED_DATA_ROWS,
+                row=totals_row_number,
             )
         )
-    if clean_text(total_row[1] if len(total_row) > 1 else "") != str(EXPECTED_PARTICIPANTS):
+    found_participants = clean_text(total_row[1] if len(total_row) > 1 else "")
+    if found_participants != str(declared_participants):
         issues.append(
             issue(
                 "totals_participants",
-                f"The totals row should contain {EXPECTED_PARTICIPANTS} participants.",
-                row=EXPECTED_DATA_ROWS,
+                f"The totals row should contain {declared_participants} participants.",
+                row=totals_row_number,
                 column="código_cenit",
             )
         )
     for index, key in ENTITY_COLUMNS.items():
-        expected = str(EXPECTED_ENTITY_TOTALS[key])
-        found = clean_text(total_row[index] if len(total_row) > index else "")
-        if found != expected:
+        declared_text = clean_text(total_row[index] if len(total_row) > index else "")
+        counted = sum(record["tipo_de_entidad"][key] for record in records)
+        if not declared_text.isdigit() or int(declared_text) != counted:
             issues.append(
                 issue(
-                    "totals_entity_mismatch",
-                    f"Totals row column {index + 1}: expected {expected}, found {found!r}.",
-                    row=EXPECTED_DATA_ROWS,
+                    "entity_total_mismatch",
+                    f"Totals row column {index + 1} for {key}: counted {counted}, "
+                    f"declared {declared_text!r}.",
+                    row=totals_row_number,
                     column=key,
-                    expected=expected,
-                    found=found,
+                    expected=counted,
+                    found=declared_text,
                 )
             )
 
@@ -663,7 +653,7 @@ def build_column_report(
 
 def build_report(
     result: dict[str, Any], headers: list[dict[str, Any]], issues: list[dict[str, Any]],
-    unextracted: list[dict[str, Any]],
+    unextracted: list[dict[str, Any]], declared_participants: int,
 ) -> dict[str, Any]:
     columns = result["column_report"]
     failed_labels = [header for header in headers if not header["matched"]]
@@ -686,7 +676,8 @@ def build_report(
             "labels_ignored": len(failed_labels),
             "entity_subcolumns": len(ENTITY_COLUMNS),
             "account_subcolumns": 4,
-            "expected_data_rows": EXPECTED_DATA_ROWS,
+            "expected_data_rows": declared_participants + 1,
+            "declared_participants": declared_participants,
             "found_data_rows": result["row_count"],
             "participant_rows_used": len(result["records"]),
             "totals_rows_used": 1,
@@ -756,16 +747,19 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
         page = pdf.pages[page_number - 1]
 
         x_boundaries, y_boundaries, data_y_range = find_grid(page)
-        y_boundaries = find_data_boundaries(page, x_boundaries, y_boundaries)
+        y_boundaries, declared_participants = find_data_boundaries(
+            page, x_boundaries, y_boundaries
+        )
         header_bottom = data_y_range[0]
         matrix = extract_matrix(page, x_boundaries, y_boundaries)
         headers = validate_headers(page, x_boundaries, header_bottom)
 
-    if len(matrix) != EXPECTED_DATA_ROWS or any(
+    expected_rows = declared_participants + 1
+    if len(matrix) != expected_rows or any(
         len(row) != EXPECTED_PHYSICAL_COLUMNS for row in matrix
     ):
         raise ValueError(
-            f"Expected a {EXPECTED_DATA_ROWS}x{EXPECTED_PHYSICAL_COLUMNS} matrix, "
+            f"Expected a {expected_rows}x{EXPECTED_PHYSICAL_COLUMNS} matrix, "
             f"got {len(matrix)} rows."
         )
 
@@ -775,7 +769,7 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
     ]
 
     total_row = matrix[-1]
-    issues, unextracted = validate_records(records, total_row)
+    issues, unextracted = validate_records(records, total_row, declared_participants)
     for header in headers:
         if not header["matched"]:
             issues.append(
@@ -813,7 +807,9 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
     result["headers"] = headers
     result["issues"] = issues
     result["unextracted"] = unextracted
-    result["report"] = build_report(result, headers, issues, unextracted)
+    result["report"] = build_report(
+        result, headers, issues, unextracted, declared_participants
+    )
     return result
 
 

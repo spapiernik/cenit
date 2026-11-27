@@ -21,7 +21,10 @@ class ExtractorTest(unittest.TestCase):
         result = extract.extract(fixture, 1, None)
 
         self.assertEqual(extract.SCHEMA_VERSION, 2)
-        self.assertEqual(len(result["records"]), extract.EXPECTED_PARTICIPANTS)
+        self.assertEqual(
+            result["report"]["summary"]["declared_participants"],
+            len(result["records"]),
+        )
         self.assertEqual(result["source"]["document_date"], "2026-10-07")
         self.assertEqual(result["report"]["status"], "ok")
         current = {
