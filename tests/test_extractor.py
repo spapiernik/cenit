@@ -71,7 +71,10 @@ class ExtractorTest(unittest.TestCase):
     def test_sedpe_spelling_is_canonicalized(self) -> None:
         fixture = ROOT / "tests" / "fixtures" / "cenit_codes.pdf"
         result = extract.extract(fixture, 1, None)
-        payload = json.dumps(result, ensure_ascii=False).lower()
+        payload = json.dumps(
+            {"participants": result["records"], "totals": result["totals"]},
+            ensure_ascii=False,
+        ).lower()
 
         self.assertNotIn("seped", payload)
         self.assertIn("sedpe", result["totals"]["tipo_de_entidad"])

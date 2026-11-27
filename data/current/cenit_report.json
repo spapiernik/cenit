@@ -1,12 +1,78 @@
 {
   "schema_version": 2,
   "source": {
-    "file": null,
+    "file": "tests/fixtures/cenit_codes.pdf",
     "sha256": "b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6",
     "page": 1,
     "url": "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf",
     "document_date": "2026-11-27"
   },
+  "change_log": [
+    {
+      "date": "2026-11-27",
+      "text": "Se incluye a NU COLOMBIA COMPAÑÍA DE FINANCIAMIENTO S.A. como entidad autorizada en el Sistema CENIT a partir del 1 de diciembre de 2026."
+    },
+    {
+      "date": "2026-11-27",
+      "text": "Se corrige la sigla SEPED por SEDPE (Sociedad Especializada en Depósitos y Pagos Electrónicos)."
+    },
+    {
+      "date": "2026-10-07",
+      "text": "Se incluye el nombre del Depósito Electrónico de BANCOLOMBIA: Bancolombia."
+    },
+    {
+      "date": "2026-10-01",
+      "text": "Por solicitud de la COOPERATIVA FINANCIERA DE ANTIOQUIA, se elimina de la parametrización del CENIT la aplicación de transacciones débito para esta entidad."
+    },
+    {
+      "date": "2026-10-01",
+      "text": "Se elimina el nombre del Depósito Electrónico de BANCOLOMBIA: NEQUI"
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se corrige el nombre del Depósito Electrónico del Banco AV Villas de DALE por DEPÓSITOS DIGITALES."
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se incluye el nombre del Depósito Electrónico de TUYA S.A.: CUENTA DIGITAL TUYA PAY."
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se incluye a NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO como entidad autorizada en el Sistema CENIT a partir del 1 de septiembre de 2026."
+    },
+    {
+      "date": "2026-08-06",
+      "text": "Se incluye a TUYA S.A. como entidad autorizada en el Sistema CENIT a partir del 12 de agosto de 2026."
+    },
+    {
+      "date": "2026-07-21",
+      "text": "Se incluye columna con el nombre del Depósito Electrónico para las entidades que tienen inscrita esta cuenta en CENIT"
+    },
+    {
+      "date": "2026-07-03",
+      "text": "Por solicitud de Banco Pichincha, se elimina de la parametrización del CENIT la aplicación de transacciones débito para esta entidad."
+    },
+    {
+      "date": "2026-06-25",
+      "text": "Se corrige la razón social de AVAL SOLUCIONES DIGITALES – DALE, la cual por error se encontraba como AVAL SOLUCIONES TECNOLÓGICAS – DALE"
+    },
+    {
+      "date": "2026-06-25",
+      "text": "Por solicitud de Banco Serfinanza, se habilita el servicio de Depósito Electrónico para transacciones crédito."
+    },
+    {
+      "date": "2026-06-17",
+      "text": "Banco AV Villas habilita el producto Depósito Electrónico en CENIT."
+    },
+    {
+      "date": "2026-05-29",
+      "text": "Se incluye la referencia (****) con el fin de especificar las entidades que tienen el servicio de cuenta de Depósitos Electrónicos, pero no han habilitado este servicio en CENIT."
+    },
+    {
+      "date": "2026-05-29",
+      "text": "Banco Itaú informa que no cuenta con el servicio de Depósito Electrónico."
+    }
+  ],
   "status": "ok",
   "grid": {
     "x_boundaries": [
