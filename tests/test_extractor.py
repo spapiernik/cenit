@@ -35,6 +35,19 @@ class ExtractorTest(unittest.TestCase):
         self.assertTrue(extract.is_totals_label("  TOTAL   PARTICIPANTES EN CENIT  "))
         self.assertFalse(extract.is_totals_label("TOTAL PARTICIPANTES"))
 
+    def test_sedpe_spelling_is_canonicalized(self) -> None:
+        fixture = ROOT / "tests" / "fixtures" / "cenit_codes.pdf"
+        result = extract.extract(fixture, 1, None)
+        payload = json.dumps(result, ensure_ascii=False).lower()
+
+        self.assertNotIn("seped", payload)
+        self.assertIn("sedpe", result["totals"]["tipo_de_entidad"])
+        self.assertTrue(
+            any("sedpe" in record["tipo_de_entidad"] for record in result["records"])
+        )
+        self.assertEqual(extract.canonicalize_sedpe("seped"), "SEDPE")
+        self.assertEqual(extract.canonicalize_sedpe("SEDPE"), "SEDPE")
+
 
 if __name__ == "__main__":
     unittest.main()

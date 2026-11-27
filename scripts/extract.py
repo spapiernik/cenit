@@ -76,7 +76,7 @@ ENTITY_COLUMNS = {
     6: "compañía_de_financiamiento",
     7: "entidad_del_estado",
     8: "operador_de_información",
-    9: "seped",
+    9: "sedpe",
 }
 
 EXPECTED_ENTITY_TOTALS = {
@@ -86,7 +86,7 @@ EXPECTED_ENTITY_TOTALS = {
     "compañía_de_financiamiento": 8,
     "entidad_del_estado": 4,
     "operador_de_información": 23,
-    "seped": 1,
+    "sedpe": 1,
 }
 
 
@@ -150,7 +150,7 @@ COLUMNS = (
         "tipo_de_entidad",
         True,
     ),
-    ColumnSpec("seped", "SEPED", 9, "subcolumn", "tipo_de_entidad", True),
+    ColumnSpec("sedpe", "SEDPE", 9, "subcolumn", "tipo_de_entidad", True),
     ColumnSpec(
         "aplica_transacciones_débito",
         "Aplica Transacciones Débito",
@@ -205,7 +205,7 @@ HEADERS = (
     ),
     HeaderSpec("entidad_del_estado", "Entidad del Estado", 7, 8, True, True),
     HeaderSpec("operador_de_información", "Operador de Información", 8, 9, True, True),
-    HeaderSpec("seped", "SEPED", 9, 10, True, True),
+    HeaderSpec("sedpe", "SEDPE", 9, 10, True, True),
     HeaderSpec(
         "aplica_transacciones_débito", "Aplica Transacciones Débito", 10, 11, True, True
     ),
@@ -230,11 +230,17 @@ ROTATED_MATRIX_TOLERANCE = 0.1
 def clean_text(value: Any) -> str:
     if value is None:
         return ""
-    return re.sub(r"\s+", " ", str(value).replace("\u00a0", " ")).strip()
+    return canonicalize_sedpe(
+        re.sub(r"\s+", " ", str(value).replace("\u00a0", " ")).strip()
+    )
+
+
+def canonicalize_sedpe(value: str) -> str:
+    return re.sub(r"sedpe|seped", "SEDPE", value or "", flags=re.IGNORECASE)
 
 
 def normalize_label(value: str) -> str:
-    value = unicodedata.normalize("NFKD", value or "")
+    value = unicodedata.normalize("NFKD", canonicalize_sedpe(value))
     value = "".join(char for char in value if not unicodedata.combining(char))
     return re.sub(r"[^a-z0-9]", "", value.lower())
 
@@ -418,7 +424,7 @@ def validate_headers(
 ) -> list[dict[str, Any]]:
     results = []
     for spec in HEADERS:
-        found = read_header_text(page, x_boundaries, header_bottom, spec)
+        found = canonicalize_sedpe(read_header_text(page, x_boundaries, header_bottom, spec))
         matches = normalize_label(found) == normalize_label(spec.label)
         results.append(
             {

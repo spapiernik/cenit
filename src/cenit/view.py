@@ -51,7 +51,7 @@ LABELS: dict[str, dict[str, str]] = {
         "financing_company": "Financing Company",
         "government_entity": "Government Entity",
         "information_operator": "Information Operator",
-        "seped": "SEPED",
+        "sedpe": "SEDPE",
         "savings_account_number_lengths": "Savings Account",
         "checking_account_number_lengths": "Checking Account",
         "electronic_or_low_value_deposit_number_lengths": "Electronic or Low Value Deposit",
@@ -82,7 +82,7 @@ LABELS: dict[str, dict[str, str]] = {
         "financing_company": "Compañía de Financiamiento",
         "government_entity": "Entidad del Estado",
         "information_operator": "Operador de Información",
-        "seped": "SEPED",
+        "sedpe": "SEDPE",
         "savings_account_number_lengths": "Cuenta de Ahorros",
         "checking_account_number_lengths": "Cuenta Corriente",
         "electronic_or_low_value_deposit_number_lengths": "Depósito Electrónico o de Bajo Monto",
@@ -137,7 +137,7 @@ ENTITY_TYPE_LABELS: dict[str, dict[str, str]] = {
         "financing_company": "Financing Company",
         "government_entity": "Government Entity",
         "information_operator": "Information Operator",
-        "seped": "SEPED",
+        "sedpe": "SEDPE",
     },
     "es": {
         "bank": "Banco",
@@ -146,7 +146,7 @@ ENTITY_TYPE_LABELS: dict[str, dict[str, str]] = {
         "financing_company": "Compañía de Financiamiento",
         "government_entity": "Entidad del Estado",
         "information_operator": "Operador de Información",
-        "seped": "SEPED",
+        "sedpe": "SEDPE",
     },
 }
 

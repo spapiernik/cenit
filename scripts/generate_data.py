@@ -25,8 +25,9 @@ ENTITY_TYPES = (
     ("compañía_de_financiamiento", "financing_company"),
     ("entidad_del_estado", "government_entity"),
     ("operador_de_información", "information_operator"),
-    ("seped", "seped"),
+    ("sedpe", "sedpe"),
 )
+ENTITY_TYPE_ALIASES = {"seped": "sedpe", "sedpe": "sedpe"}
 FOOTNOTES = {
     "(*)": "Linked before May 2025",
     "(**)": "Used for special collection agreements",

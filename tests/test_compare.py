@@ -13,7 +13,7 @@ def record(code: str, name: str, position: int = 1) -> dict:
         "posición": position,
         "participante": name,
         "código_cenit": code,
-        "tipo_de_entidad": {"bancos": True, "seped": False},
+        "tipo_de_entidad": {"bancos": True, "sedpe": False},
     }
 
 
@@ -43,8 +43,8 @@ class CompareTest(unittest.TestCase):
         self.assertNotIn("posición", str(result["changed_participants"]))
 
     def test_identical_data_after_key_normalization(self) -> None:
-        previous = {"participants": [record("1000", "NAME")], "totals": {"seped": "1"}}
-        current = {"participants": [record("1000", "NAME", 99)], "totals": {"seped": "1"}}
+        previous = {"participants": [record("1000", "NAME")], "totals": {"sedpe": "1"}}
+        current = {"participants": [record("1000", "NAME", 99)], "totals": {"sedpe": "1"}}
 
         result = compare.compare(previous, current)
 

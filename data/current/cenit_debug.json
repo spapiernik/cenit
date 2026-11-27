@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "source": {
-    "file": null,
+    "file": "tests/fixtures/cenit_codes.pdf",
     "sha256": "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
     "page": 1,
     "url": "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf",
@@ -204,16 +204,16 @@
       "matched": true
     },
     {
-      "key": "seped",
-      "label": "SEPED",
+      "key": "sedpe",
+      "label": "SEDPE",
       "role": "label",
       "physical_columns": [
         10,
         10
       ],
       "rotated": true,
-      "expected": "SEPED",
-      "found": "SEPED",
+      "expected": "SEDPE",
+      "found": "SEDPE",
       "matched": true
     },
     {
