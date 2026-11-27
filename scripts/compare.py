@@ -8,28 +8,31 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from cenit.view import ENTITY_TYPE_LABELS, LABELS
+from generate_data import ENTITY_TYPES
+
 EXCLUDED_PARTICIPANT_FIELDS = {"posición"}
 
+EN_LABELS = LABELS["en"]
+ENTITY_KEYS = dict(ENTITY_TYPES)
+
 FIELD_LABELS = {
-    "participante": "Participant",
-    "código_cenit": "CENIT code",
-    "inicio_de_operación": "Operation start",
-    "tipo_de_entidad": "Entity types",
-    "aplica_transacciones_débito": "Debit transactions",
-    "tipo_de_cuenta_y_longitud": "Account types and lengths",
-    "participantes": "Participants",
-    "bancos": "Banks",
-    "cooperativa_financiera": "Financial cooperative",
-    "corporación_financiera": "Finance corporation",
-    "compañía_de_financiamiento": "Finance company",
-    "entidad_del_estado": "State entity",
-    "operador_de_información": "Information operator",
-    "sedpe": "SEDPE",
-    "cuenta_de_ahorros": "Savings account",
-    "cuenta_corriente": "Checking account",
-    "depósito_electrónico_o_de_bajo_monto": "Electronic or low-value deposit",
-    "longitud": "Length",
-    "nombre": "Name",
+    "participante": EN_LABELS["name"],
+    "código_cenit": EN_LABELS["code"],
+    "inicio_de_operación": EN_LABELS["operation_start_date"],
+    "tipo_de_entidad": EN_LABELS["entity_types"],
+    "aplica_transacciones_débito": EN_LABELS["supports_debit_transactions"],
+    "tipo_de_cuenta_y_longitud": EN_LABELS["account_capabilities"],
+    "participantes": EN_LABELS["participants"],
+}
+
+ACCOUNT_FIELD_LABELS = {
+    "cuenta_de_ahorros": EN_LABELS["savings_account_number_lengths"],
+    "cuenta_corriente": EN_LABELS["checking_account_number_lengths"],
+    "depósito_electrónico_o_de_bajo_monto": EN_LABELS[
+        "electronic_or_low_value_deposit_number_lengths"
+    ],
+    "longitud": EN_LABELS["lengths"],
 }
 
 
@@ -78,7 +81,11 @@ def operation_start(record: dict[str, Any]) -> str:
 
 def entity_types(record: dict[str, Any]) -> str:
     flags = record.get("tipo_de_entidad") or {}
-    return ", ".join(label(key) for key, value in flags.items() if value)
+    return ", ".join(
+        ENTITY_TYPE_LABELS["en"][ENTITY_KEYS[key]]
+        for key, value in flags.items()
+        if value and key in ENTITY_KEYS
+    )
 
 
 def recent_change_log(
@@ -153,9 +160,26 @@ def compare(
 
 def label(path: str) -> str:
     parts = path.split(".")
-    return " / ".join(
-        FIELD_LABELS.get(part, part.replace("_", " ").capitalize()) for part in parts
-    )
+    if parts[0] == "tipo_de_entidad" and len(parts) > 1:
+        key = ENTITY_KEYS.get(parts[1])
+        if key is not None:
+            return f"{EN_LABELS['entity_types']} / {ENTITY_TYPE_LABELS['en'][key]}"
+    if parts[0] == "tipo_de_cuenta_y_longitud":
+        if (
+            len(parts) == 3
+            and parts[1] == "depósito_electrónico_o_de_bajo_monto"
+            and parts[2] == "nombre"
+        ):
+            return (
+                f"{EN_LABELS['account_capabilities']} / "
+                f"{EN_LABELS['electronic_or_low_value_deposit_name']}"
+            )
+        account_parts = [
+            ACCOUNT_FIELD_LABELS.get(part, part.replace("_", " ").title())
+            for part in parts[1:]
+        ]
+        return " / ".join([EN_LABELS["account_capabilities"], *account_parts])
+    return FIELD_LABELS.get(parts[0], parts[0].replace("_", " ").title())
 
 
 def display(value: Any) -> str:
@@ -208,11 +232,12 @@ def render_markdown(result: dict[str, Any]) -> str:
         "",
     ]
 
-    lines.extend(["## Added participants", ""])
+    lines.extend(["## Added Participants", ""])
     if result["added_participants"]:
         lines.extend(
             [
-                "| Code | Participant | Operation start | Entity types |",
+                f"| {EN_LABELS['code']} | {EN_LABELS['name']} | "
+                f"{EN_LABELS['operation_start_date']} | {EN_LABELS['entity_types']} |",
                 "| --- | --- | --- | --- |",
             ]
         )
@@ -225,11 +250,12 @@ def render_markdown(result: dict[str, Any]) -> str:
         lines.append("None")
     lines.append("")
 
-    lines.extend(["## Removed participants", ""])
+    lines.extend(["## Removed Participants", ""])
     if result["removed_participants"]:
         lines.extend(
             [
-                "| Code | Participant | Operation start | Entity types |",
+                f"| {EN_LABELS['code']} | {EN_LABELS['name']} | "
+                f"{EN_LABELS['operation_start_date']} | {EN_LABELS['entity_types']} |",
                 "| --- | --- | --- | --- |",
             ]
         )
@@ -247,7 +273,7 @@ def render_markdown(result: dict[str, Any]) -> str:
         for entry in result["changed_participants"]
         for field in entry["fields"]
     ]
-    lines.extend(["## Changed participants", ""])
+    lines.extend(["## Changed Participants", ""])
     if changed_rows:
         if len(changed_rows) > 10:
             lines.extend(
@@ -255,7 +281,8 @@ def render_markdown(result: dict[str, Any]) -> str:
             )
         lines.extend(
             [
-                "| Code | Participant | Field | Before | After |",
+                f"| {EN_LABELS['code']} | {EN_LABELS['name']} | "
+                f"{EN_LABELS['field']} | Before | After |",
                 "| --- | --- | --- | --- | --- |",
             ]
         )
@@ -273,7 +300,9 @@ def render_markdown(result: dict[str, Any]) -> str:
 
     lines.extend(["## Totals", ""])
     if result["totals_changes"]:
-        lines.extend(["| Field | Before | After |", "| --- | --- | --- |"])
+        lines.extend(
+            [f"| {EN_LABELS['field']} | Before | After |", "| --- | --- | --- |"]
+        )
         for field in result["totals_changes"]:
             lines.append(
                 f"| {text_cell(label(field['path']))} | {cell(field['before'])} | "
@@ -283,7 +312,7 @@ def render_markdown(result: dict[str, Any]) -> str:
         lines.append("No changes")
     lines.append("")
 
-    lines.extend(["## Official change log", ""])
+    lines.extend(["## Official Change Log", ""])
     if result["change_log"]:
         for entry in result["change_log"]:
             lines.append(
