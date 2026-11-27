@@ -40,6 +40,11 @@ jobs:
         run: curl -fL --retry 3 "$URL" -o /tmp/cenit.pdf
       - name: Extract table
         run: uv run python scripts/extract.py /tmp/cenit.pdf --source-url "$URL" --output /tmp/cenit
+      - name: Read document date
+        id: meta
+        run: |
+          DATE=$(uv run python -c 'import json; from pathlib import Path; print(json.loads(Path("/tmp/cenit.json").read_text(encoding="utf-8"))["source"]["document_date"])')
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
       - name: Normalize source path
         run: |
           uv run python - <<'PY'
@@ -57,6 +62,8 @@ jobs:
         run: |
           uv run python scripts/compare.py \
             --changed-file /tmp/changed \
+            --previous-report data/current/cenit_report.json \
+            --current-report /tmp/cenit_report.json \
             data/current/cenit.json /tmp/cenit.json > /tmp/diff.md
           echo "changed=$(cat /tmp/changed)" >> "$GITHUB_OUTPUT"
       - name: Upload diff
@@ -100,10 +107,11 @@ jobs:
           uv run python scripts/generate_data.py
           git add data src/cenit/_data.py
           git commit -m "chore(data): weekly CENIT sync"
-          git push --force origin "$BRANCH"
+          git push --force-with-lease origin "$BRANCH"
+          TITLE="chore(data): CENIT table ${{ steps.meta.outputs.date }}"
           if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
-            gh pr edit "$BRANCH" --body-file /tmp/diff.md
+            gh pr edit "$BRANCH" --title "$TITLE" --body-file /tmp/diff.md
           else
             gh pr create --base main --head "$BRANCH" \
-              --title "chore(data): weekly CENIT sync" --body-file /tmp/diff.md
+              --title "$TITLE" --body-file /tmp/diff.md
           fi

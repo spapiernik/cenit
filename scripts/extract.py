@@ -11,7 +11,7 @@ positioned glyphs, and data is emitted only when the contract checks pass.
 Outputs use English envelope fields and Spanish domain keys:
 
     <output>.json             participants and totals
-    <output>_report.json      structured extraction report
+    <output>_report.json      structured extraction report and change log
     <output>_debug.json       geometry, labels and the raw 51x15 matrix
     <output>.csv              flat 15-column view for manual review
 
@@ -47,6 +47,14 @@ EXPECTED_BOUNDARIES = EXPECTED_PHYSICAL_COLUMNS + 1
 
 TOTALS_ROW_LABEL = "TOTAL PARTICIPANTES EN CENIT"
 TOTALS_ROW_TOKENS = tuple(TOTALS_ROW_LABEL.lower().split())
+
+CHANGE_LOG_MARKER = "CONTROL DE CAMBIOS"
+PAGE_FOOTER_PATTERN = re.compile(r"^Hoja\s+\d+\s+de\s+\d+\s*$", re.IGNORECASE)
+CHANGE_ENTRY_PATTERN = re.compile(
+    r"^(\d{1,2})\s+de\s+([a-záéíóúñ]+)\s+de\s+(\d{4})\s*-\s*(.+)$",
+    re.IGNORECASE,
+)
+CHANGE_BULLET_PATTERN = re.compile(r"^-\s+(.+)$")
 
 DATE_PATTERN = re.compile(
     r"Fecha:\s*\w+,\s*(\d{1,2})\s+de\s+([a-záéíóúñ]+)\s+de\s+(\d{4})",
@@ -256,6 +264,42 @@ def find_source_date(pdf_path: Path) -> str | None:
             if number is not None:
                 return date(int(year), number, int(day)).isoformat()
     return None
+
+
+def parse_change_log(text: str) -> list[dict[str, str]]:
+    lines = [line.strip() for line in text.splitlines()]
+    start = next(
+        (index + 1 for index, line in enumerate(lines) if CHANGE_LOG_MARKER in line.upper()),
+        None,
+    )
+    if start is None:
+        return []
+
+    entries: list[dict[str, str]] = []
+    current: dict[str, str] | None = None
+    for line in lines[start:]:
+        if PAGE_FOOTER_PATTERN.match(line):
+            break
+        if not line:
+            continue
+        dated = CHANGE_ENTRY_PATTERN.match(line)
+        bullet = CHANGE_BULLET_PATTERN.match(line)
+        if dated is not None:
+            day, month, year, body = dated.groups()
+            number = MONTHS.get(month.lower())
+            if number is None:
+                continue
+            current = {
+                "date": date(int(year), number, int(day)).isoformat(),
+                "text": body.strip(),
+            }
+            entries.append(current)
+        elif bullet is not None and current is not None:
+            current = {"date": current["date"], "text": bullet.group(1).strip()}
+            entries.append(current)
+        elif current is not None:
+            current["text"] = f"{current['text']} {line}".strip()
+    return [entry for entry in entries if entry["text"]]
 
 
 def group_positions(values: list[float], tolerance: float) -> list[float]:
@@ -654,12 +698,14 @@ def build_column_report(
 def build_report(
     result: dict[str, Any], headers: list[dict[str, Any]], issues: list[dict[str, Any]],
     unextracted: list[dict[str, Any]], declared_participants: int,
+    change_log: list[dict[str, str]],
 ) -> dict[str, Any]:
     columns = result["column_report"]
     failed_labels = [header for header in headers if not header["matched"]]
     return {
         "schema_version": SCHEMA_VERSION,
         "source": result["source"],
+        "change_log": change_log,
         "status": "ok" if not issues and not unextracted and not failed_labels else "review",
         "grid": {
             "x_boundaries": result["x_boundaries"],
@@ -753,6 +799,9 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
         header_bottom = data_y_range[0]
         matrix = extract_matrix(page, x_boundaries, y_boundaries)
         headers = validate_headers(page, x_boundaries, header_bottom)
+        change_log = parse_change_log(
+            "\n".join(item.extract_text() or "" for item in pdf.pages)
+        )
 
     expected_rows = declared_participants + 1
     if len(matrix) != expected_rows or any(
@@ -790,6 +839,7 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
             "url": source_url,
             "document_date": find_source_date(pdf_path),
         },
+        "change_log": change_log,
         "x_boundaries": [round(value, 2) for value in x_boundaries],
         "y_boundaries": [round(value, 2) for value in y_boundaries],
         "data_y_range": [round(value, 2) for value in data_y_range],
@@ -808,7 +858,7 @@ def extract(pdf_path: Path, page_number: int, source_url: str | None) -> dict[st
     result["issues"] = issues
     result["unextracted"] = unextracted
     result["report"] = build_report(
-        result, headers, issues, unextracted, declared_participants
+        result, headers, issues, unextracted, declared_participants, change_log
     )
     return result
 
