@@ -88,8 +88,13 @@ class CompareTest(unittest.TestCase):
 
         self.assertIn("# CENIT table sync - 27 Nov 2026", body)
         self.assertIn("[official PDF](https://example.test/cenit.pdf)", body)
-        self.assertIn("| 1002 | ADDED S.A. | 1/12/2026 | Finance company |", body)
-        self.assertIn("| Entity types / Finance company | `0` | `1` |", body)
+        self.assertIn("## Added Participants", body)
+        self.assertIn(
+            "| CENIT Compensation Code | Participant | Operation Start | Entity Type |",
+            body,
+        )
+        self.assertIn("| 1002 | ADDED S.A. | 1/12/2026 | Financing Company |", body)
+        self.assertIn("| Entity Type / Financing Company | `0` | `1` |", body)
         self.assertIn("Se incluye a ADDED S.A.", body)
         self.assertNotIn("Old entry", body)
 
