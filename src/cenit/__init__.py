@@ -7,74 +7,58 @@ deterministic. Publishing a new package version is how new data is released.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
-from datetime import date
+from collections.abc import Callable, Mapping
+from datetime import datetime
+from typing import TypeVar, overload
+
+from rapidfuzz import distance, fuzz
 
 from . import _data
 from ._types import (
-    ENTITY_TYPES,
     AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
     AccountType,
-    Code,
+    EntityType,
     EntityTypeTotals,
-    ParticipantRecord,
+    Participant,
+    Source,
     Totals,
     normalize_name,
 )
-from .view import (
-    View,
-    display,
-    explore,
-    footnote_definitions,
-    render,
-    save,
-    to_html,
-    to_svg,
-    to_text,
-)
+from .view import View, footnote_definitions
+
+_MISSING = object()
+_T = TypeVar("_T")
+
+
+class ParticipantNotFound(KeyError):
+    """Raised when a lookup finds no matching participant."""
+
 
 __all__ = [
-    "ENTITY_TYPES",
     "AccountCapabilities",
     "AccountNumberLengthScope",
     "AccountNumberLengthVariant",
     "AccountType",
-    "Code",
+    "EntityType",
     "EntityTypeTotals",
-    "ParticipantRecord",
+    "Participant",
+    "ParticipantNotFound",
+    "Source",
     "Totals",
     "View",
     "all_records",
-    "display",
-    "explore",
     "footnote_definitions",
     "footnotes",
-    "get_account_capabilities",
     "get_by_code",
-    "get_by_code_or_raise",
     "get_by_name",
-    "is_valid_account_number_length",
-    "list_account_number_lengths",
     "list_debit_capable_participants",
     "list_participants_by_entity_type",
-    "render",
-    "routing_code",
-    "save",
-    "schema_version",
-    "source_date",
-    "source_fetched_at",
-    "source_sha256",
-    "source_url",
-    "to_html",
-    "to_svg",
-    "to_text",
+    "source",
     "totals",
-    "version",
+    "version"
 ]
-
-SCHEMA_VERSION = _data.SCHEMA_VERSION
 
 
 def _code_text(code: str | int) -> str:

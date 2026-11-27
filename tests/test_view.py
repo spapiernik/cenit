@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 import cenit
+import cenit.view
 from cenit._tui import CenitExplorer
 from rich.style import Style
 
@@ -25,9 +26,9 @@ def header_block(text: str) -> str:
 
 class ViewTest(unittest.TestCase):
     def test_record_render_includes_default_columns(self) -> None:
-        text = cenit.to_text(cenit.get_by_code("1013"), width=400)
+        text = cenit.view.to_text(cenit.get_by_code("1013"), width=400)
         header = header_block(text)
-        self.assertIn("ParticipantRecord", text)
+        self.assertIn("Participant", text)
         self.assertIn("BANCO BBVA", text)
         self.assertIn("1013", text)
         self.assertIn("CENIT Compensation Code", header)
@@ -37,7 +38,7 @@ class ViewTest(unittest.TestCase):
         self.assertIn("Linked before May 2025", text)
 
     def test_spanish_labels(self) -> None:
-        text = cenit.to_text(cenit.get_by_code("1013"), language="es", width=400)
+        text = cenit.view.to_text(cenit.get_by_code("1013"), language="es", width=400)
         self.assertIn("Participante", header_block(text))
         self.assertIn("Código de Compensación CENIT", text)
         self.assertIn("Inicio de Operación", text)
@@ -50,9 +51,9 @@ class ViewTest(unittest.TestCase):
         records = cenit.all_records()
         true_record = next(record for record in records if record.supports_debit_transactions)
         false_record = next(record for record in records if not record.supports_debit_transactions)
-        text = cenit.to_text(
+        text = cenit.view.to_text(
             [true_record, false_record],
-            columns=("participant_name", "supports_debit_transactions"),
+            columns=("name", "supports_debit_transactions"),
             show_footnotes=False,
             width=200,
         )
@@ -68,7 +69,7 @@ class ViewTest(unittest.TestCase):
         self.assertTrue(all(style.bgcolor is not None for style in styles))
 
     def test_operation_start_uses_note_when_no_date(self) -> None:
-        text = cenit.to_text(
+        text = cenit.view.to_text(
             cenit.get_by_code("1013"), show_footnotes=False, width=200
         )
         row = next(line for line in text.splitlines() if "BANCO BBVA" in line)
@@ -87,17 +88,17 @@ class ViewTest(unittest.TestCase):
 
     def test_columns_exclude_and_header_toggle(self) -> None:
         record = cenit.get_by_code("1013")
-        selected = cenit.to_text(
+        selected = cenit.view.to_text(
             record,
-            columns=("participant_name", "cenit_code"),
+            columns=("name", "code"),
             width=200,
         )
         self.assertIn("CENIT Compensation Code", header_line(selected))
         self.assertNotIn("Footnotes", header_line(selected))
 
-        hidden = cenit.to_text(
+        hidden = cenit.view.to_text(
             record,
-            columns=("participant_name", "cenit_code"),
+            columns=("name", "code"),
             show_columns=False,
             width=200,
         )
@@ -105,9 +106,9 @@ class ViewTest(unittest.TestCase):
         self.assertIn("1013", hidden)
 
     def test_keep_excluded_columns(self) -> None:
-        text = cenit.to_text(
+        text = cenit.view.to_text(
             cenit.get_by_code("1013"),
-            columns=("participant_name", "footnotes"),
+            columns=("name", "footnotes"),
             exclude=("footnotes",),
             keep_excluded_columns=True,
             show_footnotes=False,
@@ -117,10 +118,10 @@ class ViewTest(unittest.TestCase):
 
     def test_row_columns_override(self) -> None:
         records = [cenit.get_by_code("1013"), cenit.get_by_code("1070")]
-        text = cenit.to_text(
+        text = cenit.view.to_text(
             records,
-            columns=("participant_name",),
-            row_columns={1: ("cenit_code",)},
+            columns=("name",),
+            row_columns={1: ("code",)},
             show_footnotes=False,
             width=200,
         )
@@ -129,7 +130,7 @@ class ViewTest(unittest.TestCase):
         self.assertNotIn("BANCO BBVA", row)
 
     def test_nested_dataclasses_expand_into_columns(self) -> None:
-        text = cenit.to_text(cenit.totals(), width=200)
+        text = cenit.view.to_text(cenit.totals(), width=200)
         self.assertNotIn("EntityTypeTotals(", text)
         for label in (
             "Banks",
@@ -138,12 +139,12 @@ class ViewTest(unittest.TestCase):
             "Financing Company",
             "Government Entity",
             "Information Operator",
-            "SEPED",
+            "SEDPE",
         ):
             self.assertIn(label, text)
 
     def test_account_subcolumns(self) -> None:
-        text = cenit.to_text(cenit.get_by_code("1013"), language="es", width=400)
+        text = cenit.view.to_text(cenit.get_by_code("1013"), language="es", width=400)
         header = header_block(text)
         for label in (
             "Cuenta de Ahorros",
@@ -157,7 +158,7 @@ class ViewTest(unittest.TestCase):
         self.assertIn("DINERO MOVIL", row)
 
     def test_footnotes_are_ordered(self) -> None:
-        text = cenit.to_text(cenit.all_records(), width=400)
+        text = cenit.view.to_text(cenit.all_records(), width=400)
         block = text.split("Footnotes", 1)[1]
         definitions = cenit.footnote_definitions()
         positions = [block.index(definition) for definition in definitions.values()]
@@ -174,35 +175,35 @@ class ViewTest(unittest.TestCase):
         asyncio.run(check())
 
     def test_mixed_collections_have_separators(self) -> None:
-        text = cenit.to_text(
+        text = cenit.view.to_text(
             [cenit.get_by_code("1013"), cenit.totals()],
             width=200,
         )
-        self.assertIn("ParticipantRecord", text)
+        self.assertIn("Participant", text)
         self.assertIn("Totals", text)
         self.assertIn("─", text)
 
     def test_nested_collections(self) -> None:
         record = cenit.get_by_code("1013")
-        text = cenit.to_text([record, [record, cenit.totals()]], width=200)
-        self.assertEqual(text.count("ParticipantRecord"), 2)
+        text = cenit.view.to_text([record, [record, cenit.totals()]], width=200)
+        self.assertEqual(text.count("BANCO BBVA"), 2)
         self.assertIn("Totals", text)
 
     def test_cells_and_matrices(self) -> None:
-        self.assertIn("7", cenit.to_text([7, 8], width=80))
-        matrix = cenit.to_text([[1, 2], [3, 4]], width=80)
+        self.assertIn("7", cenit.view.to_text([7, 8], width=80))
+        matrix = cenit.view.to_text([[1, 2], [3, 4]], width=80)
         self.assertIn("1", matrix)
         self.assertIn("4", matrix)
 
     def test_exports_and_save(self) -> None:
         record = cenit.get_by_code("1013")
-        html = cenit.to_html(record, width=200)
+        html = cenit.view.to_html(record, width=200)
         self.assertIn("<html", html)
         self.assertIn("BANCO BBVA", html)
-        self.assertIn("<svg", cenit.to_svg(record))
+        self.assertIn("<svg", cenit.view.to_svg(record))
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "record.html"
-            returned = cenit.save(record, target, width=200)
+            returned = cenit.view.save(record, target, width=200)
             self.assertEqual(returned, target)
             self.assertIn("<html", target.read_text(encoding="utf-8"))
 
