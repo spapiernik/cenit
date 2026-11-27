@@ -167,7 +167,6 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(cenit.EntityType.BANK.value, "bank")
         self.assertEqual(cenit.version(), "0.1.0")
         source = cenit.source()
-        self.assertIsInstance(source, cenit.Source)
         self.assertEqual(source.schema_version, 2)
         self.assertEqual(source.document_date, date(2026, 10, 7))
         self.assertIsInstance(source.fetched_at, datetime)

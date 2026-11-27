@@ -61,7 +61,7 @@ class ViewTest(unittest.TestCase):
         self.assertIn("no", text)
 
     def test_row_stripes_use_backgrounds_only(self) -> None:
-        view = cenit.View(width=200)
+        view = cenit.view.View(width=200)
         table = view._rich_table(view.sections(cenit.get_by_code("1013"))[0])
         styles = [Style.parse(item) for item in table.row_styles]
         self.assertTrue(styles)
@@ -77,14 +77,14 @@ class ViewTest(unittest.TestCase):
         self.assertNotIn("Operation Start Note", header_line(text))
 
     def test_language_aliases(self) -> None:
-        self.assertEqual(cenit.View(language="spa").language, "es")
-        self.assertEqual(cenit.View(language="ENG").language, "en")
+        self.assertEqual(cenit.view.View(language="spa").language, "es")
+        self.assertEqual(cenit.view.View(language="ENG").language, "en")
         self.assertEqual(
             cenit.footnote_definitions("spa")["(*)"],
             "Vinculación antes de mayo de 2025",
         )
         with self.assertRaises(ValueError):
-            cenit.View(language="fr")
+            cenit.view.View(language="fr")
 
     def test_columns_exclude_and_header_toggle(self) -> None:
         record = cenit.get_by_code("1013")
@@ -167,7 +167,7 @@ class ViewTest(unittest.TestCase):
     def test_textual_explorer_builds_tables(self) -> None:
         async def check() -> None:
             app = CenitExplorer(
-                cenit.View(width=160), [cenit.get_by_code("1013"), cenit.totals()]
+                cenit.view.View(width=160), [cenit.get_by_code("1013"), cenit.totals()]
             )
             async with app.run_test():
                 self.assertEqual(len(list(app.query("DataTable"))), 2)
