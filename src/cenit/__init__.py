@@ -71,88 +71,71 @@ def _code_text(code: str | int) -> str:
     raise TypeError("code must be a string or integer")
 
 
-def _account_type(value: AccountType | str) -> AccountType:
-    if isinstance(value, AccountType):
-        return value
-    text = str(value).strip().lower().replace("-", "_")
-    aliases = {
-        "savings": AccountType.SAVINGS,
-        "savings_account": AccountType.SAVINGS,
-        "savings_account_number_lengths": AccountType.SAVINGS,
-        "checking": AccountType.CHECKING,
-        "checking_account": AccountType.CHECKING,
-        "checking_account_number_lengths": AccountType.CHECKING,
-        "electronic": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
-        "electronic_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
-        "electronic_or_low_value_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
-        "electronic_or_low_value_deposit_number_lengths": (
-            AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT
-        ),
-    }
-    if text in aliases:
-        return aliases[text]
-    try:
-        return AccountType(text)
-    except ValueError:
-        raise ValueError(f"unknown account type: {value!r}") from None
+def _jaro_winkler(left: str, right: str) -> float:
+    return distance.JaroWinkler.similarity(left, right) * 100
 
 
-def _scope(value: AccountNumberLengthScope | str | None) -> AccountNumberLengthScope | None:
-    if value is None:
-        return None
-    if isinstance(value, AccountNumberLengthScope):
-        return value
-    try:
-        return AccountNumberLengthScope(str(value).strip().lower().replace("-", "_"))
-    except ValueError:
-        raise ValueError(f"unknown account number length scope: {value!r}") from None
+def _best_name_match(
+    key: str, scorer: Callable[[str, str], float], cutoff: float
+) -> Participant | None:
+    best_score = -1.0
+    best_row = 0
+    best: Participant | None = None
+    for normalized, record in _data.CODES_BY_NAME.items():
+        score = scorer(key, normalized)
+        if score < cutoff:
+            continue
+        if score > best_score or (score == best_score and record.row_number < best_row):
+            best_score = score
+            best_row = record.row_number
+            best = record
+    return best
 
 
-def get_by_code(code: str | int) -> ParticipantRecord | None:
-    """Return the record for a four-digit CENIT code, or None if unknown."""
-    return _data.CODES_BY_CENIT_CODE.get(_code_text(code))
+@overload
+def get_by_code(code: str | int) -> Participant: ...
 
 
-def get_by_code_or_raise(code: str | int) -> ParticipantRecord:
-    """Return the record for a four-digit CENIT code, raising KeyError if unknown."""
-    key = _code_text(code)
-    try:
-        return _data.CODES_BY_CENIT_CODE[key]
-    except KeyError:
-        raise KeyError(f"unknown CENIT code: {code!r}") from None
+@overload
+def get_by_code(code: str | int, default: _T) -> Participant | _T: ...
 
 
-def get_by_name(name: str) -> ParticipantRecord | None:
-    """Find a participant by accent-insensitive exact or unique partial name."""
+def get_by_code(code: str | int, default: object = _MISSING) -> Participant | object:
+    """Return the record for a CENIT code, raising unless a default is given."""
+    record = _data.CODES_BY_CENIT_CODE.get(_code_text(code))
+    if record is None:
+        if default is not _MISSING:
+            return default
+        raise ParticipantNotFound(f"unknown CENIT code: {code!r}")
+    return record
+
+
+@overload
+def get_by_name(name: str) -> Participant: ...
+
+
+@overload
+def get_by_name(name: str, default: _T) -> Participant | _T: ...
+
+
+def get_by_name(name: str, default: object = _MISSING) -> Participant | object:
+    """Return the closest normalized name match, raising unless a default is given."""
     key = normalize_name(name)
     record = _data.CODES_BY_NAME.get(key)
-    if record is not None:
-        return record
-    matches = [
-        candidate
-        for normalized, candidate in _data.CODES_BY_NAME.items()
-        if key and key in normalized
-    ]
-    return matches[0] if len(matches) >= 1 else None
+    if record is None and key:
+        record = _best_name_match(key, fuzz.WRatio, 90)
+    if record is None and len(key) >= 4:
+        record = _best_name_match(key, _jaro_winkler, 69)
+    if record is None:
+        if default is not _MISSING:
+            return default
+        raise ParticipantNotFound(f"unknown participant name: {name!r}")
+    return record
 
 
-def all_records() -> tuple[ParticipantRecord, ...]:
+def all_records() -> tuple[Participant, ...]:
     """Return every record in table order."""
     return _data.RECORDS
-
-
-def routing_code(code: str | int) -> str | None:
-    """Return the four-digit routing code for a known participant.
-
-    Accepts either a full CENIT code such as "1007" or a three-digit
-    participant code such as "007". The routing code is "1" followed by the
-    three-digit participant code.
-    """
-    key = _code_text(code)
-    if len(key) == 3 and key.isdigit():
-        key = "1" + key
-    record = _data.CODES_BY_CENIT_CODE.get(key)
-    return record.routing_code if record is not None else None
 
 
 def footnotes() -> Mapping[str, str]:

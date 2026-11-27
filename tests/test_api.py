@@ -13,19 +13,32 @@ import generate_data
 
 class ApiTest(unittest.TestCase):
     def test_get_accepts_strings_and_integers(self) -> None:
-        self.assertEqual(cenit.get_by_code("1059").participant_name, "BANCAMÍA")
-        self.assertEqual(cenit.get_by_code(1059).cenit_code, "1059")
-        self.assertIsNone(cenit.get_by_code("9999"))
+        self.assertEqual(cenit.get_by_code("1059").name, "BANCAMÍA")
+        self.assertEqual(cenit.get_by_code(1059).code, "1059")
 
-    def test_get_or_raise_rejects_unknown_codes(self) -> None:
-        self.assertEqual(cenit.get_by_code_or_raise(1059).cenit_code, "1059")
-        with self.assertRaises(KeyError):
-            cenit.get_by_code_or_raise("9999")
+    def test_get_by_code_rejects_unknown_codes(self) -> None:
+        with self.assertRaises(cenit.ParticipantNotFound):
+            cenit.get_by_code("9999")
+        self.assertIsNone(cenit.get_by_code("9999", default=None))
+        self.assertTrue(issubclass(cenit.ParticipantNotFound, KeyError))
 
     def test_get_by_name_is_accent_insensitive(self) -> None:
-        self.assertEqual(cenit.get_by_name("bancamia").cenit_code, "1059")
-        self.assertEqual(cenit.get_by_name("BANCAMÍA").cenit_code, "1059")
-        self.assertIsNone(cenit.get_by_name("not a participant"))
+        self.assertEqual(cenit.get_by_name("bancamia").code, "1059")
+        self.assertEqual(cenit.get_by_name("BANCAMÍA").code, "1059")
+        self.assertIsNone(cenit.get_by_name("not a participant", default=None))
+        with self.assertRaises(cenit.ParticipantNotFound):
+            cenit.get_by_name("not a participant")
+
+    def test_get_by_name_uses_fuzzy_match(self) -> None:
+        self.assertEqual(cenit.get_by_name("BANCOLOMBI").code, "1007")
+        self.assertEqual(cenit.get_by_name("bamlom").code, "1007")
+        self.assertEqual(cenit.get_by_name("bbva").code, "1013")
+        self.assertEqual(cenit.get_by_name("bancol").code, "1007")
+        self.assertIsNone(cenit.get_by_name("foo", default=None))
+        self.assertIsNone(cenit.get_by_name("not found", default=None))
+
+    def test_get_by_name_breaks_ties_by_row_number(self) -> None:
+        self.assertEqual(cenit.get_by_name("banco").code, "1040")
 
     def test_all_returns_immutable_tuple(self) -> None:
         records = cenit.all_records()
