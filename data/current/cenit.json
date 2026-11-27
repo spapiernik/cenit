@@ -1,11 +1,11 @@
 {
   "schema_version": 2,
   "source": {
-    "file": "tests/fixtures/cenit_codes.pdf",
-    "sha256": "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
+    "file": null,
+    "sha256": "b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6",
     "page": 1,
     "url": "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf",
-    "document_date": "2026-10-07"
+    "document_date": "2026-11-27"
   },
   "participants": [
     {
@@ -1138,6 +1138,30 @@
     },
     {
       "posición": 48,
+      "participante": "NU COLOMBIA",
+      "código_cenit": "1809",
+      "inicio_de_operación": "1/12/2026",
+      "tipo_de_entidad": {
+        "bancos": false,
+        "cooperativa_financiera": false,
+        "corporación_financiera": false,
+        "compañía_de_financiamiento": true,
+        "entidad_del_estado": false,
+        "operador_de_información": false,
+        "sedpe": false
+      },
+      "aplica_transacciones_débito": "NO",
+      "tipo_de_cuenta_y_longitud": {
+        "cuenta_de_ahorros": "8",
+        "cuenta_corriente": "N/A",
+        "depósito_electrónico_o_de_bajo_monto": {
+          "longitud": "N/A",
+          "nombre": ""
+        }
+      }
+    },
+    {
+      "posición": 49,
       "participante": "RAPPIPAY",
       "código_cenit": "1811",
       "inicio_de_operación": "7/02/2026",
@@ -1161,7 +1185,7 @@
       }
     },
     {
-      "posición": 49,
+      "posición": 50,
       "participante": "SIMPLE S.A.",
       "código_cenit": "1088",
       "inicio_de_operación": "(*)",
@@ -1185,7 +1209,7 @@
       }
     },
     {
-      "posición": 50,
+      "posición": 51,
       "participante": "TUYA S.A.",
       "código_cenit": "1026",
       "inicio_de_operación": "12/08/2026",
@@ -1210,12 +1234,12 @@
     }
   ],
   "totals": {
-    "participantes": "50",
+    "participantes": "51",
     "tipo_de_entidad": {
       "bancos": "27",
       "cooperativa_financiera": "4",
       "corporación_financiera": "1",
-      "compañía_de_financiamiento": "8",
+      "compañía_de_financiamiento": "9",
       "entidad_del_estado": "4",
       "operador_de_información": "23",
       "sedpe": "1"
