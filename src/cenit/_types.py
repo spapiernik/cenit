@@ -5,18 +5,28 @@ from __future__ import annotations
 import re
 import unicodedata
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
 from enum import StrEnum
 
-ENTITY_TYPES = (
-    "bank",
-    "financial_cooperative",
-    "financial_corporation",
-    "financing_company",
-    "government_entity",
-    "information_operator",
-    "seped",
-)
+class EntityType(StrEnum):
+    BANK = "bank"
+    FINANCIAL_COOPERATIVE = "financial_cooperative"
+    FINANCIAL_CORPORATION = "financial_corporation"
+    FINANCING_COMPANY = "financing_company"
+    GOVERNMENT_ENTITY = "government_entity"
+    INFORMATION_OPERATOR = "information_operator"
+    SEDPE = "sedpe"
+
+    @classmethod
+    def _missing_(cls, value: object) -> EntityType | None:
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized == "seped":
+                return cls.SEDPE
+            for member in cls:
+                if member.value == normalized:
+                    return member
+        return None
 
 
 class _RichViewMixin:
@@ -40,6 +50,45 @@ class AccountNumberLengthScope(StrEnum):
     INCLUDES_LEADING_ZEROS = "includes_leading_zeros"
     ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT = "electronic_deposit_not_enabled_in_cenit"
     LINKED_BEFORE_MAY_2025 = "linked_before_may_2025"
+
+
+def _coerce_account_type(value: AccountType | str) -> AccountType:
+    if isinstance(value, AccountType):
+        return value
+    text = str(value).strip().lower().replace("-", "_")
+    aliases = {
+        "savings": AccountType.SAVINGS,
+        "savings_account": AccountType.SAVINGS,
+        "savings_account_number_lengths": AccountType.SAVINGS,
+        "checking": AccountType.CHECKING,
+        "checking_account": AccountType.CHECKING,
+        "checking_account_number_lengths": AccountType.CHECKING,
+        "electronic": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
+        "electronic_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
+        "electronic_or_low_value_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
+        "electronic_or_low_value_deposit_number_lengths": (
+            AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT
+        ),
+    }
+    if text in aliases:
+        return aliases[text]
+    try:
+        return AccountType(text)
+    except ValueError:
+        raise ValueError(f"unknown account type: {value!r}") from None
+
+
+def _coerce_scope(
+    value: AccountNumberLengthScope | str | None,
+) -> AccountNumberLengthScope | None:
+    if value is None:
+        return None
+    if isinstance(value, AccountNumberLengthScope):
+        return value
+    try:
+        return AccountNumberLengthScope(str(value).strip().lower().replace("-", "_"))
+    except ValueError:
+        raise ValueError(f"unknown account number length scope: {value!r}") from None
 
 
 @dataclass(frozen=True, slots=True)
@@ -68,7 +117,7 @@ class AccountCapabilities(_RichViewMixin):
         self, account_type: AccountType | str
     ) -> tuple[AccountNumberLengthVariant, ...]:
         """Return the variants for one account type."""
-        key = AccountType(account_type)
+        key = _coerce_account_type(account_type)
         if key is AccountType.SAVINGS:
             return self.savings_account_number_lengths
         if key is AccountType.CHECKING:
@@ -77,32 +126,42 @@ class AccountCapabilities(_RichViewMixin):
 
 
 @dataclass(frozen=True, slots=True)
-class ParticipantRecord(_RichViewMixin):
+class Participant(_RichViewMixin):
     """One participant row from the versioned CENIT table."""
 
     row_number: int
-    participant_name: str
-    cenit_code: str
+    name: str
+    code: str
     operation_start_date: date | None
     operation_start_note: str | None
-    entity_types: tuple[str, ...]
+    entity_types: tuple[EntityType, ...]
     supports_debit_transactions: bool
     account_capabilities: AccountCapabilities
     electronic_or_low_value_deposit_name: str | None
     footnotes: tuple[str, ...] = ()
 
-    @property
-    def participant_code(self) -> str:
-        """Return the three-digit participant part of the CENIT code."""
-        return self.cenit_code[1:]
+    def account_number_lengths(
+        self,
+        account_type: AccountType | str,
+        scope: AccountNumberLengthScope | str | None = AccountNumberLengthScope.STANDARD,
+    ) -> tuple[int, ...]:
+        """Return accepted lengths for one account type and scope."""
+        selected = self.account_capabilities.for_account_type(account_type)
+        wanted = _coerce_scope(scope)
+        lengths: list[int] = []
+        for variant in selected:
+            if wanted is None or variant.scope == wanted:
+                lengths.extend(variant.lengths)
+        return tuple(lengths)
 
-    @property
-    def routing_code(self) -> str:
-        """Return the four-digit routing code."""
-        return "1" + self.participant_code
-
-
-Code = ParticipantRecord
+    def supports_account_number_length(
+        self,
+        account_type: AccountType | str,
+        length: int,
+        scope: AccountNumberLengthScope | str | None = AccountNumberLengthScope.STANDARD,
+    ) -> bool:
+        """Check whether one account number length is accepted."""
+        return int(length) in self.account_number_lengths(account_type, scope)
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,7 +174,7 @@ class EntityTypeTotals(_RichViewMixin):
     financing_company: int
     government_entity: int
     information_operator: int
-    seped: int
+    sedpe: int
 
 
 @dataclass(frozen=True, slots=True)

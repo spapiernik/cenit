@@ -103,13 +103,23 @@ def parse_length_variants(value: str) -> tuple[tuple[tuple[int, ...], str], ...]
     return tuple(variants)
 
 
-def parse_entity_types(record: dict[str, Any]) -> tuple[str, ...]:
-    flags = record["tipo_de_entidad"]
-    return tuple(
-        english
+def canonicalize_entity_type_key(key: str) -> str:
+    normalized = str(key).strip().lower()
+    return ENTITY_TYPE_ALIASES.get(normalized, normalized)
+
+
+def entity_types_expression(record: dict[str, Any]) -> str:
+    flags = {
+        canonicalize_entity_type_key(key): value
+        for key, value in record["tipo_de_entidad"].items()
+    }
+    members = [
+        f"EntityType.{english.upper()}"
         for spanish, english in ENTITY_TYPES
         if flags.get(spanish)
-    )
+    ]
+    suffix = "," if len(members) == 1 else ""
+    return "(" + ", ".join(members) + suffix + ")"
 
 
 def scope_expression(markers: str) -> str:
@@ -165,13 +175,13 @@ def render_participant(record: dict[str, Any]) -> str:
     footnotes = collect_footnotes(start_note, (savings, checking, deposit_variants))
 
     lines = [
-        "    ParticipantRecord(",
+        "    Participant(",
         f"        row_number={record['posición']!r},",
-        f"        participant_name={record['participante']!r},",
-        f"        cenit_code={record['código_cenit']!r},",
+        f"        name={record['participante']!r},",
+        f"        code={record['código_cenit']!r},",
         f"        operation_start_date={date_expression(start_date)},",
         f"        operation_start_note={start_note!r},",
-        f"        entity_types={parse_entity_types(record)!r},",
+        f"        entity_types={entity_types_expression(record)},",
         f"        supports_debit_transactions={parse_boolean(record['aplica_transacciones_débito'])!r},",
         "        account_capabilities=AccountCapabilities(",
         f"            savings_account_number_lengths={render_variants(savings, 16)},",
@@ -202,8 +212,12 @@ def render_module(dataset: dict[str, Any], source: dict[str, Any], version: str)
     participants = "\n".join(
         render_participant(record) for record in dataset["participants"]
     )
+    entity_totals_by_key = {
+        canonicalize_entity_type_key(key): value
+        for key, value in totals["tipo_de_entidad"].items()
+    }
     entity_totals = "\n".join(
-        f"        {english}={int(totals['tipo_de_entidad'][spanish])},"
+        f"        {english}={int(entity_totals_by_key[spanish])},"
         for spanish, english in ENTITY_TYPES
     )
     footnotes = "\n".join(
@@ -222,8 +236,9 @@ from cenit._types import (
     AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
+    EntityType,
     EntityTypeTotals,
-    ParticipantRecord,
+    Participant,
     Totals,
     normalize_name,
 )
@@ -241,15 +256,15 @@ FOOTNOTES: Mapping[str, str] = MappingProxyType(
 }}
 )
 
-RECORDS: tuple[ParticipantRecord, ...] = (
+RECORDS: tuple[Participant, ...] = (
 {participants}
 )
 
-CODES_BY_CENIT_CODE: Mapping[str, ParticipantRecord] = MappingProxyType(
-    {{record.cenit_code: record for record in RECORDS}}
+CODES_BY_CENIT_CODE: Mapping[str, Participant] = MappingProxyType(
+    {{record.code: record for record in RECORDS}}
 )
-CODES_BY_NAME: Mapping[str, ParticipantRecord] = MappingProxyType(
-    {{normalize_name(record.participant_name): record for record in RECORDS}}
+CODES_BY_NAME: Mapping[str, Participant] = MappingProxyType(
+    {{normalize_name(record.name): record for record in RECORDS}}
 )
 TOTALS = Totals(
     participants={int(totals["participantes"])},

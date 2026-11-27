@@ -143,54 +143,16 @@ def footnotes() -> Mapping[str, str]:
     return _data.FOOTNOTES
 
 
-def get_account_capabilities(code: str | int) -> AccountCapabilities | None:
-    """Return the qualified account capabilities for a CENIT code."""
-    record = get_by_code(code)
-    return record.account_capabilities if record is not None else None
-
-
-def list_account_number_lengths(
-    code: str | int,
-    account_type: AccountType | str,
-    scope: AccountNumberLengthScope | str | None = None,
-) -> tuple[int, ...]:
-    """Return accepted account number lengths, optionally filtered by scope."""
-    capabilities = get_account_capabilities(code)
-    if capabilities is None:
-        return ()
-
-    selected = capabilities.for_account_type(_account_type(account_type))
-    wanted = _scope(scope)
-    lengths: list[int] = []
-    for variant in selected:
-        if wanted is None or variant.scope == wanted:
-            lengths.extend(variant.lengths)
-    return tuple(lengths)
-
-
-def is_valid_account_number_length(
-    code: str | int,
-    account_type: AccountType | str,
-    length: int,
-    scope: AccountNumberLengthScope | str = AccountNumberLengthScope.STANDARD,
-) -> bool:
-    """Check an account number length for one account type and scope."""
-    target = int(length)
-    wanted = _scope(scope)
-    if wanted is None:
-        raise ValueError("scope cannot be None")
-    return target in list_account_number_lengths(code, account_type, wanted)
-
-
-def list_participants_by_entity_type(entity_type: str) -> tuple[ParticipantRecord, ...]:
+def list_participants_by_entity_type(entity_type: str | EntityType) -> tuple[Participant, ...]:
     """Return every participant with the given English entity type."""
-    key = str(entity_type).strip().lower()
-    if key not in ENTITY_TYPES:
-        raise ValueError(f"unknown entity type: {entity_type!r}")
-    return tuple(record for record in _data.RECORDS if key in record.entity_types)
+    try:
+        wanted = EntityType(entity_type)
+    except ValueError:
+        raise ValueError(f"unknown entity type: {entity_type!r}") from None
+    return tuple(record for record in _data.RECORDS if wanted in record.entity_types)
 
 
-def list_debit_capable_participants() -> tuple[ParticipantRecord, ...]:
+def list_debit_capable_participants() -> tuple[Participant, ...]:
     """Return every participant that supports debit transactions."""
     return tuple(record for record in _data.RECORDS if record.supports_debit_transactions)
 

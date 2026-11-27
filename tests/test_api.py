@@ -101,24 +101,29 @@ class ApiTest(unittest.TestCase):
         self.assertIn("(****)", bancamia.footnotes)
 
     def test_account_length_queries(self) -> None:
-        self.assertTrue(cenit.is_valid_account_number_length("1013", "savings", 10))
-        self.assertFalse(cenit.is_valid_account_number_length("1013", "savings", 5))
+        bbva = cenit.get_by_code("1013")
+        self.assertTrue(bbva.supports_account_number_length("savings", 10))
         self.assertTrue(
-            cenit.is_valid_account_number_length(
-                "1013",
-                "savings",
-                5,
-                scope="special_collection_agreement",
+            bbva.supports_account_number_length(cenit.AccountType.SAVINGS, 10)
+        )
+        self.assertFalse(bbva.supports_account_number_length("savings", 5))
+        self.assertTrue(
+            bbva.supports_account_number_length(
+                "savings", 5, scope="special_collection_agreement"
             )
         )
+        self.assertTrue(bbva.supports_account_number_length("savings", 5, scope=None))
         self.assertEqual(
-            cenit.list_account_number_lengths("1013", "savings"),
+            bbva.account_number_lengths("savings", scope=None),
             (5, 7, 13, 9, 10, 12, 14, 16),
         )
-        self.assertEqual(
-            cenit.list_account_number_lengths("1013", "savings", scope="standard"),
-            (9, 10, 12, 14, 16),
-        )
+        self.assertEqual(bbva.account_number_lengths("savings"), (9, 10, 12, 14, 16))
+
+    def test_participant_entity_types_are_enums(self) -> None:
+        record = cenit.get_by_code("1013")
+        self.assertIsInstance(record, cenit.Participant)
+        self.assertIn(cenit.EntityType.BANK, record.entity_types)
+        self.assertIn(cenit.EntityType.INFORMATION_OPERATOR, record.entity_types)
 
     def test_list_helpers(self) -> None:
         self.assertEqual(len(cenit.list_participants_by_entity_type("bank")), 27)

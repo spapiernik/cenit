@@ -18,13 +18,13 @@ from rich.table import Table
 from rich.text import Text
 
 from ._types import (
-    ENTITY_TYPES,
     AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
     AccountType,
+    EntityType,
     EntityTypeTotals,
-    ParticipantRecord,
+    Participant,
     Totals,
 )
 
@@ -35,8 +35,8 @@ LANGUAGE_ALIASES = {"en": "en", "eng": "en", "es": "es", "spa": "es"}
 LABELS: dict[str, dict[str, str]] = {
     "en": {
         "row_number": "Row",
-        "participant_name": "Participant",
-        "cenit_code": "CENIT Compensation Code",
+        "name": "Participant",
+        "code": "CENIT Compensation Code",
         "operation_start_date": "Operation Start",
         "operation_start_note": "Operation Start Note",
         "entity_types": "Entity Type",
@@ -66,8 +66,8 @@ LABELS: dict[str, dict[str, str]] = {
     },
     "es": {
         "row_number": "Fila",
-        "participant_name": "Participante",
-        "cenit_code": "Código de Compensación CENIT",
+        "name": "Participante",
+        "code": "Código de Compensación CENIT",
         "operation_start_date": "Inicio de Operación",
         "operation_start_note": "Nota de Inicio de Operación",
         "entity_types": "Tipo de Entidad",
@@ -164,8 +164,8 @@ ACCOUNT_TYPE_LABELS: dict[str, dict[str, str]] = {
 }
 
 COLUMN_STYLES: dict[str, str] = {
-    "participant_name": "bold bright_white",
-    "cenit_code": "bright_cyan",
+    "name": "bold bright_white",
+    "code": "bright_cyan",
     "operation_start_date": "bright_green",
     "operation_start_note": "bright_yellow",
     "footnotes": "bright_magenta",
@@ -175,10 +175,10 @@ COLUMN_STYLES: dict[str, str] = {
 }
 
 DEFAULT_COLUMNS: dict[type, tuple[str, ...]] = {
-    ParticipantRecord: (
+    Participant: (
         "row_number",
-        "participant_name",
-        "cenit_code",
+        "name",
+        "code",
         "operation_start_date",
         "entity_types",
         "supports_debit_transactions",
@@ -187,8 +187,8 @@ DEFAULT_COLUMNS: dict[type, tuple[str, ...]] = {
         "electronic_or_low_value_deposit_number_lengths",
         "electronic_or_low_value_deposit_name",
     ),
-    Totals: ("participants", *ENTITY_TYPES),
-    EntityTypeTotals: ENTITY_TYPES,
+    Totals: ("participants", *(item.value for item in EntityType)),
+    EntityTypeTotals: tuple(item.value for item in EntityType),
     AccountCapabilities: (
         "savings_account_number_lengths",
         "checking_account_number_lengths",
@@ -381,6 +381,8 @@ class View:
             return SCOPE_LABELS[self.language].get(value.value, value.value)
         if isinstance(value, AccountType):
             return ACCOUNT_TYPE_LABELS[self.language].get(value.value, value.value)
+        if isinstance(value, EntityType):
+            return ENTITY_TYPE_LABELS[self.language].get(value.value, value.value)
         if isinstance(value, Enum):
             return str(value.value)
         if isinstance(value, AccountNumberLengthVariant):

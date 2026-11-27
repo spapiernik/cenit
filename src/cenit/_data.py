@@ -10,8 +10,9 @@ from cenit._types import (
     AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
+    EntityType,
     EntityTypeTotals,
-    ParticipantRecord,
+    Participant,
     Totals,
     normalize_name,
 )
@@ -32,14 +33,14 @@ FOOTNOTES: Mapping[str, str] = MappingProxyType(
 }
 )
 
-RECORDS: tuple[ParticipantRecord, ...] = (
-    ParticipantRecord(
+RECORDS: tuple[Participant, ...] = (
+    Participant(
         row_number=1,
-        participant_name='APORTES EN LÍNEA S.A.',
-        cenit_code='1084',
+        name='APORTES EN LÍNEA S.A.',
+        code='1084',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('information_operator',),
+        entity_types=(EntityType.INFORMATION_OPERATOR,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -49,13 +50,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=2,
-        participant_name='ASOPAGOS',
-        cenit_code='1086',
+        name='ASOPAGOS',
+        code='1086',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('information_operator',),
+        entity_types=(EntityType.INFORMATION_OPERATOR,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -65,13 +66,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=3,
-        participant_name='AVAL SOLUCIONES DIGITALES - DALE',
-        cenit_code='1899',
+        name='AVAL SOLUCIONES DIGITALES - DALE',
+        code='1899',
         operation_start_date=date(2025, 7, 3),
         operation_start_note=None,
-        entity_types=('seped',),
+        entity_types=(EntityType.SEDPE,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -87,13 +88,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='DALE',
         footnotes=(),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=4,
-        participant_name='BAN100 S.A.',
-        cenit_code='1058',
+        name='BAN100 S.A.',
+        code='1058',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -115,13 +116,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=5,
-        participant_name='BANCAMÍA',
-        cenit_code='1059',
+        name='BANCAMÍA',
+        code='1059',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -143,13 +144,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=6,
-        participant_name='BANCO AGRARIO DE COLOMBIA',
-        cenit_code='1040',
+        name='BANCO AGRARIO DE COLOMBIA',
+        code='1040',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -177,13 +178,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=7,
-        participant_name='BANCO AV VILLAS',
-        cenit_code='1052',
+        name='BANCO AV VILLAS',
+        code='1052',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -211,13 +212,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='DEPÓSITOS DIGITALES',
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=8,
-        participant_name='BANCO BANCOOMEVA',
-        cenit_code='1061',
+        name='BANCO BANCOOMEVA',
+        code='1061',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -245,13 +246,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=9,
-        participant_name='BANCO BBVA',
-        cenit_code='1013',
+        name='BANCO BBVA',
+        code='1013',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -289,13 +290,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='DINERO MOVIL',
         footnotes=('(*)', '(**)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=10,
-        participant_name='BANCO CAJA SOCIAL',
-        cenit_code='1032',
+        name='BANCO CAJA SOCIAL',
+        code='1032',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -323,13 +324,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=11,
-        participant_name='BANCO CITIBANK',
-        cenit_code='1009',
+        name='BANCO CITIBANK',
+        code='1009',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -351,13 +352,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=12,
-        participant_name='BANCO COOPCENTRAL',
-        cenit_code='1066',
+        name='BANCO COOPCENTRAL',
+        code='1066',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -385,13 +386,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='LETMI',
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=13,
-        participant_name='BANCO DAVIVIENDA',
-        cenit_code='1051',
+        name='BANCO DAVIVIENDA',
+        code='1051',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -419,13 +420,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='DAVIPLATA',
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=14,
-        participant_name='BANCO DE BOGOTÁ',
-        cenit_code='1001',
+        name='BANCO DE BOGOTÁ',
+        code='1001',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -447,13 +448,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=15,
-        participant_name='BANCO DE OCCIDENTE',
-        cenit_code='1023',
+        name='BANCO DE OCCIDENTE',
+        code='1023',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -475,13 +476,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=16,
-        participant_name='BANCO FALABELLA',
-        cenit_code='1062',
+        name='BANCO FALABELLA',
+        code='1062',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -503,13 +504,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=17,
-        participant_name='BANCO FINANDINA',
-        cenit_code='1063',
+        name='BANCO FINANDINA',
+        code='1063',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -531,13 +532,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=18,
-        participant_name='BANCO GNB SUDAMERIS',
-        cenit_code='1012',
+        name='BANCO GNB SUDAMERIS',
+        code='1012',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -559,13 +560,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=19,
-        participant_name='BANCO ITAÚ',
-        cenit_code='1006',
+        name='BANCO ITAÚ',
+        code='1006',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -587,13 +588,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=20,
-        participant_name='BANCO JP MORGAN',
-        cenit_code='1071',
+        name='BANCO JP MORGAN',
+        code='1071',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -609,13 +610,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=21,
-        participant_name='BANCO MUNDO MUJER',
-        cenit_code='1047',
+        name='BANCO MUNDO MUJER',
+        code='1047',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -631,13 +632,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=22,
-        participant_name='BANCO PICHINCHA',
-        cenit_code='1060',
+        name='BANCO PICHINCHA',
+        code='1060',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -659,13 +660,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=23,
-        participant_name='BANCO POPULAR',
-        cenit_code='1002',
+        name='BANCO POPULAR',
+        code='1002',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -687,13 +688,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=24,
-        participant_name='BANCO REPÚBLICA',
-        cenit_code='1000',
+        name='BANCO REPÚBLICA',
+        code='1000',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -703,13 +704,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=25,
-        participant_name='BANCO SANTANDER DE NEGOCIOS',
-        cenit_code='1065',
+        name='BANCO SANTANDER DE NEGOCIOS',
+        code='1065',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -731,13 +732,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=26,
-        participant_name='BANCO SERFINANZA',
-        cenit_code='1069',
+        name='BANCO SERFINANZA',
+        code='1069',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -765,13 +766,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='CLICuenta',
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=27,
-        participant_name='BANCOLOMBIA',
-        cenit_code='1007',
+        name='BANCOLOMBIA',
+        code='1007',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -799,13 +800,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='Bancolombia',
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=28,
-        participant_name='BNP PARIBAS',
-        cenit_code='1042',
+        name='BNP PARIBAS',
+        code='1042',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financial_corporation',),
+        entity_types=(EntityType.FINANCIAL_CORPORATION,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -821,13 +822,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=29,
-        participant_name='COLTEFINANCIERA',
-        cenit_code='1370',
+        name='COLTEFINANCIERA',
+        code='1370',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -843,13 +844,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=30,
-        participant_name='COMPENSAR',
-        cenit_code='1083',
+        name='COMPENSAR',
+        code='1083',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('information_operator',),
+        entity_types=(EntityType.INFORMATION_OPERATOR,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -859,13 +860,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=31,
-        participant_name='CONFIAR COOPERATIVA FINANCIERA',
-        cenit_code='1292',
+        name='CONFIAR COOPERATIVA FINANCIERA',
+        code='1292',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financial_cooperative',),
+        entity_types=(EntityType.FINANCIAL_COOPERATIVE,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -881,13 +882,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=32,
-        participant_name='COOPERATIVA FINANCIERA DE ANTIOQUIA',
-        cenit_code='1283',
+        name='COOPERATIVA FINANCIERA DE ANTIOQUIA',
+        code='1283',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financial_cooperative',),
+        entity_types=(EntityType.FINANCIAL_COOPERATIVE,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -909,13 +910,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='CFA EXPRESS',
         footnotes=('(*)', '(***)'),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=33,
-        participant_name='COTRAFA',
-        cenit_code='1289',
+        name='COTRAFA',
+        code='1289',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financial_cooperative',),
+        entity_types=(EntityType.FINANCIAL_COOPERATIVE,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -931,13 +932,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=34,
-        participant_name='CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO',
-        cenit_code='1816',
+        name='CREZCAMOS COMPAÑÍA DE FINANCIAMIENTO',
+        code='1816',
         operation_start_date=date(2025, 9, 1),
         operation_start_note=None,
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -959,13 +960,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='MOSI',
         footnotes=(),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=35,
-        participant_name='DAVIBANK',
-        cenit_code='1019',
+        name='DAVIBANK',
+        code='1019',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank', 'information_operator'),
+        entity_types=(EntityType.BANK, EntityType.INFORMATION_OPERATOR),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -987,13 +988,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=36,
-        participant_name='DECEVAL',
-        cenit_code='1550',
+        name='DECEVAL',
+        code='1550',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('government_entity',),
+        entity_types=(EntityType.GOVERNMENT_ENTITY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1003,13 +1004,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=37,
-        participant_name='DGCPTN',
-        cenit_code='1683',
+        name='DGCPTN',
+        code='1683',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('government_entity',),
+        entity_types=(EntityType.GOVERNMENT_ENTITY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1019,13 +1020,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=38,
-        participant_name='DGCPTN – REGALÍAS',
-        cenit_code='1685',
+        name='DGCPTN – REGALÍAS',
+        code='1685',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('government_entity',),
+        entity_types=(EntityType.GOVERNMENT_ENTITY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1035,13 +1036,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=39,
-        participant_name='ENLACE OPERATIVO',
-        cenit_code='1089',
+        name='ENLACE OPERATIVO',
+        code='1089',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('information_operator',),
+        entity_types=(EntityType.INFORMATION_OPERATOR,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1051,13 +1052,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=40,
-        participant_name='FINANCIERA JURISCOOP CF',
-        cenit_code='1121',
+        name='FINANCIERA JURISCOOP CF',
+        code='1121',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1073,13 +1074,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=41,
-        participant_name='FOGAFIN',
-        cenit_code='1684',
+        name='FOGAFIN',
+        code='1684',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('government_entity',),
+        entity_types=(EntityType.GOVERNMENT_ENTITY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1089,13 +1090,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=42,
-        participant_name='IRIS CF',
-        cenit_code='1108',
+        name='IRIS CF',
+        code='1108',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1111,13 +1112,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=43,
-        participant_name='JFK COOPERATIVA FINANCIERA',
-        cenit_code='1286',
+        name='JFK COOPERATIVA FINANCIERA',
+        code='1286',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('financial_cooperative',),
+        entity_types=(EntityType.FINANCIAL_COOPERATIVE,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1133,13 +1134,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=44,
-        participant_name='LULO BANK S.A.',
-        cenit_code='1070',
+        name='LULO BANK S.A.',
+        code='1070',
         operation_start_date=date(2025, 5, 22),
         operation_start_note=None,
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1155,13 +1156,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(***)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=45,
-        participant_name='MI BANCO',
-        cenit_code='1067',
+        name='MI BANCO',
+        code='1067',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('bank',),
+        entity_types=(EntityType.BANK,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1183,13 +1184,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=46,
-        participant_name='MOVii S.A.',
-        cenit_code='1801',
+        name='MOVii S.A.',
+        code='1801',
         operation_start_date=date(2026, 5, 4),
         operation_start_note=None,
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1205,13 +1206,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='MOVii',
         footnotes=(),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=47,
-        participant_name='NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO',
-        cenit_code='1507',
+        name='NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO',
+        code='1507',
         operation_start_date=date(2026, 9, 1),
         operation_start_note=None,
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1233,13 +1234,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='NEQUI',
         footnotes=(),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=48,
-        participant_name='RAPPIPAY',
-        cenit_code='1811',
+        name='RAPPIPAY',
+        code='1811',
         operation_start_date=date(2026, 2, 7),
         operation_start_note=None,
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(
@@ -1261,13 +1262,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name='RAPPIPAY',
         footnotes=(),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=49,
-        participant_name='SIMPLE S.A.',
-        cenit_code='1088',
+        name='SIMPLE S.A.',
+        code='1088',
         operation_start_date=None,
         operation_start_note='(*)',
-        entity_types=('information_operator',),
+        entity_types=(EntityType.INFORMATION_OPERATOR,),
         supports_debit_transactions=True,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1277,13 +1278,13 @@ RECORDS: tuple[ParticipantRecord, ...] = (
         electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
-    ParticipantRecord(
+    Participant(
         row_number=50,
-        participant_name='TUYA S.A.',
-        cenit_code='1026',
+        name='TUYA S.A.',
+        code='1026',
         operation_start_date=date(2026, 8, 12),
         operation_start_note=None,
-        entity_types=('financing_company',),
+        entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=False,
         account_capabilities=AccountCapabilities(
             savings_account_number_lengths=(),
@@ -1301,11 +1302,11 @@ RECORDS: tuple[ParticipantRecord, ...] = (
     ),
 )
 
-CODES_BY_CENIT_CODE: Mapping[str, ParticipantRecord] = MappingProxyType(
-    {record.cenit_code: record for record in RECORDS}
+CODES_BY_CENIT_CODE: Mapping[str, Participant] = MappingProxyType(
+    {record.code: record for record in RECORDS}
 )
-CODES_BY_NAME: Mapping[str, ParticipantRecord] = MappingProxyType(
-    {normalize_name(record.participant_name): record for record in RECORDS}
+CODES_BY_NAME: Mapping[str, Participant] = MappingProxyType(
+    {normalize_name(record.name): record for record in RECORDS}
 )
 TOTALS = Totals(
     participants=50,
@@ -1316,6 +1317,6 @@ TOTALS = Totals(
         financing_company=8,
         government_entity=4,
         information_operator=23,
-        seped=1,
+        sedpe=1,
     ),
 )
