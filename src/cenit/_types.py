@@ -185,6 +185,17 @@ class Totals(_RichViewMixin):
     entity_types: EntityTypeTotals
 
 
+@dataclass(frozen=True, slots=True)
+class Source:
+    """Provenance of the compiled CENIT snapshot."""
+
+    url: str
+    sha256: str
+    document_date: date
+    fetched_at: datetime
+    schema_version: int
+
+
 def normalize_name(value: str) -> str:
     """Return an accent-insensitive comparison key for a participant name."""
     decomposed = unicodedata.normalize("NFKD", value or "")

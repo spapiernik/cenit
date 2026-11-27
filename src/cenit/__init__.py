@@ -167,26 +167,12 @@ def version() -> str:
     return _data.VERSION
 
 
-def schema_version() -> int:
-    """Return the data schema version."""
-    return _data.SCHEMA_VERSION
-
-
-def source_date() -> date:
-    """Return the official document date represented by this release."""
-    return _data.SOURCE_DATE
-
-
-def source_fetched_at() -> str:
-    """Return when the source PDF was fetched during data generation."""
-    return _data.SOURCE_FETCHED_AT
-
-
-def source_sha256() -> str:
-    """Return the checksum of the source PDF used by this release."""
-    return _data.SOURCE_SHA256
-
-
-def source_url() -> str:
-    """Return the official source URL recorded for this release."""
-    return _data.SOURCE_URL
+def source() -> Source:
+    """Return the provenance of this dataset snapshot."""
+    return Source(
+        url=_data.SOURCE_URL,
+        sha256=_data.SOURCE_SHA256,
+        document_date=_data.SOURCE_DATE,
+        fetched_at=datetime.fromisoformat(_data.SOURCE_FETCHED_AT),
+        schema_version=_data.SCHEMA_VERSION,
+    )

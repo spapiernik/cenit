@@ -1,6 +1,6 @@
 import sys
 import unittest
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 import cenit
@@ -131,26 +131,37 @@ class ApiTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             cenit.list_participants_by_entity_type("unknown")
 
-    def test_routing_code_accepts_full_and_participant_codes(self) -> None:
-        record = cenit.get_by_code("1059")
-        self.assertEqual(record.participant_code, "059")
-        self.assertEqual(record.routing_code, "1059")
-        self.assertEqual(cenit.routing_code(1059), "1059")
-        self.assertEqual(cenit.routing_code("059"), "1059")
-        self.assertIsNone(cenit.routing_code("9999"))
+    def test_sedpe_spelling_is_canonicalized(self) -> None:
+        self.assertEqual(cenit.EntityType.SEDPE.value, "sedpe")
+        self.assertIs(cenit.EntityType("seped"), cenit.EntityType.SEDPE)
+        self.assertEqual(cenit.totals().entity_types.sedpe, 1)
+        self.assertEqual(len(cenit.list_participants_by_entity_type("sedpe")), 1)
+        self.assertEqual(len(cenit.list_participants_by_entity_type("seped")), 1)
+        self.assertEqual(len(cenit.list_participants_by_entity_type("SEDPE")), 1)
+        self.assertEqual(
+            generate_data.canonicalize_entity_type_key("seped"),
+            "sedpe",
+        )
+
+    def test_participant_exposes_code(self) -> None:
+        self.assertEqual(cenit.get_by_code("1059").code, "1059")
 
     def test_footnotes_totals_and_metadata(self) -> None:
         self.assertEqual(cenit.footnotes()["(**)"], "Used for special collection agreements")
         self.assertEqual(cenit.totals().participants, 50)
         self.assertEqual(cenit.totals().entity_types.bank, 27)
-        self.assertEqual(cenit.ENTITY_TYPES[0], "bank")
+        self.assertEqual(cenit.EntityType.BANK.value, "bank")
         self.assertEqual(cenit.version(), "0.1.0")
-        self.assertEqual(cenit.schema_version(), 2)
-        self.assertEqual(cenit.source_date(), date(2026, 10, 7))
+        source = cenit.source()
+        self.assertIsInstance(source, cenit.Source)
+        self.assertEqual(source.schema_version, 2)
+        self.assertEqual(source.document_date, date(2026, 10, 7))
+        self.assertIsInstance(source.fetched_at, datetime)
         self.assertEqual(
-            cenit.source_sha256(),
+            source.sha256,
             "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
         )
+        self.assertEqual(source.url, "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf")
 
     def test_generated_module_matches_versioned_json(self) -> None:
         dataset = generate_data.read_json(generate_data.DATA_PATH)
