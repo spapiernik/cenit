@@ -1,89 +1,156 @@
 {
   "schema_version": 2,
   "source": {
-    "file": "tests/fixtures/cenit_codes.pdf",
-    "sha256": "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
+    "file": null,
+    "sha256": "b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6",
     "page": 1,
     "url": "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf",
-    "document_date": "2026-10-07"
+    "document_date": "2026-11-27"
   },
+  "change_log": [
+    {
+      "date": "2026-11-27",
+      "text": "Se incluye a NU COLOMBIA COMPAÑÍA DE FINANCIAMIENTO S.A. como entidad autorizada en el Sistema CENIT a partir del 1 de diciembre de 2026."
+    },
+    {
+      "date": "2026-11-27",
+      "text": "Se corrige la sigla SEPED por SEDPE (Sociedad Especializada en Depósitos y Pagos Electrónicos)."
+    },
+    {
+      "date": "2026-10-07",
+      "text": "Se incluye el nombre del Depósito Electrónico de BANCOLOMBIA: Bancolombia."
+    },
+    {
+      "date": "2026-10-01",
+      "text": "Por solicitud de la COOPERATIVA FINANCIERA DE ANTIOQUIA, se elimina de la parametrización del CENIT la aplicación de transacciones débito para esta entidad."
+    },
+    {
+      "date": "2026-10-01",
+      "text": "Se elimina el nombre del Depósito Electrónico de BANCOLOMBIA: NEQUI"
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se corrige el nombre del Depósito Electrónico del Banco AV Villas de DALE por DEPÓSITOS DIGITALES."
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se incluye el nombre del Depósito Electrónico de TUYA S.A.: CUENTA DIGITAL TUYA PAY."
+    },
+    {
+      "date": "2026-08-19",
+      "text": "Se incluye a NEQUI S.A. COMPAÑÍA DE FINANCIAMIENTO como entidad autorizada en el Sistema CENIT a partir del 1 de septiembre de 2026."
+    },
+    {
+      "date": "2026-08-06",
+      "text": "Se incluye a TUYA S.A. como entidad autorizada en el Sistema CENIT a partir del 12 de agosto de 2026."
+    },
+    {
+      "date": "2026-07-21",
+      "text": "Se incluye columna con el nombre del Depósito Electrónico para las entidades que tienen inscrita esta cuenta en CENIT"
+    },
+    {
+      "date": "2026-07-03",
+      "text": "Por solicitud de Banco Pichincha, se elimina de la parametrización del CENIT la aplicación de transacciones débito para esta entidad."
+    },
+    {
+      "date": "2026-06-25",
+      "text": "Se corrige la razón social de AVAL SOLUCIONES DIGITALES – DALE, la cual por error se encontraba como AVAL SOLUCIONES TECNOLÓGICAS – DALE"
+    },
+    {
+      "date": "2026-06-25",
+      "text": "Por solicitud de Banco Serfinanza, se habilita el servicio de Depósito Electrónico para transacciones crédito."
+    },
+    {
+      "date": "2026-06-17",
+      "text": "Banco AV Villas habilita el producto Depósito Electrónico en CENIT."
+    },
+    {
+      "date": "2026-05-29",
+      "text": "Se incluye la referencia (****) con el fin de especificar las entidades que tienen el servicio de cuenta de Depósitos Electrónicos, pero no han habilitado este servicio en CENIT."
+    },
+    {
+      "date": "2026-05-29",
+      "text": "Banco Itaú informa que no cuenta con el servicio de Depósito Electrónico."
+    }
+  ],
   "status": "ok",
   "grid": {
     "x_boundaries": [
-      35.53,
-      207.07,
-      241.38,
-      285.39,
-      309.67,
-      330.71,
-      351.74,
-      376.34,
-      397.38,
-      425.22,
-      437.19,
-      465.03,
-      516.49,
-      567.94,
-      601.28,
-      665.06
+      40.03,
+      209.03,
+      242.84,
+      286.19,
+      310.11,
+      330.84,
+      351.55,
+      375.79,
+      396.52,
+      423.95,
+      435.74,
+      463.16,
+      513.87,
+      564.55,
+      597.4,
+      660.23
     ],
     "y_boundaries": [
-      190.6,
-      203.9,
-      217.2,
-      230.45,
-      243.7,
-      256.95,
-      270.2,
-      291.3,
-      304.6,
-      325.6,
-      338.9,
-      352.15,
-      365.4,
-      378.7,
-      392.0,
-      405.2,
-      418.5,
-      431.75,
-      445.0,
-      458.3,
-      471.6,
-      484.85,
-      498.1,
-      511.4,
-      524.7,
-      537.95,
-      551.2,
-      564.5,
-      577.8,
-      591.05,
-      604.3,
-      617.6,
-      630.8,
-      644.1,
-      657.4,
-      670.65,
-      683.9,
-      697.2,
-      710.5,
-      723.75,
-      737.0,
-      750.3,
-      763.6,
-      776.85,
-      790.1,
-      803.4,
-      816.7,
-      829.9,
-      843.2,
-      856.45,
-      877.5,
-      888.65
+      189.6,
+      202.7,
+      215.8,
+      228.85,
+      241.9,
+      255.0,
+      268.1,
+      288.75,
+      301.8,
+      322.55,
+      335.6,
+      348.7,
+      361.8,
+      374.8,
+      387.9,
+      401.0,
+      414.0,
+      427.1,
+      440.2,
+      453.25,
+      466.3,
+      479.4,
+      492.5,
+      505.55,
+      518.6,
+      531.65,
+      544.7,
+      557.8,
+      570.9,
+      583.95,
+      597.0,
+      610.1,
+      623.1,
+      636.2,
+      649.3,
+      662.35,
+      675.4,
+      688.5,
+      701.6,
+      714.65,
+      727.7,
+      740.75,
+      753.8,
+      766.9,
+      780.0,
+      793.05,
+      806.1,
+      819.2,
+      832.3,
+      845.3,
+      858.4,
+      879.45,
+      890.45
     ],
     "data_y_range": [
-      190.3,
-      888.85
+      189.32,
+      890.59
     ]
   },
   "summary": {
@@ -96,9 +163,10 @@
     "labels_ignored": 0,
     "entity_subcolumns": 7,
     "account_subcolumns": 4,
-    "expected_data_rows": 51,
-    "found_data_rows": 51,
-    "participant_rows_used": 50,
+    "expected_data_rows": 52,
+    "declared_participants": 51,
+    "found_data_rows": 52,
+    "participant_rows_used": 51,
     "totals_rows_used": 1,
     "unextracted_cells": 0
   },
@@ -320,8 +388,8 @@
       "parent": null,
       "physical_index": 0,
       "x_range": [
-        35.53,
-        207.07
+        40.03,
+        209.03
       ],
       "expected_label": "Participante",
       "label_found": "Participante",
@@ -329,7 +397,7 @@
       "parent_label_matched": null,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -339,8 +407,8 @@
       "parent": null,
       "physical_index": 1,
       "x_range": [
-        207.07,
-        241.38
+        209.03,
+        242.84
       ],
       "expected_label": "Código de Compensación CENIT",
       "label_found": "Códigode Compensación CENIT",
@@ -348,7 +416,7 @@
       "parent_label_matched": null,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -358,8 +426,8 @@
       "parent": null,
       "physical_index": 2,
       "x_range": [
-        241.38,
-        285.39
+        242.84,
+        286.19
       ],
       "expected_label": "Inicio de Operación",
       "label_found": "Iniciode Operación",
@@ -367,7 +435,7 @@
       "parent_label_matched": null,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -377,8 +445,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 3,
       "x_range": [
-        285.39,
-        309.67
+        286.19,
+        310.11
       ],
       "expected_label": "Bancos",
       "label_found": "Bancos",
@@ -387,7 +455,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 27,
-      "rows_empty": 23
+      "rows_empty": 24
     },
     {
       "key": "cooperativa_financiera",
@@ -396,8 +464,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 4,
       "x_range": [
-        309.67,
-        330.71
+        310.11,
+        330.84
       ],
       "expected_label": "Cooperativa Financiera",
       "label_found": "Cooperativa Financiera",
@@ -406,7 +474,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 4,
-      "rows_empty": 46
+      "rows_empty": 47
     },
     {
       "key": "corporación_financiera",
@@ -415,8 +483,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 5,
       "x_range": [
-        330.71,
-        351.74
+        330.84,
+        351.55
       ],
       "expected_label": "Corporación Financiera",
       "label_found": "Corporación Financiera",
@@ -425,7 +493,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 1,
-      "rows_empty": 49
+      "rows_empty": 50
     },
     {
       "key": "compañía_de_financiamiento",
@@ -434,8 +502,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 6,
       "x_range": [
-        351.74,
-        376.34
+        351.55,
+        375.79
       ],
       "expected_label": "Compañía de Financiamiento",
       "label_found": "Compañíade Financiamiento",
@@ -443,7 +511,7 @@
       "parent_label_matched": true,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 8,
+      "rows_with_value": 9,
       "rows_empty": 42
     },
     {
@@ -453,8 +521,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 7,
       "x_range": [
-        376.34,
-        397.38
+        375.79,
+        396.52
       ],
       "expected_label": "Entidad del Estado",
       "label_found": "Entidaddel Estado",
@@ -463,7 +531,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 4,
-      "rows_empty": 46
+      "rows_empty": 47
     },
     {
       "key": "operador_de_información",
@@ -472,8 +540,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 8,
       "x_range": [
-        397.38,
-        425.22
+        396.52,
+        423.95
       ],
       "expected_label": "Operador de Información",
       "label_found": "Operadorde Información",
@@ -482,7 +550,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 23,
-      "rows_empty": 27
+      "rows_empty": 28
     },
     {
       "key": "sedpe",
@@ -491,8 +559,8 @@
       "parent": "tipo_de_entidad",
       "physical_index": 9,
       "x_range": [
-        425.22,
-        437.19
+        423.95,
+        435.74
       ],
       "expected_label": "SEDPE",
       "label_found": "SEDPE",
@@ -501,7 +569,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 1,
-      "rows_empty": 49
+      "rows_empty": 50
     },
     {
       "key": "aplica_transacciones_débito",
@@ -510,8 +578,8 @@
       "parent": null,
       "physical_index": 10,
       "x_range": [
-        437.19,
-        465.03
+        435.74,
+        463.16
       ],
       "expected_label": "Aplica Transacciones Débito",
       "label_found": "Aplica Transacciones Débito",
@@ -519,7 +587,7 @@
       "parent_label_matched": null,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -529,8 +597,8 @@
       "parent": "tipo_de_cuenta_y_longitud",
       "physical_index": 11,
       "x_range": [
-        465.03,
-        516.49
+        463.16,
+        513.87
       ],
       "expected_label": "Cuenta de Ahorros",
       "label_found": "Cuentade Ahorros",
@@ -538,7 +606,7 @@
       "parent_label_matched": true,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -548,8 +616,8 @@
       "parent": "tipo_de_cuenta_y_longitud",
       "physical_index": 12,
       "x_range": [
-        516.49,
-        567.94
+        513.87,
+        564.55
       ],
       "expected_label": "Cuenta Corriente",
       "label_found": "Cuenta Corriente",
@@ -557,7 +625,7 @@
       "parent_label_matched": true,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -567,8 +635,8 @@
       "parent": "depósito_electrónico_o_de_bajo_monto",
       "physical_index": 13,
       "x_range": [
-        567.94,
-        601.28
+        564.55,
+        597.4
       ],
       "expected_label": "Depósito Electrónico o de Bajo Monto",
       "label_found": "Depósito Electrónicoo deBajoMonto",
@@ -576,7 +644,7 @@
       "parent_label_matched": true,
       "kept": true,
       "ignored": false,
-      "rows_with_value": 50,
+      "rows_with_value": 51,
       "rows_empty": 0
     },
     {
@@ -586,8 +654,8 @@
       "parent": "depósito_electrónico_o_de_bajo_monto",
       "physical_index": 14,
       "x_range": [
-        601.28,
-        665.06
+        597.4,
+        660.23
       ],
       "expected_label": "Depósito Electrónico o de Bajo Monto",
       "label_found": "Depósito Electrónicoo deBajoMonto",
@@ -596,7 +664,7 @@
       "kept": true,
       "ignored": false,
       "rows_with_value": 13,
-      "rows_empty": 37
+      "rows_empty": 38
     }
   ],
   "unextracted": [],
