@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "source": {
-    "file": "tests/fixtures/cenit_codes.pdf",
+    "file": null,
     "sha256": "b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6",
     "page": 1,
     "url": "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf",
