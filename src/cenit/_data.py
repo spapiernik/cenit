@@ -1248,19 +1248,18 @@ RECORDS: tuple[Participant, ...] = (
         name='NU COLOMBIA',
         code='1809',
         operation_start_date=date(2026, 12, 1),
-        operation_start_note=None,
         entity_types=(EntityType.FINANCING_COMPANY,),
         supports_debit_transactions=False,
-        account_capabilities=AccountCapabilities(
-            savings_account_number_lengths=(
+        account_types_and_lengths=AccountTypesAndLengths(
+            savings=(
                     AccountNumberLengthVariant(
                         lengths=(8,),
                         footnote_markers=(),
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
-            checking_account_number_lengths=(),
-            electronic_or_low_value_deposit_number_lengths=(),
+            checking=(),
+            electronic_or_low_value_deposit=(),
         ),
         electronic_or_low_value_deposit_name=None,
         footnotes=(),
