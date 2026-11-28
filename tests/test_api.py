@@ -47,20 +47,19 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(len(records), cenit.totals().participants)
         self.assertIs(records, cenit.all_records())
 
-    def test_operation_start_date_and_note_are_separate(self) -> None:
-        dated = cenit.get_by_code("1899")
+    def test_operation_start_is_date_or_note(self) -> None:
+        dated = cenit.get_by_name("aval")
         self.assertEqual(dated.operation_start_date, date(2025, 7, 3))
-        self.assertIsNone(dated.operation_start_note)
         self.assertEqual(dated.footnotes, ())
 
-        noted = cenit.get_by_code("1013")
-        self.assertIsNone(noted.operation_start_date)
-        self.assertEqual(noted.operation_start_note, "(*)")
+        noted = cenit.get_by_name("bancolombia")
+        self.assertEqual(noted.operation_start_date, "(*)")
         self.assertIn("(*)", noted.footnotes)
+        self.assertFalse(hasattr(noted, "operation_start_note"))
 
     def test_special_collection_agreement_variants(self) -> None:
         bbva = cenit.get_by_code("1013")
-        savings = bbva.account_capabilities.savings_account_number_lengths
+        savings = bbva.account_types_and_lengths.savings
         self.assertEqual(len(savings), 2)
         self.assertEqual(savings[0].lengths, (5, 7, 13))
         self.assertEqual(savings[0].footnote_markers, ("**",))
@@ -71,14 +70,14 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(savings[1].lengths, (9, 10, 12, 14, 16))
         self.assertEqual(savings[1].scope, cenit.AccountNumberLengthScope.STANDARD)
 
-        checking = bbva.account_capabilities.checking_account_number_lengths
+        checking = bbva.account_types_and_lengths.checking
         self.assertEqual(checking[0].lengths, (5, 7))
         self.assertEqual(checking[0].footnote_markers, ("**",))
         self.assertIn("(**)", bbva.footnotes)
 
     def test_includes_leading_zeros_variant(self) -> None:
         lulo = cenit.get_by_code("1070")
-        variants = lulo.account_capabilities.savings_account_number_lengths
+        variants = lulo.account_types_and_lengths.savings
         self.assertEqual(len(variants), 1)
         self.assertEqual(variants[0].lengths, (12,))
         self.assertEqual(variants[0].footnote_markers, ("***",))
@@ -89,9 +88,7 @@ class ApiTest(unittest.TestCase):
 
     def test_electronic_deposit_not_enabled_variant(self) -> None:
         bancamia = cenit.get_by_code("1059")
-        variants = (
-            bancamia.account_capabilities.electronic_or_low_value_deposit_number_lengths
-        )
+        variants = bancamia.account_types_and_lengths.electronic_or_low_value_deposit
         self.assertEqual(len(variants), 1)
         self.assertEqual(variants[0].lengths, ())
         self.assertEqual(variants[0].footnote_markers, ("****",))
@@ -107,18 +104,18 @@ class ApiTest(unittest.TestCase):
         self.assertTrue(
             bbva.supports_account_number_length(cenit.AccountType.SAVINGS, 10)
         )
-        self.assertFalse(bbva.supports_account_number_length("savings", 5))
+        self.assertTrue(bbva.supports_account_number_length("savings", 5))
         self.assertTrue(
             bbva.supports_account_number_length(
                 "savings", 5, scope="special_collection_agreement"
             )
         )
-        self.assertTrue(bbva.supports_account_number_length("savings", 5, scope=None))
-        self.assertEqual(
-            bbva.account_number_lengths("savings", scope=None),
-            (5, 7, 13, 9, 10, 12, 14, 16),
+        self.assertFalse(
+            bbva.supports_account_number_length("savings", 5, scope="standard")
         )
-        self.assertEqual(bbva.account_number_lengths("savings"), (9, 10, 12, 14, 16))
+        self.assertFalse(bbva.supports_account_number_length("savings", 999))
+        antioquia = cenit.get_by_name("antioquia")
+        self.assertTrue(antioquia.supports_account_number_length("savings", 11))
 
     def test_participant_entity_types_are_enums(self) -> None:
         record = cenit.get_by_code("1013")

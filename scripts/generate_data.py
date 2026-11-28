@@ -53,19 +53,19 @@ def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def date_expression(value: date | None) -> str:
-    if value is None:
-        return "None"
-    return f"date({value.year}, {value.month}, {value.day})"
+def date_expression(value: date | str) -> str:
+    if isinstance(value, date):
+        return f"date({value.year}, {value.month}, {value.day})"
+    return repr(value)
 
 
-def parse_operation_start(value: str) -> tuple[date | None, str | None]:
+def parse_operation_start(value: str) -> date | str:
     label = str(value).strip()
     match = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", label)
     if match is None:
-        return None, label or None
+        return label
     day, month, year = (int(part) for part in match.groups())
-    return date(year, month, day), None
+    return date(year, month, day)
 
 
 def parse_boolean(value: str) -> bool:
@@ -169,26 +169,26 @@ def collect_footnotes(
 def render_participant(record: dict[str, Any]) -> str:
     account = record["tipo_de_cuenta_y_longitud"]
     deposit = account["depósito_electrónico_o_de_bajo_monto"]
-    start_date, start_note = parse_operation_start(record["inicio_de_operación"])
+    operation_start = parse_operation_start(record["inicio_de_operación"])
     savings = parse_length_variants(account["cuenta_de_ahorros"])
     checking = parse_length_variants(account["cuenta_corriente"])
     deposit_variants = parse_length_variants(deposit["longitud"])
     deposit_name = (deposit["nombre"] or "").strip() or None
-    footnotes = collect_footnotes(start_note, (savings, checking, deposit_variants))
+    note = operation_start if isinstance(operation_start, str) else None
+    footnotes = collect_footnotes(note, (savings, checking, deposit_variants))
 
     lines = [
         "    Participant(",
         f"        row_number={record['posición']!r},",
         f"        name={record['participante']!r},",
         f"        code={record['código_cenit']!r},",
-        f"        operation_start_date={date_expression(start_date)},",
-        f"        operation_start_note={start_note!r},",
+        f"        operation_start_date={date_expression(operation_start)},",
         f"        entity_types={entity_types_expression(record)},",
         f"        supports_debit_transactions={parse_boolean(record['aplica_transacciones_débito'])!r},",
-        "        account_capabilities=AccountCapabilities(",
-        f"            savings_account_number_lengths={render_variants(savings, 16)},",
-        f"            checking_account_number_lengths={render_variants(checking, 16)},",
-        "            electronic_or_low_value_deposit_number_lengths="
+        "        account_types_and_lengths=AccountTypesAndLengths(",
+        f"            savings={render_variants(savings, 16)},",
+        f"            checking={render_variants(checking, 16)},",
+        "            electronic_or_low_value_deposit="
         f"{render_variants(deposit_variants, 16)},",
         "        ),",
         f"        electronic_or_low_value_deposit_name={deposit_name!r},",
@@ -251,9 +251,9 @@ from types import MappingProxyType
 from typing import Mapping
 
 from cenit._types import (
-    AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
+    AccountTypesAndLengths,
     EntityType,
     EntityTypeTotals,
     Participant,

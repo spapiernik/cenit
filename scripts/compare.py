@@ -22,15 +22,15 @@ FIELD_LABELS = {
     "inicio_de_operación": EN_LABELS["operation_start_date"],
     "tipo_de_entidad": EN_LABELS["entity_types"],
     "aplica_transacciones_débito": EN_LABELS["supports_debit_transactions"],
-    "tipo_de_cuenta_y_longitud": EN_LABELS["account_capabilities"],
+    "tipo_de_cuenta_y_longitud": EN_LABELS["account_types_and_lengths"],
     "participantes": EN_LABELS["participants"],
 }
 
 ACCOUNT_FIELD_LABELS = {
-    "cuenta_de_ahorros": EN_LABELS["savings_account_number_lengths"],
-    "cuenta_corriente": EN_LABELS["checking_account_number_lengths"],
+    "cuenta_de_ahorros": EN_LABELS["savings"],
+    "cuenta_corriente": EN_LABELS["checking"],
     "depósito_electrónico_o_de_bajo_monto": EN_LABELS[
-        "electronic_or_low_value_deposit_number_lengths"
+        "electronic_or_low_value_deposit"
     ],
     "longitud": EN_LABELS["lengths"],
 }
@@ -171,14 +171,14 @@ def label(path: str) -> str:
             and parts[2] == "nombre"
         ):
             return (
-                f"{EN_LABELS['account_capabilities']} / "
+                f"{EN_LABELS['account_types_and_lengths']} / "
                 f"{EN_LABELS['electronic_or_low_value_deposit_name']}"
             )
         account_parts = [
             ACCOUNT_FIELD_LABELS.get(part, part.replace("_", " ").title())
             for part in parts[1:]
         ]
-        return " / ".join([EN_LABELS["account_capabilities"], *account_parts])
+        return " / ".join([EN_LABELS["account_types_and_lengths"], *account_parts])
     return FIELD_LABELS.get(parts[0], parts[0].replace("_", " ").title())
 
 
