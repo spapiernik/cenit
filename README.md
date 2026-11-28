@@ -3,7 +3,13 @@
 Versioned, offline lookups for official CENIT compensation codes.
 
 ```bash
-pip install git+https://github.com/spapiernik/cenit.git
+uv add cenit
+```
+
+For one-off scripts:
+
+```bash
+uv run --with cenit python script.py
 ```
 
 ```python

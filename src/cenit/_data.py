@@ -22,7 +22,7 @@ VERSION = '0.1.0'
 SOURCE_DATE = date(2026, 11, 27)
 SOURCE_SHA256 = 'b4066b93294e7c36fa0f9e35ef5b8da007eb718b34168f24cb701939a45804d6'
 SOURCE_URL = 'https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf'
-SOURCE_FETCHED_AT = '2026-11-28T02:48:07.457872+00:00'
+SOURCE_FETCHED_AT = '2026-11-28T03:12:08.718728+00:00'
 
 FOOTNOTES: Mapping[str, str] = MappingProxyType(
 {

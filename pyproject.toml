@@ -3,15 +3,33 @@ name = "cenit"
 version = "0.1.0"
 description = "Versioned Python library for CENIT compensation codes"
 readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Santiago Papiernik", email = "spapiernik12@gmail.com" }
 ]
-requires-python = ">=3.14"
+keywords = ["cenit", "colombia", "compensation-codes", "banrep"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "rapidfuzz>=3.14.6",
     "rich>=15.0.0",
     "textual>=8.2.8",
 ]
+
+[project.urls]
+Homepage = "https://github.com/spapiernik/cenit"
+Repository = "https://github.com/spapiernik/cenit"
+Issues = "https://github.com/spapiernik/cenit/issues"
 
 [dependency-groups]
 dev = [
@@ -19,5 +37,5 @@ dev = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.12.11,<0.13.0"]
+requires = ["uv_build>=0.12.11,<0.14.0"]
 build-backend = "uv_build"
