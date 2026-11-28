@@ -18,10 +18,10 @@ from rich.table import Table
 from rich.text import Text
 
 from ._types import (
-    AccountCapabilities,
     AccountNumberLengthScope,
     AccountNumberLengthVariant,
     AccountType,
+    AccountTypesAndLengths,
     EntityType,
     EntityTypeTotals,
     Participant,
@@ -38,10 +38,9 @@ LABELS: dict[str, dict[str, str]] = {
         "name": "Participant",
         "code": "CENIT Compensation Code",
         "operation_start_date": "Operation Start",
-        "operation_start_note": "Operation Start Note",
         "entity_types": "Entity Type",
         "supports_debit_transactions": "Applies Debit Transactions",
-        "account_capabilities": "Account Type and Length",
+        "account_types_and_lengths": "Account Type and Length",
         "electronic_or_low_value_deposit_name": "Electronic or Low Value Deposit Name",
         "footnotes": "Footnotes",
         "participants": "Participants",
@@ -52,9 +51,9 @@ LABELS: dict[str, dict[str, str]] = {
         "government_entity": "Government Entity",
         "information_operator": "Information Operator",
         "sedpe": "SEDPE",
-        "savings_account_number_lengths": "Savings Account",
-        "checking_account_number_lengths": "Checking Account",
-        "electronic_or_low_value_deposit_number_lengths": "Electronic or Low Value Deposit",
+        "savings": "Savings Account",
+        "checking": "Checking Account",
+        "electronic_or_low_value_deposit": "Electronic or Low Value Deposit",
         "lengths": "Lengths",
         "footnote_markers": "Markers",
         "scope": "Scope",
@@ -69,10 +68,9 @@ LABELS: dict[str, dict[str, str]] = {
         "name": "Participante",
         "code": "Código de Compensación CENIT",
         "operation_start_date": "Inicio de Operación",
-        "operation_start_note": "Nota de Inicio de Operación",
         "entity_types": "Tipo de Entidad",
         "supports_debit_transactions": "Aplica Transacciones Débito",
-        "account_capabilities": "Tipo de Cuenta y Longitud",
+        "account_types_and_lengths": "Tipo de Cuenta y Longitud",
         "electronic_or_low_value_deposit_name": "Nombre del Depósito Electrónico o de Bajo Monto",
         "footnotes": "Notas",
         "participants": "Participantes",
@@ -83,9 +81,9 @@ LABELS: dict[str, dict[str, str]] = {
         "government_entity": "Entidad del Estado",
         "information_operator": "Operador de Información",
         "sedpe": "SEDPE",
-        "savings_account_number_lengths": "Cuenta de Ahorros",
-        "checking_account_number_lengths": "Cuenta Corriente",
-        "electronic_or_low_value_deposit_number_lengths": "Depósito Electrónico o de Bajo Monto",
+        "savings": "Cuenta de Ahorros",
+        "checking": "Cuenta Corriente",
+        "electronic_or_low_value_deposit": "Depósito Electrónico o de Bajo Monto",
         "lengths": "Longitudes",
         "footnote_markers": "Marcadores",
         "scope": "Alcance",
@@ -167,7 +165,6 @@ COLUMN_STYLES: dict[str, str] = {
     "name": "bold bright_white",
     "code": "bright_cyan",
     "operation_start_date": "bright_green",
-    "operation_start_note": "bright_yellow",
     "footnotes": "bright_magenta",
     "scope": "bright_magenta",
     "row_number": "bright_white",
@@ -182,17 +179,17 @@ DEFAULT_COLUMNS: dict[type, tuple[str, ...]] = {
         "operation_start_date",
         "entity_types",
         "supports_debit_transactions",
-        "savings_account_number_lengths",
-        "checking_account_number_lengths",
-        "electronic_or_low_value_deposit_number_lengths",
+        "savings",
+        "checking",
+        "electronic_or_low_value_deposit",
         "electronic_or_low_value_deposit_name",
     ),
     Totals: ("participants", *(item.value for item in EntityType)),
     EntityTypeTotals: tuple(item.value for item in EntityType),
-    AccountCapabilities: (
-        "savings_account_number_lengths",
-        "checking_account_number_lengths",
-        "electronic_or_low_value_deposit_number_lengths",
+    AccountTypesAndLengths: (
+        "savings",
+        "checking",
+        "electronic_or_low_value_deposit",
     ),
     AccountNumberLengthVariant: ("lengths", "footnote_markers", "scope"),
 }
@@ -324,9 +321,6 @@ class View:
 
     def _collect_markers(self, value: Any, found: list[str]) -> list[str]:
         if is_dataclass(value) and not isinstance(value, type):
-            note = getattr(value, "operation_start_note", None)
-            if note:
-                self._collect_markers(note, found)
             footnotes = getattr(value, "footnotes", ())
             if isinstance(footnotes, (tuple, list, set, frozenset)):
                 for marker in footnotes:
@@ -363,12 +357,6 @@ class View:
 
     def _label(self, name: str) -> str:
         return LABELS[self.language].get(name, name.replace("_", " ").title())
-
-    def _format_record_value(self, record: Mapping[str, Any], name: str) -> str:
-        value = record.get(name)
-        if name == "operation_start_date" and value is None:
-            return self._format(record.get("operation_start_note"))
-        return self._format(value)
 
     def _format(self, value: Any) -> str:
         if value is None:
@@ -451,7 +439,7 @@ class View:
         column_names, specs = self._select(base, available, len(items))
         rows = tuple(
             tuple(
-                self._format_record_value(record, name)
+                self._format(record.get(name))
                 if name in spec and name not in self.exclude
                 else ""
                 for name in column_names

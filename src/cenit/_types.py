@@ -59,16 +59,11 @@ def _coerce_account_type(value: AccountType | str) -> AccountType:
     aliases = {
         "savings": AccountType.SAVINGS,
         "savings_account": AccountType.SAVINGS,
-        "savings_account_number_lengths": AccountType.SAVINGS,
         "checking": AccountType.CHECKING,
         "checking_account": AccountType.CHECKING,
-        "checking_account_number_lengths": AccountType.CHECKING,
         "electronic": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
         "electronic_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
         "electronic_or_low_value_deposit": AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT,
-        "electronic_or_low_value_deposit_number_lengths": (
-            AccountType.ELECTRONIC_OR_LOW_VALUE_DEPOSIT
-        ),
     }
     if text in aliases:
         return aliases[text]
@@ -104,14 +99,12 @@ class AccountNumberLengthVariant(_RichViewMixin):
 
 
 @dataclass(frozen=True, slots=True)
-class AccountCapabilities(_RichViewMixin):
+class AccountTypesAndLengths(_RichViewMixin):
     """Qualified account number lengths accepted by one participant."""
 
-    savings_account_number_lengths: tuple[AccountNumberLengthVariant, ...] = ()
-    checking_account_number_lengths: tuple[AccountNumberLengthVariant, ...] = ()
-    electronic_or_low_value_deposit_number_lengths: tuple[
-        AccountNumberLengthVariant, ...
-    ] = ()
+    savings: tuple[AccountNumberLengthVariant, ...] = ()
+    checking: tuple[AccountNumberLengthVariant, ...] = ()
+    electronic_or_low_value_deposit: tuple[AccountNumberLengthVariant, ...] = ()
 
     def for_account_type(
         self, account_type: AccountType | str
@@ -119,10 +112,10 @@ class AccountCapabilities(_RichViewMixin):
         """Return the variants for one account type."""
         key = _coerce_account_type(account_type)
         if key is AccountType.SAVINGS:
-            return self.savings_account_number_lengths
+            return self.savings
         if key is AccountType.CHECKING:
-            return self.checking_account_number_lengths
-        return self.electronic_or_low_value_deposit_number_lengths
+            return self.checking
+        return self.electronic_or_low_value_deposit
 
 
 @dataclass(frozen=True, slots=True)
@@ -132,36 +125,26 @@ class Participant(_RichViewMixin):
     row_number: int
     name: str
     code: str
-    operation_start_date: date | None
-    operation_start_note: str | None
+    operation_start_date: date | str
     entity_types: tuple[EntityType, ...]
     supports_debit_transactions: bool
-    account_capabilities: AccountCapabilities
+    account_types_and_lengths: AccountTypesAndLengths
     electronic_or_low_value_deposit_name: str | None
     footnotes: tuple[str, ...] = ()
-
-    def account_number_lengths(
-        self,
-        account_type: AccountType | str,
-        scope: AccountNumberLengthScope | str | None = AccountNumberLengthScope.STANDARD,
-    ) -> tuple[int, ...]:
-        """Return accepted lengths for one account type and scope."""
-        selected = self.account_capabilities.for_account_type(account_type)
-        wanted = _coerce_scope(scope)
-        lengths: list[int] = []
-        for variant in selected:
-            if wanted is None or variant.scope == wanted:
-                lengths.extend(variant.lengths)
-        return tuple(lengths)
 
     def supports_account_number_length(
         self,
         account_type: AccountType | str,
         length: int,
-        scope: AccountNumberLengthScope | str | None = AccountNumberLengthScope.STANDARD,
+        scope: AccountNumberLengthScope | str | None = None,
     ) -> bool:
         """Check whether one account number length is accepted."""
-        return int(length) in self.account_number_lengths(account_type, scope)
+        wanted = _coerce_scope(scope)
+        return any(
+            int(length) in variant.lengths
+            for variant in self.account_types_and_lengths.for_account_type(account_type)
+            if wanted is None or variant.scope == wanted
+        )
 
     def csv(self) -> str:
         """Return the exact CSV line for this participant."""
