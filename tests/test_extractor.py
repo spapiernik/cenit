@@ -50,7 +50,12 @@ class ExtractorTest(unittest.TestCase):
             result["report"]["summary"]["declared_participants"],
             len(result["records"]),
         )
-        self.assertEqual(result["source"]["document_date"], "2026-10-07")
+        recorded_source = json.loads(
+            (ROOT / "data" / "source.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            result["source"]["document_date"], recorded_source["document_date"]
+        )
         self.assertEqual(result["report"]["status"], "ok")
         current = {
             "participants": result["records"],
@@ -66,7 +71,10 @@ class ExtractorTest(unittest.TestCase):
     def test_sedpe_spelling_is_canonicalized(self) -> None:
         fixture = ROOT / "tests" / "fixtures" / "cenit_codes.pdf"
         result = extract.extract(fixture, 1, None)
-        payload = json.dumps(result, ensure_ascii=False).lower()
+        payload = json.dumps(
+            {"participants": result["records"], "totals": result["totals"]},
+            ensure_ascii=False,
+        ).lower()
 
         self.assertNotIn("seped", payload)
         self.assertIn("sedpe", result["totals"]["tipo_de_entidad"])

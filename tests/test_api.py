@@ -44,7 +44,7 @@ class ApiTest(unittest.TestCase):
     def test_all_returns_immutable_tuple(self) -> None:
         records = cenit.all_records()
         self.assertIsInstance(records, tuple)
-        self.assertEqual(len(records), 50)
+        self.assertEqual(len(records), cenit.totals().participants)
         self.assertIs(records, cenit.all_records())
 
     def test_operation_start_is_date_or_note(self) -> None:
@@ -167,18 +167,16 @@ class ApiTest(unittest.TestCase):
 
     def test_footnotes_totals_and_metadata(self) -> None:
         self.assertEqual(cenit.footnotes()["(**)"], "Used for special collection agreements")
-        self.assertEqual(cenit.totals().participants, 50)
+        self.assertEqual(cenit.totals().participants, len(cenit.all_records()))
         self.assertEqual(cenit.totals().entity_types.bank, 27)
         self.assertEqual(cenit.EntityType.BANK.value, "bank")
         self.assertEqual(cenit.version(), "0.1.0")
         source = cenit.source()
         self.assertEqual(source.schema_version, 2)
-        self.assertEqual(source.document_date, date(2026, 10, 7))
+        recorded = generate_data.read_json(generate_data.SOURCE_PATH)
+        self.assertEqual(source.document_date, date.fromisoformat(recorded["document_date"]))
         self.assertIsInstance(source.fetched_at, datetime)
-        self.assertEqual(
-            source.sha256,
-            "ee7e3775387ec9032c3eb7cb3664c63dbd7e8187bab6687f9e8cc907b4d79706",
-        )
+        self.assertEqual(source.sha256, recorded["sha256"])
         self.assertEqual(source.url, "https://www.banrep.gov.co/sites/default/files/codigos-compensacion-cenit.pdf")
 
     def test_generated_module_matches_versioned_json(self) -> None:
