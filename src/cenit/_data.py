@@ -1260,8 +1260,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=(),
     ),
     Participant(
