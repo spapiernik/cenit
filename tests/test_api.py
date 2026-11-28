@@ -98,6 +98,14 @@ class ApiTest(unittest.TestCase):
         )
         self.assertIn("(****)", bancamia.footnotes)
 
+    def test_electronic_deposit_name_is_nested(self) -> None:
+        aval = cenit.get_by_name("aval")
+        self.assertEqual(
+            aval.account_types_and_lengths.electronic_or_low_value_deposit_name,
+            "DALE",
+        )
+        self.assertFalse(hasattr(aval, "electronic_or_low_value_deposit_name"))
+
     def test_account_length_queries(self) -> None:
         bbva = cenit.get_by_code("1013")
         self.assertTrue(bbva.supports_account_number_length("savings", 10))

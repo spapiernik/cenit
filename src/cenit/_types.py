@@ -100,11 +100,12 @@ class AccountNumberLengthVariant(_RichViewMixin):
 
 @dataclass(frozen=True, slots=True)
 class AccountTypesAndLengths(_RichViewMixin):
-    """Qualified account number lengths accepted by one participant."""
+    """Account types, number lengths, and deposit name for one participant."""
 
     savings: tuple[AccountNumberLengthVariant, ...] = ()
     checking: tuple[AccountNumberLengthVariant, ...] = ()
     electronic_or_low_value_deposit: tuple[AccountNumberLengthVariant, ...] = ()
+    electronic_or_low_value_deposit_name: str | None = None
 
     def for_account_type(
         self, account_type: AccountType | str
@@ -129,7 +130,6 @@ class Participant(_RichViewMixin):
     entity_types: tuple[EntityType, ...]
     supports_debit_transactions: bool
     account_types_and_lengths: AccountTypesAndLengths
-    electronic_or_low_value_deposit_name: str | None
     footnotes: tuple[str, ...] = ()
 
     def supports_account_number_length(

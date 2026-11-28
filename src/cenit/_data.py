@@ -101,8 +101,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -116,8 +116,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -137,8 +137,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='DALE',
         ),
-        electronic_or_low_value_deposit_name='DALE',
         footnotes=(),
     ),
     Participant(
@@ -164,8 +164,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -191,8 +191,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
                     ),
                 ),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
     Participant(
@@ -224,8 +224,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
                     ),
                 ),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
     Participant(
@@ -257,8 +257,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='DEPÓSITOS DIGITALES',
         ),
-        electronic_or_low_value_deposit_name='DEPÓSITOS DIGITALES',
         footnotes=('(*)',),
     ),
     Participant(
@@ -290,8 +290,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
                     ),
                 ),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
     Participant(
@@ -333,8 +333,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='DINERO MOVIL',
         ),
-        electronic_or_low_value_deposit_name='DINERO MOVIL',
         footnotes=('(*)', '(**)'),
     ),
     Participant(
@@ -366,8 +366,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.ELECTRONIC_DEPOSIT_NOT_ENABLED_IN_CENIT,
                     ),
                 ),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)', '(****)'),
     ),
     Participant(
@@ -393,8 +393,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -426,8 +426,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='LETMI',
         ),
-        electronic_or_low_value_deposit_name='LETMI',
         footnotes=('(*)',),
     ),
     Participant(
@@ -459,8 +459,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='DAVIPLATA',
         ),
-        electronic_or_low_value_deposit_name='DAVIPLATA',
         footnotes=('(*)',),
     ),
     Participant(
@@ -486,8 +486,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -513,8 +513,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -540,8 +540,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -567,8 +567,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -594,8 +594,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -621,8 +621,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -642,8 +642,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -663,8 +663,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -690,8 +690,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -717,8 +717,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -732,8 +732,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -759,8 +759,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -792,8 +792,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='CLICuenta',
         ),
-        electronic_or_low_value_deposit_name='CLICuenta',
         footnotes=('(*)',),
     ),
     Participant(
@@ -825,8 +825,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='Bancolombia',
         ),
-        electronic_or_low_value_deposit_name='Bancolombia',
         footnotes=('(*)',),
     ),
     Participant(
@@ -846,8 +846,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -867,8 +867,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -882,8 +882,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -903,8 +903,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -930,8 +930,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='CFA EXPRESS',
         ),
-        electronic_or_low_value_deposit_name='CFA EXPRESS',
         footnotes=('(*)', '(***)'),
     ),
     Participant(
@@ -951,8 +951,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -978,8 +978,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='MOSI',
         ),
-        electronic_or_low_value_deposit_name='MOSI',
         footnotes=(),
     ),
     Participant(
@@ -1005,8 +1005,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1020,8 +1020,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1035,8 +1035,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1050,8 +1050,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1065,8 +1065,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1086,8 +1086,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1101,8 +1101,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1122,8 +1122,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1143,8 +1143,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1164,8 +1164,8 @@ RECORDS: tuple[Participant, ...] = (
                 ),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(***)',),
     ),
     Participant(
@@ -1191,8 +1191,8 @@ RECORDS: tuple[Participant, ...] = (
                     ),
                 ),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1212,8 +1212,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='MOVii',
         ),
-        electronic_or_low_value_deposit_name='MOVii',
         footnotes=(),
     ),
     Participant(
@@ -1239,8 +1239,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='NEQUI',
         ),
-        electronic_or_low_value_deposit_name='NEQUI',
         footnotes=(),
     ),
     Participant(
@@ -1287,8 +1287,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='RAPPIPAY',
         ),
-        electronic_or_low_value_deposit_name='RAPPIPAY',
         footnotes=(),
     ),
     Participant(
@@ -1302,8 +1302,8 @@ RECORDS: tuple[Participant, ...] = (
             savings=(),
             checking=(),
             electronic_or_low_value_deposit=(),
+            electronic_or_low_value_deposit_name=None,
         ),
-        electronic_or_low_value_deposit_name=None,
         footnotes=('(*)',),
     ),
     Participant(
@@ -1323,8 +1323,8 @@ RECORDS: tuple[Participant, ...] = (
                         scope=AccountNumberLengthScope.STANDARD,
                     ),
                 ),
+            electronic_or_low_value_deposit_name='CUENTA DIGITAL TUYA PAY',
         ),
-        electronic_or_low_value_deposit_name='CUENTA DIGITAL TUYA PAY',
         footnotes=(),
     ),
 )
