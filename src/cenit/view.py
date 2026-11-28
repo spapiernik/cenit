@@ -190,6 +190,7 @@ DEFAULT_COLUMNS: dict[type, tuple[str, ...]] = {
         "savings",
         "checking",
         "electronic_or_low_value_deposit",
+        "electronic_or_low_value_deposit_name",
     ),
     AccountNumberLengthVariant: ("lengths", "footnote_markers", "scope"),
 }

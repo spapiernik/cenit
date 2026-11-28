@@ -190,8 +190,8 @@ def render_participant(record: dict[str, Any]) -> str:
         f"            checking={render_variants(checking, 16)},",
         "            electronic_or_low_value_deposit="
         f"{render_variants(deposit_variants, 16)},",
+        f"            electronic_or_low_value_deposit_name={deposit_name!r},",
         "        ),",
-        f"        electronic_or_low_value_deposit_name={deposit_name!r},",
         f"        footnotes={footnotes!r},",
         "    ),",
     ]
